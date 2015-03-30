@@ -1,13 +1,13 @@
 import java.io.Serializable;
 
 
-public class Livre implements Serializable {
+public class Livre implements Serializable{
 	
 	@Override
 	public String toString() {
 		return "Livre [titre=" + titre + ", ISBN=" + ISBN + ", auteur="
 				+ auteur + "]";
-	} 
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (obj==this)
