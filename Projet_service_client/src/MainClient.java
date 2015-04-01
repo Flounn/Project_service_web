@@ -10,7 +10,7 @@ public class MainClient {
 	public static void main(String[] args) {
 		try {
 			System.setProperty("java.security.policy", "sec.policy");
-			System.setProperty("java.rmi.server.codebase", "file://F:/Eugen/Workspace/Project_service_web/Projet_service_web/bin/");
+			System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
 			System.setSecurityManager(new SecurityManager());
 				
 			Bibliotheque b =  (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
@@ -38,7 +38,7 @@ public class MainClient {
 			livres = b.findByTitre("Fred et Mile");
 			Livre l=livres.get(0);
 			l.addToAttente(p);
-			System.out.println(p.getNom() + " " + p.getPrenom() + " a été rajouté à l'attente du " + l.remoteToString());
+			System.out.println(p.getNom() + " " + p.getPrenom() + " a ete rajoute a� l'attente du " + l.remoteToString());
 			p.addLivre(l);
 			System.out.println(p.getNom() + " " + p.getPrenom() + " vient d'emprunter " 
 					+ p.getLivres().get(p.getLivres().size()-1).remoteToString());

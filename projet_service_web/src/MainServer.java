@@ -12,7 +12,6 @@ public class MainServer {
 			Naming.rebind("rmi://localhost:1099/Personne", new PersonneImpl());
 			Naming.rebind("rmi://localhost:1099/Livre", new LivreImpl());
 		} catch (Exception e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 	}

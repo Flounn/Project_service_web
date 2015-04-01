@@ -11,7 +11,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	protected String prenom;
 	protected String role;
 	/**
-	 * Les livres empruntés
+	 * Les livres empruntes
 	 */
 	protected List<Livre> livres;
 	
@@ -79,7 +79,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	
 	/**
 	 * 
-	 * @return livres. La liste des livres empruntés
+	 * @return livres. La liste des livres empruntes
 	 * @throws RemoteException
 	 */
 	@Override
@@ -87,7 +87,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		return livres;
 	}
 	/**
-	 * Rajoute un livre à liste des livres empruntés
+	 * Rajoute un livre a� liste des livres empruntes
 	 * @throws RemoteException
 	 */
 	@Override
@@ -95,8 +95,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.livres.add(livre);
 	}
 	/**
-	 * Enlève un livre de liste des livres empruntés. Appelle la methode qui 
-	 * prête le livre à la personne suivante sur la liste d'attente.
+	 * Enlève un livre de liste des livres empruntees. Appelle la methode qui 
+	 * prête le livre a� la personne suivante sur la liste d'attente.
 	 * @throws RemoteException
 	 */
 	@Override
@@ -105,20 +105,16 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		if(livre.getAttente()!=null)
 			livre.enleveFromAttente(livre.getAttente().get(0));
 	}
+
 	/**
-	 * Notifie une personne que le livre souhaité est disponible et lui a été prété.
+	 * Notifie une personne que le livre souhaite est disponible et lui a ete prete.
 	 * @param livre
 	 * @throws RemoteException
 	 */
-	/*@Override
-	public void notification(Livre livre) throws RemoteException {
-		System.out.println(livre.remoteToString() + " est désormais disponible "
-				+ "et vous attend. N'oubliez pas de venir le chercher");
-	}*/
-
 	@Override
 	public void notification(Livre livre) throws RemoteException {
-		// TODO Auto-generated method stub
+		System.out.println(livre.remoteToString() + " est desormais disponible "
+				+ "et vous attend. N'oubliez pas de venir le chercher");
 		
 	}
 	

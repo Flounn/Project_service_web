@@ -14,21 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/BibliothequeImpl_Stub.java</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/bin/BibliothequeImpl_Stub.java</locationURI>
-		</link>
-		<link>
-			<name>src/LivreImpl_Stub.java</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/bin/LivreImpl_Stub.java</locationURI>
-		</link>
-		<link>
-			<name>src/PersonneImpl_Stub.java</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/bin/PersonneImpl_Stub.java</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>
