@@ -17,4 +17,6 @@ public interface Livre extends Remote{
 	boolean isDisponible() throws RemoteException;
 	void addToAttente(Personne p) throws RemoteException;
 	void enleveFromAttente(Personne p) throws RemoteException;
+	
+	
 }

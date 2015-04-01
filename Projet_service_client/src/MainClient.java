@@ -5,12 +5,12 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-public class Main {
+public class MainClient {
 
 	public static void main(String[] args) {
 		try {
 			System.setProperty("java.security.policy", "sec.policy");
-			System.setProperty("java.rmi.server.codebase", "file://F:/Eugen/Workspace/ServicesWebEx1_Server/bin/");
+			System.setProperty("java.rmi.server.codebase", "file://F:/Eugen/Workspace/Project_service_web/Projet_service_web/bin/");
 			System.setSecurityManager(new SecurityManager());
 				
 			Bibliotheque b =  (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
@@ -35,7 +35,13 @@ public class Main {
 			p.setNom("Tiganu");
 			p.setPrenom("Eugen");
 			p.setRole("Etudiant");
-			
+			livres = b.findByTitre("Fred et Mile");
+			Livre l=livres.get(0);
+			l.addToAttente(p);
+			System.out.println(p.getNom() + " " + p.getPrenom() + " a été rajouté à l'attente du " + l.remoteToString());
+			p.addLivre(l);
+			System.out.println(p.getNom() + " " + p.getPrenom() + " vient d'emprunter " 
+					+ p.getLivres().get(p.getLivres().size()-1).remoteToString());
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

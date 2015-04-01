@@ -6,18 +6,18 @@ import java.util.List;
 public class PersonneImpl extends UnicastRemoteObject implements Personne {
 
 	private static final long serialVersionUID = 1L;
-	long id;
-	String nom;
-	String prenom;
-	String role;
+	protected long id;
+	protected String nom;
+	protected String prenom;
+	protected String role;
 	/**
 	 * Les livres empruntés
 	 */
-	List<LivreImpl> livres;
+	protected List<Livre> livres;
 	
 	public PersonneImpl() throws RemoteException {
 		super();
-		livres = new ArrayList<LivreImpl>();
+		livres = new ArrayList<Livre>();
 	}
 
 	public PersonneImpl(long id, String role, String nom, String prenom) throws RemoteException {
@@ -26,7 +26,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.role = role; 
 		this.nom = nom;
 		this.prenom = prenom;
-		livres = new ArrayList<LivreImpl>();
+		livres = new ArrayList<Livre>();
 	}
 	
 	@Override
@@ -83,37 +83,43 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	 * @throws RemoteException
 	 */
 	@Override
-	public List<LivreImpl> getLivres() throws RemoteException  {
+	public List<Livre> getLivres() throws RemoteException  {
 		return livres;
 	}
 	/**
 	 * Rajoute un livre à liste des livres empruntés
 	 * @throws RemoteException
 	 */
-	/*@Override
-	public void addLivre(LivreImpl livre) throws RemoteException  {
+	@Override
+	public void addLivre(Livre livre) throws RemoteException  {
 		this.livres.add(livre);
-	}*/
+	}
 	/**
 	 * Enlève un livre de liste des livres empruntés. Appelle la methode qui 
 	 * prête le livre à la personne suivante sur la liste d'attente.
 	 * @throws RemoteException
 	 */
-	/*@Override
-	public void returnLivre(LivreImpl livre) throws RemoteException  {
+	@Override
+	public void returnLivre(Livre livre) throws RemoteException  {
 		this.livres.remove(livre);
 		if(livre.getAttente()!=null)
 			livre.enleveFromAttente(livre.getAttente().get(0));
-	}*/
+	}
 	/**
 	 * Notifie une personne que le livre souhaité est disponible et lui a été prété.
 	 * @param livre
 	 * @throws RemoteException
 	 */
 	/*@Override
-	public void notification(LivreImpl livre) throws RemoteException {
-		System.out.println(livre.toString() + " est désormais disponible "
+	public void notification(Livre livre) throws RemoteException {
+		System.out.println(livre.remoteToString() + " est désormais disponible "
 				+ "et vous attend. N'oubliez pas de venir le chercher");
 	}*/
+
+	@Override
+	public void notification(Livre livre) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

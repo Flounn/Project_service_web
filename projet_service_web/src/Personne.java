@@ -13,9 +13,9 @@ public interface Personne extends Remote{
 	void setId(long id) throws RemoteException;
 	String getRole() throws RemoteException;
 	void setRole(String role) throws RemoteException;
-	List<LivreImpl> getLivres() throws RemoteException;
-	//void addLivre(LivreImpl livre) throws RemoteException;
-	//void returnLivre(LivreImpl livre) throws RemoteException;
-	//void notification(LivreImpl livre) throws RemoteException;
+	List<Livre> getLivres() throws RemoteException;
+	void addLivre(Livre livre) throws RemoteException;
+	void returnLivre(Livre livre) throws RemoteException;
+	void notification(Livre livre) throws RemoteException;
 	
 }

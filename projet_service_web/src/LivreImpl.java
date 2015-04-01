@@ -8,17 +8,17 @@ import java.util.List;
 public class LivreImpl extends UnicastRemoteObject implements Livre {
 
 	private static final long serialVersionUID = 1L;
-	String titre;
-	String auteur;
-	long isbn;
+	protected String titre;
+	protected String auteur;
+	protected long isbn;
 	/**
 	 * Liste de personnes en attente du livre
 	 */
-	List<PersonneImpl> attente;
+	List<Personne> attente;
 	
 	public LivreImpl() throws RemoteException {
 		super();
-		attente = new ArrayList<PersonneImpl>();
+		attente = new ArrayList<Personne>();
 	}
 	
 	public LivreImpl(long isbn, String auteur, String titre) throws RemoteException {
@@ -26,16 +26,16 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		this.isbn = isbn; 
 		this.auteur = auteur;
 		this.titre = titre;
-		attente = new ArrayList<PersonneImpl>();
+		attente = new ArrayList<Personne>();
 	}
 	
 	@Override
-	public List<PersonneImpl> getAttente() throws RemoteException {
+	public List<Personne> getAttente() throws RemoteException {
 		return attente;
 	}
 	
 	@Override
-	public void setAttente(List<PersonneImpl> attente) throws RemoteException {
+	public void setAttente(List<Personne> attente) throws RemoteException {
 		this.attente = attente;
 	}
 	/**
@@ -52,20 +52,20 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	 * @param personne
 	 * @throws RemoteException
 	 */
-	/*@Override
-	public void addToAttente(PersonneImpl p) throws RemoteException {
+	@Override
+	public void addToAttente(Personne p) throws RemoteException {
 		if(!attente.contains(p)){
 			this.attente.add(p);
 		}		
-	}*/
+	}
 	/**
 	 * Enlève une personne de la liste d'attente. Notifie la 
 	 * personne suivante de la liste d'attente qu'on lui prête le livre
 	 * @param personne
 	 * @throws RemoteException
 	 */
-	/*@Override
-	public synchronized void enleveFromAttente(PersonneImpl p) throws RemoteException {
+	@Override
+	public synchronized void enleveFromAttente(Personne p) throws RemoteException {
 		if(attente.contains(p)){
 			if(attente.get(0).equals(p)){
 				p.addLivre(this);
@@ -73,7 +73,7 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 			}
 			this.attente.remove(p);
 		}
-	}*/
+	}
 	
 	@Override
 	public String toString() {

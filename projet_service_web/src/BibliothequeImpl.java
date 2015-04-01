@@ -23,8 +23,8 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public ArrayList<LivreImpl> findByAuteur(String auteur) throws RemoteException {
-		ArrayList<LivreImpl> result = new ArrayList<LivreImpl>();
+	public ArrayList<Livre> findByAuteur(String auteur) throws RemoteException {
+		ArrayList<Livre> result = new ArrayList<Livre>();
 		for (long key : bibliotheque.keySet()){
 			if (bibliotheque.get(key).getAuteur().equals(auteur))
 				result.add(bibliotheque.get(key));
@@ -33,8 +33,8 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public ArrayList<LivreImpl> findByTitre(String titre) throws RemoteException {
-		ArrayList<LivreImpl> result = new ArrayList<LivreImpl>();
+	public ArrayList<Livre> findByTitre(String titre) throws RemoteException {
+		ArrayList<Livre> result = new ArrayList<Livre>();
 		for (long key : bibliotheque.keySet()){
 			if (bibliotheque.get(key).getTitre().equals(titre))
 				result.add(bibliotheque.get(key));

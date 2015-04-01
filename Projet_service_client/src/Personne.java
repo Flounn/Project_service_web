@@ -1,8 +1,9 @@
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
 
-public interface Personne {
+public interface Personne extends Remote{
 
 	String getNom() throws RemoteException;
 	void setNom(String nom) throws RemoteException;
@@ -15,5 +16,6 @@ public interface Personne {
 	List<Livre> getLivres() throws RemoteException;
 	void addLivre(Livre livre) throws RemoteException;
 	void returnLivre(Livre livre) throws RemoteException;
+	void notification(Livre livre) throws RemoteException;
 	
 }
