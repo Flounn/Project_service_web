@@ -103,7 +103,7 @@ public class IHM extends JFrame implements ActionListener {
 			DicoUni dicoUni = (DicoUni) Naming.lookup("rmi://192.168.43.40:1099/DicoUniService");
 			dico.add(add);
 			dicoUni.add(add.getTitre(), add.getAuteur(), add.getISBN());
-			System.out.println("livre ajout� :"+add);
+			System.out.println("livre ajouté :"+add);
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

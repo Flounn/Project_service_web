@@ -1,4 +1,4 @@
-package fr.dauphine.ihm;
+
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +14,6 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-import fr.dauphine.services.Dico;
-import fr.dauphine.services.DicoUni;
-import fr.dauphine.services.Livre;
 
 
 public class IHM extends JFrame implements ActionListener {
@@ -31,7 +28,7 @@ public class IHM extends JFrame implements ActionListener {
 		super();
 		
 		this.resize(800, 600);
-		this.setTitle("Bibliothèque");
+		this.setTitle("Bibliothï¿½que");
 		
 		textField = new JTextField();
 		textField.setColumns(10);
@@ -100,16 +97,10 @@ public class IHM extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Livre add = new Livre ();
-		add.setTitre(textField.getText());
-		add.setAuteur(textField_1.getText());
-		add.setISBN(new Long(textField_2.getText()));
 		try {
-			Dico dico = (Dico) Naming.lookup("rmi://192.168.43.40:1099/DicoService");
-			DicoUni dicoUni = (DicoUni) Naming.lookup("rmi://192.168.43.40:1099/DicoUniService");
-			dico.add(add);
-			dicoUni.add(add.getTitre(), add.getAuteur(), add.getISBN());
-			System.out.println("livre ajoutï¿½ :"+add);
+			Bibliotheque dico = (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
+			dico.add(new Long(textField_2.getText()), textField.getText(), textField_1.getText());
+			System.out.println("livre ajoutÃ©");
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
