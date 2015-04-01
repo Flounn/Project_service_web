@@ -1,0 +1,5 @@
+cd F:\Eugen\Workspace\Project_service_web\projet_service_web\bin
+rmic -keep BibliothequeImpl
+rmic -keep LivreImpl
+rmic -keep PersonneImpl
+rmiregistry
