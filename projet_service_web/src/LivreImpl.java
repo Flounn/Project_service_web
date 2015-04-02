@@ -10,42 +10,39 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	private static final long serialVersionUID = 1L;
 	protected String titre;
 	protected String auteur;
-	protected long isbn;
+	protected long numero;
+	protected String isbn;
+	protected List<String> commentaires;
+	protected boolean disponible=true;
+
 	/**
 	 * Liste de personnes en attente du livre
 	 */
-	List<Personne> attente;
-	
+	protected List<Personne> attente;
+
 	public LivreImpl() throws RemoteException {
 		super();
 		attente = new ArrayList<Personne>();
+		commentaires = new ArrayList<String>();
 	}
-	
-	public LivreImpl(long isbn, String auteur, String titre) throws RemoteException {
+
+	public LivreImpl(String isbn, String auteur, String titre) throws RemoteException {
 		super();
 		this.isbn = isbn; 
 		this.auteur = auteur;
 		this.titre = titre;
 		attente = new ArrayList<Personne>();
+		commentaires = new ArrayList<String>();
 	}
-	
+
 	@Override
 	public List<Personne> getAttente() throws RemoteException {
 		return attente;
 	}
-	
+
 	@Override
 	public void setAttente(List<Personne> attente) throws RemoteException {
 		this.attente = attente;
-	}
-	/**
-	 * 
-	 * @return vrai, si le livre est disponible (Si la liste d'attente est vide)
-	 * @throws RemoteException
-	 */
-	@Override
-	public boolean isDisponible() throws RemoteException {
-		return attente!=null;
 	}
 	/**
 	 * Rajoute une personne à la liste d'attente
@@ -55,11 +52,14 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	@Override
 	public void addToAttente(Personne p) throws RemoteException {
 		if(!attente.contains(p)){
+			System.out.println(p.remoteToString() 
+					+ " a ete mis en attente pour " + this.remoteToString());
 			this.attente.add(p);
+			p.addEnAttente(this);
 		}		
 	}
 	/**
-	 * Enlève une personne de la liste d'attente. Notifie la 
+	 * Enleve une personne de la liste d'attente. Notifie la 
 	 * personne suivante de la liste d'attente qu'on lui prête le livre
 	 * @param personne
 	 * @throws RemoteException
@@ -67,23 +67,26 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	@Override
 	public synchronized void enleveFromAttente(Personne p) throws RemoteException {
 		if(attente.contains(p)){
-			if(attente.get(0).equals(p)){
-				p.addLivre(this);
-				p.notification(this);
-			}
 			this.attente.remove(p);
+			p.delEnAttente(this);
 		}
 	}
-	
+	@Override
+	public synchronized void passerAuSuivant(Personne p) throws RemoteException {
+		this.attente.remove(p);
+		p.addLivre(this);
+		p.notification(this);
+	}
+
 	@Override
 	public String toString() {
 		return "Livre [ISBN=" + isbn + ", titre=" + titre + ", auteur="
 				+ auteur + "]";
 	}
-	
+
 	@Override
 	public String remoteToString() throws RemoteException{
-		return "Livre [ISBN=" + isbn + ", titre=" + titre + ", auteur="
+		return "Livre [ID=" + numero + ", ISBN=" + isbn + ", titre=" + titre + ", auteur="
 				+ auteur + "]";
 	}
 	@Override
@@ -93,7 +96,7 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		if (!(obj instanceof LivreImpl))
 			return false;
 		LivreImpl temp = (LivreImpl) obj;
-		return temp.auteur==auteur&&temp.isbn==isbn&&temp.titre==titre;
+		return temp.auteur==auteur&&temp.isbn==isbn&&temp.titre==titre&&temp.numero==numero;
 	}
 	@Override
 	public boolean remoteEquals(Object obj) throws RemoteException {
@@ -104,7 +107,7 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		LivreImpl temp = (LivreImpl) obj;
 		return temp.auteur==auteur&&temp.isbn==isbn&&temp.titre==titre;
 	}
-	
+
 	@Override
 	public String getTitre() throws RemoteException {
 		return titre;
@@ -120,20 +123,39 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	@Override
 	public void setAuteur(String auteur) throws RemoteException {
 		this.auteur = auteur;
-		
+
 	}
 	@Override
-	public long getIsbn() throws RemoteException {
+	public long getNumero() throws RemoteException  {
+		return numero;
+	}
+	@Override
+	public void setNumero(long numero) throws RemoteException  {
+		this.numero = numero;
+	}
+	@Override
+	public String getIsbn() throws RemoteException {
 		return isbn;
 	}
 	@Override
-	public void setIsbn(long isbn) throws RemoteException {
+	public void setIsbn(String isbn) throws RemoteException {
 		this.isbn=isbn;
 	}
+	@Override
+	public List<String> getCommentaires() throws RemoteException  {
+		return commentaires;
+	}
+	@Override
+	public void addCommentaire(String commentaire) throws RemoteException  {
+		this.commentaires.add(commentaire);
+	}
+	@Override
+	public boolean isDisponible() throws RemoteException  {
+		return disponible;
+	}
+	@Override
+	public void setDisponible(boolean disponible) throws RemoteException  {
+		this.disponible = disponible;
+	}
 
-
-
-
-	
-	
 }

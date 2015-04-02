@@ -23,13 +23,5 @@ public interface Personne extends Remote{
 	void setMdp(String mdp) throws RemoteException;
 	String remoteToString() throws RemoteException;
 	boolean remoteEquals(Object obj) throws RemoteException;
-	List<String> getNotifications() throws RemoteException;
-	void addNotification(String notification) throws RemoteException;
-	void delNotification(int i) throws RemoteException;
-	void delAllNotifications() throws RemoteException;
-	List<Livre> getEnAttente() throws RemoteException;
-	void addEnAttente(Livre l) throws RemoteException;
-	void delEnAttente(Livre l) throws RemoteException;
-	void delAllEnAttente() throws RemoteException;
 	
 }

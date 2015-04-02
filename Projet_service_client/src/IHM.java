@@ -99,7 +99,7 @@ public class IHM extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			Bibliotheque dico = (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
-			dico.add(new Long(textField_2.getText()), textField.getText(), textField_1.getText());
+			dico.addLivre(textField_2.getText(), textField.getText(), textField_1.getText());
 			System.out.println("livre ajouté");
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block

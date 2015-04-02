@@ -12,14 +12,31 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 	 */
 	private static final long serialVersionUID = 1L;
 	private final HashMap<Long, LivreImpl> bibliotheque = new HashMap<Long, LivreImpl>();
+	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
+	private long compteurLivre=0;
+	private long compteurPersonne=0;
 
 	public BibliothequeImpl() throws RemoteException {
-		super();
+		super();		
 	}
 
+	public long getCompteurLivre() {
+		return compteurLivre;
+	}
+
+	public long getCompteurPersonne() {
+		return compteurPersonne;
+	}
+	/**
+	 * Supprime le livre de la base
+	 */
 	@Override
-	public boolean del(long ISBN) throws RemoteException {
-		return bibliotheque.remove(ISBN) != null;
+	public boolean delLivre(Livre livre) throws RemoteException {
+		if(bibliotheque.containsKey(livre.getNumero())){
+			System.out.println(livre.remoteToString() +" vient d'etre supprime de la base");
+			return bibliotheque.remove(livre.getNumero()) != null;
+		}
+		return false;
 	}
 
 	@Override
@@ -41,15 +58,55 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 		}
 		return result.size()>0?result:null;
 	}
-
+	/**
+	 * Ajoute un livre a la base
+	 */
 	@Override
-	public boolean add(long isbn, String auteur, String titre) throws RemoteException {
+	public boolean addLivre(String isbn, String auteur, String titre) throws RemoteException {
 		LivreImpl livre = new LivreImpl();
 		livre.setAuteur(auteur);
 		livre.setIsbn(isbn);
 		livre.setTitre(titre);
-		return bibliotheque.put(isbn, livre) != null;
-	
+		livre.setNumero(compteurLivre);
+		compteurLivre++;
+		System.out.println(livre.remoteToString() +" vient d'etre ajoute a la base");
+		return bibliotheque.put(livre.getNumero(), livre) != null;
 	}
-
+	/**
+	 * Ajoute une personne a la base
+	 */
+	@Override
+	public boolean addPersonne(Personne personne) throws RemoteException {
+		if(findByEmail(personne.getEmail())==null){
+			personne.setId(compteurPersonne);
+			compteurPersonne++;
+			System.out.println(personne.remoteToString() +" vient d'etre ajoute a la base");
+			return annuaire.put(personne.getId(), personne) != null;
+		}
+		System.out.println("Une personne avec le mail: " + personne.getEmail() 
+				+ " existe deja dans la base");
+		return false;
+	}
+	/**
+	 * Supprime une personne de la base
+	 */
+	@Override
+	public boolean delPersonne(Personne personne) throws RemoteException {
+		if(annuaire.containsKey(personne.getId())){
+			System.out.println(personne.remoteToString() +" vient d'etre supprime de la base");
+		}
+			return bibliotheque.remove(personne.getId()) != null;
+		
+	}
+	/**
+	 * @return Trouve une personne par son email
+	 */
+	@Override
+	public Personne findByEmail(String email) throws RemoteException {
+		for (long key : annuaire.keySet()){
+			if (annuaire.get(key).getEmail().equals(email))
+				return annuaire.get(key);
+		}
+		return null;
+	}
 }
