@@ -1,10 +1,9 @@
 package fr.dauphine.beans;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -25,11 +24,11 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 
 	public BibliothequeImpl() throws RemoteException {
 		super();
-		try {
+		/*try {
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 
@@ -74,19 +73,24 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	/**
 	 * Ajoute un livre a la base
 	 */
-	@Override
+	//@Override
 	public boolean addLivre(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
 		LivreImpl livre = new LivreImpl();
 		livre.setAuteur(auteur);
 		livre.setIsbn(isbn);
 		livre.setTitre(titre);
 		livre.setPrixEuros(prixEuros);
-		livre.setDateAjout(dateAjout);
+		if (dateAjout==null)
+			livre.setDateAjout(Calendar.getInstance().getTime());
+		else	
+			livre.setDateAjout(dateAjout);
 		livre.setNumero(compteurLivre);
 		compteurLivre++;
+		bibliotheque.put(livre.getNumero(), livre);
 		System.out.println(livre.remoteToString() +" vient d'etre ajoute a la base");
-		return bibliotheque.put(livre.getNumero(), livre) != null;
+		return true;
 	}
+	
 	/**
 	 * Ajoute une personne a la base
 	 */
@@ -128,7 +132,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	/**
 	 * @return achete les livres passes en parametre
 	 */
-	@Override
+
 	public boolean acheter(LivreService[] livres) throws RemoteException {
 		if (livres==null)
 			throw new NullPointerException();
@@ -140,7 +144,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		}*/
 		return true;
 	}
-	@Override
+
 	public LivreService[] getLivresCanSell() throws RemoteException {
 		ArrayList<LivreService> livres = new ArrayList<LivreService>();
 		for (Entry<Long, Livre> e : bibliotheque.entrySet()){
@@ -149,6 +153,11 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		}
 
 		return livres.toArray(new LivreService[livres.size()]);
+	}
+
+	@Override
+	public Livre[] getLivres() throws RemoteException {
+		return bibliotheque.values().toArray(new Livre[bibliotheque.size()]);
 	}
 	
 }

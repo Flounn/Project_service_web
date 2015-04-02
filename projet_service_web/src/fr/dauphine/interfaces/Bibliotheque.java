@@ -4,8 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Date;
 
-import fr.dauphine.beans.LivreService;
-
 public interface Bibliotheque extends Remote{
 
 	boolean addLivre(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException;
@@ -15,7 +13,6 @@ public interface Bibliotheque extends Remote{
 	boolean addPersonne(Personne personne) throws RemoteException;
 	boolean delPersonne(Personne personne) throws RemoteException;
 	Personne findByEmail(String email) throws RemoteException;
-	boolean acheter(LivreService[] livres) throws RemoteException;
-	LivreService[] getLivresCanSell() throws RemoteException;
+	Livre[] getLivres() throws RemoteException;
 
 }
