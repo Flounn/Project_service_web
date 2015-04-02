@@ -1,8 +1,10 @@
-package fr.dauphine.beans;
+package fr.dauphine.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Date;
+
+import fr.dauphine.beans.LivreService;
 
 public interface Bibliotheque extends Remote{
 

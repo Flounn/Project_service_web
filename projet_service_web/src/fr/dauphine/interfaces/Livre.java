@@ -1,4 +1,4 @@
-package fr.dauphine.beans;
+package fr.dauphine.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

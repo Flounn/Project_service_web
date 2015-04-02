@@ -127,8 +127,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	 * @throws RemoteException
 	 */
 	@Override
-	public List<Livre> getLivres() throws RemoteException  {
-		return livres;
+	public Livre[] getLivres() throws RemoteException  {
+		return livres.toArray(new Livre[livres.size()]);
 	}
 	/**
 	 * Rajoute un livre a liste des livres empruntes si celui-ci est disponible
@@ -160,7 +160,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 				+ this.remoteToString());
 		livre.setDisponible(true);
 		if(livre.getAttente()!=null)
-			livre.passerAuSuivant(livre.getAttente().get(0));
+			livre.passerAuSuivant(livre.getAttente()[0]);
 	}
 
 	/**
@@ -176,8 +176,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.addNotification(notification);
 	}
 	@Override
-	public List<String> getNotifications() throws RemoteException {
-		return notifications;
+	public String[] getNotifications() throws RemoteException {
+		return notifications.toArray(new String[notifications.size()]);
 	}
 	@Override
 	public void addNotification(String notification) throws RemoteException {
@@ -192,8 +192,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.notifications.clear();
 	}
 	@Override
-	public List<Livre> getEnAttente() throws RemoteException {
-		return enAttente;
+	public Livre[] getEnAttente() throws RemoteException {
+		return enAttente.toArray(new Livre[enAttente.size()]);
 	}
 	@Override
 	public void addEnAttente(Livre l) throws RemoteException {

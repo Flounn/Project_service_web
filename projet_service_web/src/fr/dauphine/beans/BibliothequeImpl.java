@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import fr.dauphine.interfaces.Bibliotheque;
+import fr.dauphine.interfaces.Livre;
+import fr.dauphine.interfaces.Personne;
+
 
 public class BibliothequeImpl extends UnicastRemoteObject implements Bibliotheque {
 
