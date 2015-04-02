@@ -1,8 +1,13 @@
+package fr.dauphine.beans;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import fr.dauphine.interfaces.Bibliotheque;
+import fr.dauphine.interfaces.Livre;
+import fr.dauphine.interfaces.Personne;
 
 
 public class BibliothequeImpl extends UnicastRemoteObject implements

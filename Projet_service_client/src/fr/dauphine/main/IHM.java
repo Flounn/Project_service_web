@@ -1,3 +1,4 @@
+package fr.dauphine.main;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
+import fr.dauphine.interfaces.Bibliotheque;
 
 
 

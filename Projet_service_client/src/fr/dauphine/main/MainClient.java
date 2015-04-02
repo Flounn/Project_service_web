@@ -1,3 +1,4 @@
+package fr.dauphine.main;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -7,6 +8,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import fr.dauphine.beans.PersonneImpl;
+import fr.dauphine.interfaces.Bibliotheque;
+import fr.dauphine.interfaces.Livre;
+import fr.dauphine.interfaces.Personne;
 
 
 public class MainClient {

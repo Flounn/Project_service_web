@@ -1,7 +1,11 @@
+package fr.dauphine.beans;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import fr.dauphine.interfaces.Livre;
+import fr.dauphine.interfaces.Personne;
 
 public class PersonneImpl extends UnicastRemoteObject implements Personne {
 

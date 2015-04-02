@@ -1,5 +1,8 @@
+package fr.dauphine.main;
 
 import java.rmi.Naming;
+
+import fr.dauphine.beans.BibliothequeImpl;
 
 /**
  * 
