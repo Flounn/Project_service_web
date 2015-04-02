@@ -128,12 +128,12 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	public boolean acheter(LivreService[] livres) throws RemoteException {
 		if (livres==null)
 			throw new NullPointerException();
-		for (Livre livre : livres){
+		/*for (Livre livre : livres){
 			if (delLivre(livre))
 				System.out.println(livre.remoteToString() +" vient d'etre achete.");
 			else
 				System.out.println(livre.remoteToString() +" n'a pu etre achete.");
-		}
+		}*/
 		return true;
 	}
 	@Override
