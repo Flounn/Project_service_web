@@ -1,27 +1,27 @@
-package fr.dauphine.interfaces;
+package fr.dauphine.beans;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Date;
-import java.util.List;
 
 
 public interface Livre extends Remote{
+
 	String remoteToString() throws RemoteException;
 	boolean remoteEquals(Object obj) throws RemoteException;
-	public String getTitre() throws RemoteException;
-	public void setTitre(String titre) throws RemoteException;
-	public String getAuteur() throws RemoteException;
-	public void setAuteur(String auteur) throws RemoteException;
+	String getTitre() throws RemoteException;
+	void setTitre(String titre) throws RemoteException;
+	String getAuteur() throws RemoteException;
+	void setAuteur(String auteur) throws RemoteException;
 	long getNumero() throws RemoteException;
 	void setNumero(long numero) throws RemoteException;
-	public String getIsbn() throws RemoteException;
-	public void setIsbn(String isbn) throws RemoteException;
-	void setAttente(List<Personne> attente) throws RemoteException ;
-	List<Personne> getAttente() throws RemoteException ;
+	String getIsbn() throws RemoteException;
+	void setIsbn(String isbn) throws RemoteException;
+	Personne[] getAttente() throws RemoteException ;
 	boolean isDisponible() throws RemoteException;
 	void addToAttente(Personne p) throws RemoteException;
 	void enleveFromAttente(Personne p) throws RemoteException;
-	List<String> getCommentaires() throws RemoteException;
+	String[] getCommentaires() throws RemoteException;
 	void addCommentaire(String commentaire) throws RemoteException;
 	void setDisponible(boolean disponible) throws RemoteException;
 	void passerAuSuivant(Personne p) throws RemoteException;
@@ -31,7 +31,9 @@ public interface Livre extends Remote{
 	void setPrixEuros(double prixEuros) throws RemoteException;
 	Date getDateAjout() throws RemoteException;
 	void setDateAjout(Date dateAjout) throws RemoteException;
+	void addNote(int note) throws RemoteException;
+	Integer[] getNotes() throws RemoteException;
+	double getMoyenneNotes() throws RemoteException;
+	boolean canSell() throws RemoteException;
 
-	
-	
 }

@@ -1,4 +1,5 @@
 package fr.dauphine.main;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -7,12 +8,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import fr.dauphine.beans.PersonneImpl;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
+import fr.dauphine.interfaces.Personne.Role;
 
 
 public class MainClient {
@@ -60,7 +61,7 @@ public class MainClient {
 			Personne p = (Personne) new PersonneImpl();
 			p.setNom("Tiganu");
 			p.setPrenom("Eugen");
-			p.setRole("Etudiant");
+			p.setRole(Role.Etudiant);
 			p.setEmail("eugen.tiganu@gmail.com");
 			p.setMdp("Eugen");
 			
@@ -69,7 +70,7 @@ public class MainClient {
 			Personne p2 = (Personne) new PersonneImpl();
 			p2.setNom("Lestic");
 			p2.setPrenom("Florian");
-			p2.setRole("Etudiant");
+			p2.setRole(Role.Etudiant);
 			p2.setEmail("florian.lestic@gmail.com");
 			p2.setMdp("Florian");
 			
@@ -78,7 +79,7 @@ public class MainClient {
 			Personne p3 = (Personne) new PersonneImpl();
 			p3.setNom("Hollande");
 			p3.setPrenom("Francois");
-			p3.setRole("Etudiant");
+			p3.setRole(Role.Etudiant);
 			p3.setEmail("francois.hollande@gmail.com");
 			p3.setMdp("Francois");
 			
@@ -87,7 +88,7 @@ public class MainClient {
 			Personne p4 = (Personne) new PersonneImpl();
 			p4.setNom("Eugen");
 			p4.setPrenom("Herve");
-			p4.setRole("Enseignant");
+			p4.setRole(Role.Enseignant);
 			p4.setEmail("eugen.tiganu@gmail.com");
 			p4.setMdp("Eugen");
 			

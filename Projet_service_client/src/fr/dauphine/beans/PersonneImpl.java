@@ -10,14 +10,14 @@ import fr.dauphine.interfaces.Personne;
 public class PersonneImpl extends UnicastRemoteObject implements Personne {
 
 	private static final long serialVersionUID = 1L;
-	protected long id;
-	protected String nom;
-	protected String prenom;
-	protected String role;
-	protected String email;
-	protected String mdp;
-	protected List<String> notifications;
-	protected List<Livre> enAttente;
+	private long id;
+	private String nom;
+	private String prenom;
+	private Role role;
+	private String email;
+	private String mdp;
+	private List<String> notifications;
+	private List<Livre> enAttente;
 
 
 	/**
@@ -32,9 +32,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		enAttente = new ArrayList<Livre>();
 	}
 
-	public PersonneImpl(String role, String nom, String prenom, String email, String mdp) throws RemoteException {
+	public PersonneImpl(Role role, String nom, String prenom, String email, String mdp) throws RemoteException {
 		super();
-		this.id = 0; 
 		this.role = role; 
 		this.nom = nom;
 		this.prenom = prenom;
@@ -91,11 +90,11 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		
 	}
 	@Override
-	public String getRole() throws RemoteException {
+	public Role getRole() throws RemoteException {
 		return role;
 	}
 	@Override
-	public void setRole(String role) throws RemoteException {
+	public void setRole(Role role) throws RemoteException {
 		this.role = role;
 	}
 	@Override

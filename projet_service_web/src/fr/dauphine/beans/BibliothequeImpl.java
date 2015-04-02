@@ -1,29 +1,32 @@
 package fr.dauphine.beans;
+
+import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
-import fr.dauphine.interfaces.Bibliotheque;
-import fr.dauphine.interfaces.Livre;
-import fr.dauphine.interfaces.Personne;
+import java.util.Map.Entry;
 
 
-public class BibliothequeImpl extends UnicastRemoteObject implements
-		Bibliotheque {
+public class BibliothequeImpl extends UnicastRemoteObject implements Bibliotheque {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private final HashMap<Long, LivreImpl> bibliotheque = new HashMap<Long, LivreImpl>();
+	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
 	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
-	private long compteurLivre=0;
-	private long compteurPersonne=0;
+	private long compteurLivre;
+	private long compteurPersonne;
+
 
 	public BibliothequeImpl() throws RemoteException {
-		super();		
+		super();
+		try {
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public long getCompteurLivre() {
@@ -46,23 +49,23 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 	}
 
 	@Override
-	public ArrayList<Livre> findByAuteur(String auteur) throws RemoteException {
+	public Livre[] findByAuteur(String auteur) throws RemoteException {
 		ArrayList<Livre> result = new ArrayList<Livre>();
 		for (long key : bibliotheque.keySet()){
 			if (bibliotheque.get(key).getAuteur().equals(auteur))
 				result.add(bibliotheque.get(key));
 		}
-		return result.size()>0?result:null;
+		return result.size()>0?result.toArray(new Livre[result.size()]):null;
 	}
 
 	@Override
-	public ArrayList<Livre> findByTitre(String titre) throws RemoteException {
+	public Livre[] findByTitre(String titre) throws RemoteException {
 		ArrayList<Livre> result = new ArrayList<Livre>();
 		for (long key : bibliotheque.keySet()){
 			if (bibliotheque.get(key).getTitre().equals(titre))
 				result.add(bibliotheque.get(key));
 		}
-		return result.size()>0?result:null;
+		return result.size()>0?result.toArray(new Livre[result.size()]):null;
 	}
 	/**
 	 * Ajoute un livre a la base
@@ -103,8 +106,8 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 		if(annuaire.containsKey(personne.getId())){
 			System.out.println(personne.remoteToString() +" vient d'etre supprime de la base");
 		}
-			return bibliotheque.remove(personne.getId()) != null;
-		
+		return bibliotheque.remove(personne.getId()) != null;
+
 	}
 	/**
 	 * @return Trouve une personne par son email
@@ -117,4 +120,31 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 		}
 		return null;
 	}
+
+	/**
+	 * @return achete les livres passes en parametre
+	 */
+	@Override
+	public boolean acheter(LivreService[] livres) throws RemoteException {
+		if (livres==null)
+			throw new NullPointerException();
+		for (Livre livre : livres){
+			if (delLivre(livre))
+				System.out.println(livre.remoteToString() +" vient d'etre achete.");
+			else
+				System.out.println(livre.remoteToString() +" n'a pu etre achete.");
+		}
+		return true;
+	}
+	@Override
+	public LivreService[] getLivresCanSell() throws RemoteException {
+		ArrayList<LivreService> livres = new ArrayList<LivreService>();
+		for (Entry<Long, Livre> e : bibliotheque.entrySet()){
+			if (e.getValue().canSell())
+				livres.add(new LivreService(e.getValue()));
+		}
+
+		return livres.toArray(new LivreService[livres.size()]);
+	}
+	
 }

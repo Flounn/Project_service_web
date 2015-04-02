@@ -1,9 +1,11 @@
+package fr.dauphine.beans;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
-
 
 public interface Personne extends Remote{
+
+	public enum Role {Enseignant,Etudiant}
 
 	String getNom() throws RemoteException;
 	void setNom(String nom) throws RemoteException;
@@ -11,9 +13,9 @@ public interface Personne extends Remote{
 	void setPrenom(String prenom) throws RemoteException;
 	long getId() throws RemoteException;
 	void setId(long id) throws RemoteException;
-	String getRole() throws RemoteException;
-	void setRole(String role) throws RemoteException;
-	List<Livre> getLivres() throws RemoteException;
+	Role getRole() throws RemoteException;
+	void setRole(Role role) throws RemoteException;
+	Livre[] getLivres() throws RemoteException;
 	void addLivre(Livre livre) throws RemoteException;
 	void returnLivre(Livre livre) throws RemoteException;
 	void notification(Livre livre) throws RemoteException;
@@ -23,5 +25,13 @@ public interface Personne extends Remote{
 	void setMdp(String mdp) throws RemoteException;
 	String remoteToString() throws RemoteException;
 	boolean remoteEquals(Object obj) throws RemoteException;
-	
+	String[] getNotifications() throws RemoteException;
+	void addNotification(String notification) throws RemoteException;
+	void delNotification(int i) throws RemoteException;
+	void delAllNotifications() throws RemoteException;
+	Livre[] getEnAttente() throws RemoteException;
+	void addEnAttente(Livre l) throws RemoteException;
+	void delEnAttente(Livre l) throws RemoteException;
+	void delAllEnAttente() throws RemoteException;
+
 }

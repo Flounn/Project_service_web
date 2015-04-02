@@ -1,16 +1,15 @@
 package fr.dauphine.beans;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 
-public class LivreImpl extends UnicastRemoteObject implements Livre {
+public class LivreService implements Livre {
 
-	private static final long serialVersionUID = 1L;
 	private String titre;
 	private String auteur;
 	private long numero;
@@ -20,19 +19,28 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	private List<String> commentaires = new ArrayList<String>();
 	private List<Integer> notes = new ArrayList<Integer>();
 	private boolean disponible=true;
-	private long compteurPrets=0;
+	private long compteurPrets;
 
-
-	/**
-	 * Liste de personnes en attente du livre
-	 */
 	private List<Personne> attente = new ArrayList<Personne>();
 
-	public LivreImpl() throws RemoteException {
-		super();
+
+	public LivreService(){}
+	
+	public LivreService(Livre livre) throws RemoteException {
+		titre=livre.getTitre();
+		auteur=livre.getAuteur();
+		numero=livre.getNumero();
+		isbn=livre.getIsbn();
+		prixEuros=livre.getPrixEuros();
+		dateAjout=livre.getDateAjout();
+		commentaires=Arrays.asList(livre.getCommentaires());
+		notes=Arrays.asList(livre.getNotes());
+		disponible=livre.isDisponible();
+		compteurPrets=livre.getCompteurPrets();
+		attente=Arrays.asList(livre.getAttente());
 	}
 
-	public LivreImpl(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
+	public LivreService(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
 		super();
 		this.isbn = isbn; 
 		this.auteur = auteur;
@@ -41,43 +49,9 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		this.dateAjout = dateAjout;
 	}
 
-	@Override
+
 	public Personne[] getAttente() throws RemoteException {
 		return attente.toArray(new Personne[attente.size()]);
-	}
-
-	/**
-	 * Rajoute une personne à la liste d'attente
-	 * @param personne
-	 * @throws RemoteException
-	 */
-	@Override
-	public void addToAttente(Personne p) throws RemoteException {
-		if(!attente.contains(p)){
-			System.out.println(p.remoteToString() 
-					+ " a ete mis en attente pour " + this.remoteToString());
-			this.attente.add(p);
-			p.addEnAttente(this);
-		}		
-	}
-	/**
-	 * Enleve une personne de la liste d'attente. Notifie la 
-	 * personne suivante de la liste d'attente qu'on lui prête le livre
-	 * @param personne
-	 * @throws RemoteException
-	 */
-	@Override
-	public synchronized void enleveFromAttente(Personne p) throws RemoteException {
-		if(attente.contains(p)){
-			this.attente.remove(p);
-			p.delEnAttente(this);
-		}
-	}
-	@Override
-	public synchronized void passerAuSuivant(Personne p) throws RemoteException {
-		this.attente.remove(p);
-		p.addLivre(this);
-		p.notification(this);
 	}
 
 	@Override
@@ -91,29 +65,33 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		return "Livre [ID=" + numero + ", ISBN=" + isbn + ", titre=" + titre + ", auteur="
 				+ auteur + "]";
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj==this)
 			return true;
-		if (!(obj instanceof LivreImpl))
+		if (!(obj instanceof LivreService))
 			return false;
-		LivreImpl temp = (LivreImpl) obj;
+		LivreService temp = (LivreService) obj;
 		return temp.auteur==auteur&&temp.isbn==isbn&&temp.titre==titre&&temp.numero==numero;
 	}
+
 	@Override
 	public boolean remoteEquals(Object obj) throws RemoteException {
 		if (obj==this)
 			return true;
-		if (!(obj instanceof LivreImpl))
+		if (!(obj instanceof LivreService))
 			return false;
-		LivreImpl temp = (LivreImpl) obj;
+		LivreService temp = (LivreService) obj;
 		return temp.auteur==auteur&&temp.isbn==isbn&&temp.titre==titre;
 	}
+
 
 	@Override
 	public String getTitre() throws RemoteException {
 		return titre;
 	}
+
 	@Override
 	public void setTitre(String titre) throws RemoteException {
 		this.titre = titre;
@@ -209,7 +187,6 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 
 		return result;
 	}
-
 	@Override
 	public boolean canSell() throws RemoteException{
 		long diff = Calendar.getInstance().getTimeInMillis()-dateAjout.getTime();
@@ -217,6 +194,24 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		if (compteurPrets>1&&diff>twoyears/*&&isDisponible()*/)
 			return true;
 		return false;
+	}
+
+
+	@Override
+	public void addToAttente(Personne p) throws RemoteException {
+
+	}
+
+
+	@Override
+	public void enleveFromAttente(Personne p) throws RemoteException {
+
+	}
+
+
+	@Override
+	public void passerAuSuivant(Personne p) throws RemoteException {
+
 	}
 
 
