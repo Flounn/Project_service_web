@@ -1,5 +1,6 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,6 +24,12 @@ public interface Livre extends Remote{
 	void addCommentaire(String commentaire) throws RemoteException;
 	void setDisponible(boolean disponible) throws RemoteException;
 	void passerAuSuivant(Personne p) throws RemoteException;
+	long getCompteurPrets() throws RemoteException;
+	void setCompteurPrets(long compteurPrets) throws RemoteException;
+	double getPrixEuros() throws RemoteException;
+	void setPrixEuros(double prixEuros) throws RemoteException;
+	Date getDateAjout() throws RemoteException;
+	void setDateAjout(Date dateAjout) throws RemoteException;
 
 	
 	

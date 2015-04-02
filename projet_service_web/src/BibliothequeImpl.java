@@ -1,6 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -62,11 +63,13 @@ public class BibliothequeImpl extends UnicastRemoteObject implements
 	 * Ajoute un livre a la base
 	 */
 	@Override
-	public boolean addLivre(String isbn, String auteur, String titre) throws RemoteException {
+	public boolean addLivre(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
 		LivreImpl livre = new LivreImpl();
 		livre.setAuteur(auteur);
 		livre.setIsbn(isbn);
 		livre.setTitre(titre);
+		livre.setPrixEuros(prixEuros);
+		livre.setDateAjout(dateAjout);
 		livre.setNumero(compteurLivre);
 		compteurLivre++;
 		System.out.println(livre.remoteToString() +" vient d'etre ajoute a la base");

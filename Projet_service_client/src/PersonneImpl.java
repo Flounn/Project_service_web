@@ -138,6 +138,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 					+ this.remoteToString());
 			this.livres.add(livre);
 			livre.setDisponible(false);
+			livre.setCompteurPrets(livre.getCompteurPrets()+1);
 		} else {
 			System.out.println(livre.remoteToString() + 
 					" n'est pas disponible est ne peut pas etre emprunté");

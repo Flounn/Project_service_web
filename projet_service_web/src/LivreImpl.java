@@ -2,6 +2,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -12,8 +13,12 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	protected String auteur;
 	protected long numero;
 	protected String isbn;
+	protected double prixEuros;
+	protected Date dateAjout;
 	protected List<String> commentaires;
 	protected boolean disponible=true;
+	protected long compteurPrets=0;
+	
 
 	/**
 	 * Liste de personnes en attente du livre
@@ -26,11 +31,13 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		commentaires = new ArrayList<String>();
 	}
 
-	public LivreImpl(String isbn, String auteur, String titre) throws RemoteException {
+	public LivreImpl(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
 		super();
 		this.isbn = isbn; 
 		this.auteur = auteur;
 		this.titre = titre;
+		this.prixEuros = prixEuros;
+		this.dateAjout = dateAjout;
 		attente = new ArrayList<Personne>();
 		commentaires = new ArrayList<String>();
 	}
@@ -157,5 +164,30 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	public void setDisponible(boolean disponible) throws RemoteException  {
 		this.disponible = disponible;
 	}
-
+	@Override
+	public long getCompteurPrets() throws RemoteException{
+		return compteurPrets;
+	}
+	@Override
+	public void setCompteurPrets(long compteurPrets) throws RemoteException{
+		this.compteurPrets = compteurPrets;
+	}
+	@Override
+	public double getPrixEuros() throws RemoteException {
+		return prixEuros;
+	}
+	@Override
+	public void setPrixEuros(double prixEuros) throws RemoteException {
+		this.prixEuros = prixEuros;
+	}
+	@Override
+	public Date getDateAjout() throws RemoteException {
+		return dateAjout;
+	}
+	@Override
+	public void setDateAjout(Date dateAjout) throws RemoteException {
+		this.dateAjout = dateAjout;
+	}
+	
+	
 }
