@@ -150,7 +150,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	}
 	/**
 	 * Enlève un livre de liste des livres empruntees. Appelle la methode qui 
-	 * prête le livre a� la personne suivante sur la liste d'attente.
+	 * prête le livre a la personne suivante sur la liste d'attente.
 	 * @throws RemoteException
 	 */
 	@Override

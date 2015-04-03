@@ -3,8 +3,11 @@ package fr.dauphine.beans;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.server.RMIClientSocketFactory;
+import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,6 +20,29 @@ import fr.dauphine.interfaces.Personne;
 
 public class BibliothequeImpl extends UnicastRemoteObject implements Bibliotheque {
 
+	public BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,
+			RMIServerSocketFactory arg2) throws RemoteException {
+		super(arg0, arg1, arg2);
+		System.out.println("BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,"
+			+"RMIServerSocketFactory arg2)");
+		try {
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			System.out.println();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public BibliothequeImpl(int arg0) throws RemoteException {
+		super(arg0);
+		System.out.println("BibliothequeImpl(int arg0)");
+		try {
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static final long serialVersionUID = 1L;
 	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
 	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
@@ -26,13 +52,17 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 
 	public BibliothequeImpl() throws RemoteException {
 		super();
+		System.out.println("BibliothequeImpl()");
 		try {
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			//initBiblio();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 
 	}
+
+	//private void initBiblio() {}
 
 	public long getCompteurLivre() {
 		return compteurLivre;
@@ -138,12 +168,13 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	public boolean acheter(LivreService[] livres) throws RemoteException {
 		if (livres==null)
 			throw new NullPointerException();
-		/*for (Livre livre : livres){
-			if (delLivre(livre))
-				System.out.println(livre.remoteToString() +" vient d'etre achete.");
+		for (int i=0; i<Arrays.asList(livres).size(); i++){
+			Livre l = bibliotheque.get(livres[i].getNumero());			
+			if (delLivre(l))
+				System.out.println(l.remoteToString() +" vient d'etre achete.");
 			else
-				System.out.println(livre.remoteToString() +" n'a pu etre achete.");
-		}*/
+				System.out.println(l.remoteToString() +" n'a pu etre achete.");
+		}
 		return true;
 	}
 
@@ -153,7 +184,6 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 			if (e.getValue().canSell())
 				livres.add(new LivreService(e.getValue()));
 		}
-
 		return livres.toArray(new LivreService[livres.size()]);
 	}
 

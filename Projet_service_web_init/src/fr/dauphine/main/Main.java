@@ -15,6 +15,7 @@ import fr.dauphine.banque.BanqueSoapBindingStub;
 import fr.dauphine.beans.BibliothequeImpl;
 import fr.dauphine.beans.BibliothequeImplServiceLocator;
 import fr.dauphine.beans.BibliothequeImplSoapBindingStub;
+import fr.dauphine.beans.LivreService;
 import fr.dauphine.beans.PersonneImpl;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
@@ -31,14 +32,15 @@ public class Main {
 		initBanque(banque);
 		
 		BibliothequeImpl bibliotheque = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);
-		initBanque(banque);
+		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);	
+
 		System.setProperty("java.security.policy", "sec.policy");
 		//System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
 		System.setProperty("java.rmi.server.codebase", "file://F:/Eugen/Workspace/Project_service_web/projet_service_web/bin/");
 		System.setSecurityManager(new SecurityManager());
 		String[] l = Naming.list("rmi://localhost:1099");
-		for(String s:l) System.out.println(s);
+		for(String s:l) 
+			System.out.println(s);
 		Bibliotheque b = (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
 		initBiblio(b);
 		
@@ -98,19 +100,20 @@ public class Main {
 	}
 		
 		public static void initBanque(Banque banque) throws RemoteException{			
-			banque.addCompte("Tiganu", "Eugen", "eugen.tiganu@gmail.com", "eugen");
+			banque.addCompte("Tiganu", "Eugen", "eugen.tiganu@gmail.com", "eugen", "EUR");
 			banque.depot("eugen.tiganu@gmail.com", "eugen", 200);
-			banque.retrait("eugen.tiganu@gmail.com", "eugen", 100);
+			banque.retraitEur("eugen.tiganu@gmail.com", "eugen", 100.0);
 			System.out.println("Tiganu Eugen a un solde de " + banque.consultSolde("eugen.tiganu@gmail.com", "eugen"));
 			
-			banque.addCompte("Florian", "Lestic", "florian.lestic@gmail.com", "florian");
+			banque.addCompte("Florian", "Lestic", "florian.lestic@gmail.com", "florian", "EUR");
 			banque.depot("florian.lestic@gmail.com", "florian", 90);
 			
-			banque.addCompte("Nicolas", "Sarkozy", "eugen.tiganu@gmail.com", "nicolas");
-			banque.addCompte("Nicolas", "Sarkozy", "nicolas.sarkozy@gmail.com", "nicolas");
+			banque.addCompte("Nicolas", "Sarkozy", "eugen.tiganu@gmail.com", "nicolas", "USD");
+			banque.addCompte("Nicolas", "Sarkozy", "nicolas.sarkozy@gmail.com", "nicolas", "USD");
 			banque.depot("nicolas.sarkozy@gmail.com", "nicolas", 200);
+			banque.retraitEur("nicolas.sarkozy@gmail.com", "nicolas", 100.0);
 			
-			banque.addCompte("Francois", "Hollande", "francois.hollande@gmail.com", "eugen");
+			banque.addCompte("Francois", "Hollande", "francois.hollande@gmail.com", "eugen", "EUR");
 			banque.delCompte("francois.hollande@gmail.com");
 			
 		}
