@@ -1,5 +1,7 @@
 package fr.dauphine.beans;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -24,11 +26,11 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 
 	public BibliothequeImpl() throws RemoteException {
 		super();
-		/*try {
+		try {
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 	}
 
@@ -73,7 +75,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	/**
 	 * Ajoute un livre a la base
 	 */
-	//@Override
+	@Override
 	public boolean addLivre(String isbn, String auteur, String titre, double prixEuros, Date dateAjout) throws RemoteException {
 		LivreImpl livre = new LivreImpl();
 		livre.setAuteur(auteur);
