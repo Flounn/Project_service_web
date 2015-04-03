@@ -3,6 +3,12 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
+import javax.xml.rpc.ServiceException;
+
+import NET.webserviceX.www.Currency;
+import NET.webserviceX.www.CurrencyConvertorLocator;
+import NET.webserviceX.www.CurrencyConvertorSoap;
+
 public class Banque implements Serializable{
 	
 	/**
@@ -17,10 +23,6 @@ public class Banque implements Serializable{
 		super();
 	}
 
-	public long getCompteurCompte() {
-		return compteurCompte;
-	}
-
 	public Compte findByEmail(String email){
 		for (long key : banque.keySet()){
 			if (banque.get(key).getEmail().equals(email))
@@ -32,9 +34,9 @@ public class Banque implements Serializable{
 	/**
 	 * Ajoute un compte a la base
 	 */
-	public boolean addCompte(String nom, String prenom, String email, String mdp) {
+	public boolean addCompte(String nom, String prenom, String email, String mdp, String devise) {
 		if(findByEmail(email)==null){
-			Compte compte = new Compte(nom, prenom, email, mdp, compteurCompte);
+			Compte compte = new Compte(nom, prenom, email, mdp, compteurCompte, devise);
 			banque.put(compteurCompte, compte);
 			compteurCompte++;
 			System.out.println(compte.toString() +" vient d'etre ajoute a la base");
@@ -92,9 +94,11 @@ public class Banque implements Serializable{
 	 * @return 0 si le compte avec l'email indiqué n'existe pas; 
 	 * 2 si le mot de passe indique n'est pas correcte
 	 * 3 si le montant n'a pas ete correctement reseigne
+	 * 4 si la solde du compte est inferieur au montant
+	 * 5 si le service de convertisseur a echoue
 	 * 1 si le compte a ete debite avec succes
 	 */
-	public int retrait(String email, String mdp, double montant){
+	public int retraitEur(String email, String mdp, double montant){
 		Compte compte = findByEmail(email);
 		if(compte==null){
 			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
@@ -105,6 +109,23 @@ public class Banque implements Serializable{
 		} else if(montant<=0){
 			System.out.println(compte.toString() + " le montant indique n'est pas correct");
 			return 3;
+		} else if(compte.getDevise()!="EUR"){
+			double montantDev = 0;
+			try {
+				CurrencyConvertorSoap dev = new CurrencyConvertorLocator().getCurrencyConvertorSoap();
+				montantDev= Math.round(100*montant*dev.conversionRate(Currency.fromString("EUR"), Currency.fromString(compte.getDevise())))/100;
+				if(compte.getSolde()<montantDev){
+					System.out.println(compte.toString() + " le solde du compte est inferieur au montant demande");
+					return 4;
+				} else {
+					compte.setSolde(compte.getSolde()-montantDev);
+					System.out.println(compte.toString() + " a ete debite avec succes");
+					return 1;
+				}		
+			} catch (Exception e) {
+				e.printStackTrace();
+				return 5;
+			}					
 		} else {
 			compte.setSolde(compte.getSolde()-montant);
 			System.out.println(compte.toString() + " a ete debite avec succes");
@@ -129,6 +150,26 @@ public class Banque implements Serializable{
 		} else {			
 			System.out.println(compte.toString() + " interogation du compte");
 			return compte.getSolde();
+		}
+	}
+	/**
+	 * Renvoie le solde d'un compte
+	 * @param email
+	 * @param mdp
+	 * @param montant
+	 * @return
+	 */
+	public String consultDevise(String email, String mdp){
+		Compte compte = findByEmail(email);
+		if(compte==null){
+			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
+			return "";
+		} else if(!compte.getMdp().equals(mdp)){
+			System.out.println(compte.toString() + " le mot de passe renseigne n'est pas correct");
+			return "";
+		} else {			
+			System.out.println(compte.toString() + " interogation du compte");
+			return compte.getDevise();
 		}
 	}
 }

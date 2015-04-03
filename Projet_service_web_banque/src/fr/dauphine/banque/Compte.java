@@ -9,22 +9,25 @@ public class Compte implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private double solde;
+	private String devise;
 	private String nom;
 	private String prenom;
 	private String email;
 	private String mdp;
 	private long noCompte;
 	
+	
 	public Compte() {
 		super();
 	}
 	public Compte(String nom, String prenom, String email, String mdp,
-			long noCompte) {
+			long noCompte, String devise) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.mdp = mdp;
+		this.devise = devise;
 		this.noCompte = noCompte;
 		this.solde=0;
 	}
@@ -33,6 +36,12 @@ public class Compte implements Serializable{
 	}
 	public void setSolde(double solde) {
 		this.solde = solde;
+	}
+	public String getDevise() {
+		return devise;
+	}
+	public void setDevise(String devise) {
+		this.devise = devise;
 	}
 	public String getNom() {
 		return nom;
@@ -67,6 +76,6 @@ public class Compte implements Serializable{
 	@Override
 	public String toString() {
 		return "Compte [ID=" + noCompte + ", nom=" + nom + ", prenom=" 
-				+ prenom + ", noCompte=" + noCompte + "]";
+				+ prenom + ", noCompte=" + noCompte + ", devise=" + devise + "]";
 	}
 }
