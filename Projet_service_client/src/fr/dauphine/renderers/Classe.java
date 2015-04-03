@@ -10,4 +10,6 @@ public class Classe {
 	public final static String Long = "java.lang.Long";
 	public final static String DateSql = "java.sql.Date";
 	public final static String Date = "java.util.Date";
+	public final static String Boolean = "java.lang.Boolean";
+	
 }

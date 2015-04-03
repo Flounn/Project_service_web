@@ -15,6 +15,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import fr.dauphine.models.TableModelGestionBO;
 import fr.dauphine.renderers.ComponentTableCellRenderer; 
 import fr.dauphine.renderers.ComponentTableCellEditor; 
 import fr.dauphine.renderers.JLabelTableCellRenderer;
@@ -68,7 +69,8 @@ public class JTableGestionBO extends JTable {
 		setDefaultRenderer(Double.class, ComponentTableCellRenderer);
 		setDefaultEditor(ListGenerique.class, new JListTableCellEditor());
 		setDefaultRenderer(ListGenerique.class, ComponentTableCellRenderer);
-
+		setDefaultRenderer(boolean.class, ComponentTableCellRenderer);
+		
 		getTableHeader().setReorderingAllowed(false); 
 		// je veux pouvoir selectionner une cellule a la fois
 		// setRowSelectionAllowed(true);

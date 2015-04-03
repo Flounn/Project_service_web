@@ -1,4 +1,4 @@
-package fr.dauphine.renderers;
+package fr.dauphine.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,29 +6,27 @@ import java.sql.SQLException;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-public class ComboBoxModelGenerique  extends AbstractListModel<Generique> implements ComboBoxModel<Generique>{
+import fr.dauphine.renderers.Generique;
+
+public class ComboBoxModelDevise  extends AbstractListModel<Generique> implements ComboBoxModel<Generique>{
 	
 	private static final long serialVersionUID = -3908233092221170412L;
-	private ResultSet rs;
-	private final String nomRequete;
 	private int nbLignes;
-	private Object[] valuesObjects;	
+	private String[] values = {"EUR",};	
 	
 	public void setValuesObjects(Object[] valuesObjects) {
 		this.valuesObjects = valuesObjects;
 	}
 
-	private boolean valeurNullFirst = false;
 	private Generique selectedItem;
 	private Class<?>[] classParams;
 	
-	public ComboBoxModelGenerique (String nomRequete) throws Exception{
-		this.nomRequete=nomRequete;
+	public ComboBoxModelDevise (S nomRequete) throws Exception{
 		initResultSet();
 		init();	
 	}
 	
-	public ComboBoxModelGenerique (String nomRequete,Class<?>[] classParams, Object[] valuesRequetes) throws Exception{
+	public ComboBoxModelDevise (String nomRequete,Class<?>[] classParams, Object[] valuesRequetes) throws Exception{
 		this.nomRequete=nomRequete;
 		this.valuesObjects = valuesRequetes;
 		this.classParams = classParams;
@@ -40,7 +38,7 @@ public class ComboBoxModelGenerique  extends AbstractListModel<Generique> implem
 		init();	
 	}
 	
-	public ComboBoxModelGenerique (String nomRequete,Class<?>[] classParams, boolean valeurNullFirst,Object[] valuesRequetes) throws Exception{
+	public ComboBoxModelDevise (String nomRequete,Class<?>[] classParams, boolean valeurNullFirst,Object[] valuesRequetes) throws Exception{
 		this.nomRequete=nomRequete;
 		this.valeurNullFirst=valeurNullFirst;
 		this.valuesObjects = valuesRequetes;
@@ -50,7 +48,7 @@ public class ComboBoxModelGenerique  extends AbstractListModel<Generique> implem
 		selectedItem=nbLignes>0?getElementAt(0):null;
 	}
 	
-	public ComboBoxModelGenerique (String nomRequete, Class<?>[] classParams,boolean valeurNullFirst,int positionSelected,Object[] valuesRequetes) throws Exception{
+	public ComboBoxModelDevise (String nomRequete, Class<?>[] classParams,boolean valeurNullFirst,int positionSelected,Object[] valuesRequetes) throws Exception{
 		this.nomRequete=nomRequete;
 		this.valeurNullFirst=valeurNullFirst;
 		this.valuesObjects = valuesRequetes;
@@ -59,7 +57,7 @@ public class ComboBoxModelGenerique  extends AbstractListModel<Generique> implem
 		selectedItem = getElementAt(valeurNullFirst?positionSelected+1:positionSelected);
 	}
 	
-	public ComboBoxModelGenerique (ResultSet resultSet, boolean valeurNullFirst,int positionSelected) {
+	public ComboBoxModelDevise (ResultSet resultSet, boolean valeurNullFirst,int positionSelected) {
 		this.valeurNullFirst=valeurNullFirst;
 		nomRequete=null;
 		rs=resultSet;
@@ -152,42 +150,6 @@ public class ComboBoxModelGenerique  extends AbstractListModel<Generique> implem
 		} catch (SQLException e) {e.printStackTrace();}
 		return null;
 	}
-	
-	
-	
-	public void refreshDatas(){
-		try {
-			initResultSet();
-			init();
-		} catch (Exception e) {e.printStackTrace();}
-		fireContentsChanged(this, 0, nbLignes);
-	}
-	
-	public void delRow(){
-		try {
-			rs.deleteRow();
-			initResultSet();
-			init();
-		} catch (Exception e) {e.printStackTrace();}
-		fireIntervalRemoved(this, nbLignes, nbLignes);
-	}
-	
-	private boolean containGenerique(Integer idGenerique){
-		try {
-			rs.beforeFirst();
-			while (rs.next()){
-				if ((Integer)rs.getObject(1)==idGenerique)
-					return true;
-			}
-			rs.first();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-
-		return false;
-	}
-
-	
+		
 
 }

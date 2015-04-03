@@ -48,7 +48,11 @@ public class ComponentTableCellRenderer implements TableCellRenderer{
 				Long te = (Long)value;
 				component.setText(te.toString());
 				component.setToolTipText(te.toString());
-
+				break;
+			case Classe.Boolean:
+				String val = (Boolean)value==true?"Oui":"Non";
+				component.setText(val);
+				component.setToolTipText(val);
 				break;
 			}
 

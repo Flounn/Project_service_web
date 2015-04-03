@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import fr.dauphine.vues.Accueil;
 
 
-public class MainClient {
+public class MainClient_Externe {
 
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 

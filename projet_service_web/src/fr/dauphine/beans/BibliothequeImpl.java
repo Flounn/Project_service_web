@@ -161,5 +161,14 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	public Livre[] getLivres() throws RemoteException {
 		return bibliotheque.values().toArray(new Livre[bibliotheque.size()]);
 	}
+
+	@Override
+	public Personne getPersonne(String email, String mdp) throws RemoteException {
+		for (Entry<Long, Personne> t : annuaire.entrySet()){
+			if (t.getValue().getEmail().equals(email)&& t.getValue().getMdp().equals(mdp))
+				return t.getValue();
+		}
+		return null;
+	}
 	
 }

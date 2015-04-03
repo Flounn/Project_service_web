@@ -1,4 +1,4 @@
-package fr.dauphine.widgets;
+package fr.dauphine.models;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.main.Connexion;
 import fr.dauphine.main.IHM;
+import fr.dauphine.widgets.SelectionListener;
 
 public class TableModelGestionBO extends AbstractTableModel implements SelectionListener{
 
@@ -24,13 +25,18 @@ public class TableModelGestionBO extends AbstractTableModel implements Selection
 	public TableModelGestionBO(boolean selection){
 		firstColIcon = new ImageIcon(getClass().getResource(selection?"selectionner.png":"del.png"),selection?"Selectionner":"Supprimer");
 		majLivres();
-
 	}
+	
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-
-		return String.class;
+		switch (columnIndex){
+		case 0: return firstColIcon.getClass();
+		case 1 : return String.class;
+		case 2 : return String.class;
+		case 3 : return boolean.class;
+		default: return String.class;
+		}
 	}
 
 	@Override
@@ -44,7 +50,7 @@ public class TableModelGestionBO extends AbstractTableModel implements Selection
 		case 0:return "";
 		case 1 : return "Titre";
 		case 2 : return "Auteur";
-		case 3 : return "Disponibilite";
+		case 3 : return "Disponible";
 		default: return "";
 		}
 	}
