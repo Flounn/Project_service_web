@@ -83,6 +83,8 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		else{
 			Personne p = attente.get(0);
 			attente.remove(p);
+			p.delEnAttente(this);
+			disponible=true;
 			p.addLivre(this);
 			p.notification(this);
 		}

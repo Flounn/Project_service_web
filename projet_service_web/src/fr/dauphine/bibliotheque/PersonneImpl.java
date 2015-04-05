@@ -139,6 +139,11 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	 */
 	@Override
 	public void addLivre(Livre livre) throws RemoteException  {
+		if (this.livres.contains(livre)||this.enAttente.contains(livre)){
+			System.out.println("Vous avez deja emprunte ce livre");
+			return;
+		}
+			
 		if(livre.isDisponible()){
 			System.out.println(livre.remoteToString() + " a ete emprunte par " 
 					+ this.remoteToString());
@@ -200,6 +205,11 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	}
 	@Override
 	public void addEnAttente(Livre l) throws RemoteException {
+		if (enAttente.contains(l)||livres.contains(l)){
+			System.out.println("Vous avez deja emprunte ce livre.");
+			return;
+		}
+			
 		System.out.println(l.remoteToString() + " a ete rajoute a la liste d'attente");
 		this.enAttente.add(l);
 	}
