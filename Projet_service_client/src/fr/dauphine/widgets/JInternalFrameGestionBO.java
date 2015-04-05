@@ -2,8 +2,11 @@ package fr.dauphine.widgets;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import fr.dauphine.models.TableModelLivres;
+import fr.dauphine.vues.Accueil;
 
 
 /** 
@@ -43,16 +46,13 @@ public class JInternalFrameGestionBO extends JInternalFrame{
 		else
 			add(new JScrollPane(new JTableLivres(nom,new TableModelLivres(),selectionListener)));
 		
-		/*addInternalFrameListener(new InternalFrameAdapter() {
-			public void internalFrameClosing(InternalFrameEvent arg0) {	
-				if (nom == Database.EvenementSportif.TABLE_NAME)
-					((Accueil)getParent().getParent().getParent()).JInternalFrameEvenementSportifClose();
-				else if (nom == Database.Course.TABLE_NAME)
-					((Accueil)getParent().getParent().getParent()).JInternalCourseClose();
-				else if (nom == Database.ConditionTours.TABLE_NAME)
-					((Accueil)getParent().getParent().getParent()).JInternalConditionToursClose();
+		addInternalFrameListener(new InternalFrameAdapter() {
+			public void internalFrameClosing(InternalFrameEvent arg0) {
+				Accueil accueil = (Accueil) getParent().getParent().getParent();
+				accueil.refreshJTables();
 			}
-          } ) ;*/
+          } ) ;
+		
 		setVisible(true);
 	}
 	

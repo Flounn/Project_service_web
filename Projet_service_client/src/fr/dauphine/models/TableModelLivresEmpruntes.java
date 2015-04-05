@@ -4,8 +4,11 @@ import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
 
+import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.main.Session;
 import fr.dauphine.renderers.ListInteger;
+import fr.dauphine.widgets.JInternalFrameGestionBO;
+import fr.dauphine.widgets.SelectionListenerLivre;
 
 public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 
@@ -109,12 +112,12 @@ public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 	@Override
 	public boolean addRow(){
 		try {
-			fireTableRowsInserted(Session.getLivres().size(), Session.getLivres().size());
-			return true;
+			new JInternalFrameGestionBO("Emprunt");
+			//fireTableRowsInserted(Session.getLivres().size(), Session.getLivres().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 
 	@Override

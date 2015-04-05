@@ -103,6 +103,23 @@ public final class Session {
 		return new ArrayList<Livre>();
 	}
 	
+	public final static List<Livre> getLivresEnAttentes(){
+		try {
+			return Arrays.asList(personne.getEnAttente());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Livre>();
+	}
+	
+	public final static void delAttente(Livre livre){
+		try {
+			personne.delEnAttente(livre);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public final static void emprunter(Livre livre){
 		try {
 			personne.addLivre(livre);

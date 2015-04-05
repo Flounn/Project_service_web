@@ -1,6 +1,7 @@
 package fr.dauphine.vues;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -10,7 +11,6 @@ import javax.swing.JPanel;
 public class Accueil extends JFrame implements ConnexionOk {
 
 	private static final long serialVersionUID = 1L;
-	public MenuAccueil menuAccueil;
 
 	public Accueil() {
 		initUI();
@@ -48,6 +48,15 @@ public class Accueil extends JFrame implements ConnexionOk {
 	@Override
 	public void connexionOk() {
 		initUIAccueil();
+	}
+	
+	public void refreshJTables(){
+		for (Component c : getContentPane().getComponents()){
+			if (c instanceof JPanelAccueil){
+				JPanelAccueil jpane = (JPanelAccueil) c;
+				jpane.refreshJTable();
+			}
+		}
 	}
 
 }

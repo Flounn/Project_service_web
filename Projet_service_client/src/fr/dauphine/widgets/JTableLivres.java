@@ -3,6 +3,7 @@ package fr.dauphine.widgets;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
+import java.beans.PropertyVetoException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -10,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
@@ -18,6 +20,8 @@ import javax.swing.table.TableRowSorter;
 import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.models.AbstractLivresTableModel;
 import fr.dauphine.models.TableModelLivres;
+import fr.dauphine.models.TableModelLivresEmpruntes;
+import fr.dauphine.models.TableModelLivresEnAttentes;
 import fr.dauphine.renderers.ComponentTableCellRenderer; 
 import fr.dauphine.renderers.ComponentTableCellEditor; 
 import fr.dauphine.renderers.JLabelTableCellRenderer;
@@ -139,6 +143,16 @@ public class JTableLivres extends JTable {
 			int col = columnAtPoint(p);
 
 			if (col==0){
+				if (model instanceof TableModelLivresEnAttentes || model instanceof TableModelLivresEmpruntes){
+					JInternalFrame test = new JInternalFrameGestionBO("Emprunt");
+					getParent().getParent().getParent().getParent().getParent().getParent().add(test);
+					try {
+						test.setMaximum(true);
+					} catch (PropertyVetoException e) {e.printStackTrace();}
+					return;
+				}
+					
+				
 				if (model.addRow()){
 					int i = convertRowIndexToView(model.getRowCount()-1);
 					changeSelection(i, 1, false, false);
