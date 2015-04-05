@@ -20,6 +20,28 @@ import fr.dauphine.interfaces.Personne;
 
 public class BibliothequeImpl extends UnicastRemoteObject implements Bibliotheque {
 
+	private static final long serialVersionUID = 1L;
+	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
+	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
+	private long compteurLivre;
+	private long compteurPersonne;
+
+	/**
+	 * Le Naming.rebind est mis dans le constructeur de la classe.
+	 * Ainsi des que l'objet BibliothequeImpl est cree, il sera accesssible depuis RMI
+	 * @throws RemoteException
+	 */
+	public BibliothequeImpl() throws RemoteException {
+		super();
+		System.out.println("BibliothequeImpl()");
+		try {
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,
 			RMIServerSocketFactory arg2) throws RemoteException {
 		super(arg0, arg1, arg2);
@@ -42,27 +64,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 			e.printStackTrace();
 		}
 	}
-
-	private static final long serialVersionUID = 1L;
-	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
-	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
-	private long compteurLivre;
-	private long compteurPersonne;
-
-
-	public BibliothequeImpl() throws RemoteException {
-		super();
-		System.out.println("BibliothequeImpl()");
-		try {
-			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
-			//initBiblio();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	//private void initBiblio() {}
+	
 
 	public long getCompteurLivre() {
 		return compteurLivre;
@@ -177,7 +179,11 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		}
 		return true;
 	}
-
+	/**
+	 * Retourne la liste des livres disponibles à la vente.
+	 * @return
+	 * @throws RemoteException
+	 */
 	public LivreService[] getLivresCanSell() throws RemoteException {
 		ArrayList<LivreService> livres = new ArrayList<LivreService>();
 		for (Entry<Long, Livre> e : bibliotheque.entrySet()){

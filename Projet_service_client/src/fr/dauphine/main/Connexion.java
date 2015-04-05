@@ -13,12 +13,18 @@ public final class Connexion {
 
 	private static Bibliotheque bibliotheque ;
 	
-	public static final boolean addLivre(){
-		return addLivre(null,null,null,0,null);
-	}
-
-	public static final boolean addLivre(String isbn, String auteur, String titre, double prixEuro){
-		return addLivre(isbn,auteur,titre,prixEuro,null);
+	private final static Bibliotheque getBiblio(){
+		if (bibliotheque==null)
+			try {
+				System.setProperty("java.security.policy", "sec.policy");
+				System.setProperty("java.rmi.server.codebase", "file://C:/"
+						+ "Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
+				System.setSecurityManager(new SecurityManager());
+				bibliotheque = (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return bibliotheque;
 	}
 
 	public static final boolean addLivre(String isbn, String auteur, String titre, double prixEuro, Date dateAjout){
@@ -28,6 +34,14 @@ public final class Connexion {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public static final boolean addLivre(){
+		return addLivre(null,null,null,0,null);
+	}
+
+	public static final boolean addLivre(String isbn, String auteur, String titre, double prixEuro){
+		return addLivre(isbn,auteur,titre,prixEuro,null);
 	}
 	
 	public static final List<Livre> getLivres(){
@@ -49,19 +63,7 @@ public final class Connexion {
 	}
 
 
-	private final static Bibliotheque getBiblio(){
-		if (bibliotheque==null)
-			try {
-				System.setProperty("java.security.policy", "sec.policy");
-				System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
-				//System.setProperty("java.rmi.server.codebase", "file://F:/Eugen/Workspace/Project_service_web/projet_service_web/bin/");
-				System.setSecurityManager(new SecurityManager());
-				bibliotheque = (Bibliotheque) Naming.lookup("rmi://localhost:1099/Bibliotheque");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		return bibliotheque;
-	}
+
 
 
 }

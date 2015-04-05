@@ -88,9 +88,6 @@ public class Banque implements Serializable{
 	}
 	/**
 	 * Permet de debiter le compte
-	 * @param email
-	 * @param mdp
-	 * @param montant
 	 * @return 0 si le compte avec l'email indiqué n'existe pas; 
 	 * 2 si le mot de passe indique n'est pas correcte
 	 * 3 si le montant n'a pas ete correctement reseigne
@@ -113,7 +110,8 @@ public class Banque implements Serializable{
 			double montantDev = 0;
 			try {
 				CurrencyConvertorSoap dev = new CurrencyConvertorLocator().getCurrencyConvertorSoap();
-				montantDev= Math.round(100*montant*dev.conversionRate(Currency.fromString("EUR"), Currency.fromString(compte.getDevise())))/100;
+				montantDev= Math.round(100*montant*dev.conversionRate(Currency.fromString("EUR"), 
+						Currency.fromString(compte.getDevise())))/100;
 				if(compte.getSolde()<montantDev){
 					System.out.println(compte.toString() + " le solde du compte est inferieur au montant demande");
 					return 4;
