@@ -1,11 +1,12 @@
-package fr.dauphine.beans;
+package fr.dauphine.bibliotheque;
 
-import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -16,19 +17,26 @@ import java.util.Map.Entry;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
+import fr.dauphine.interfaces.Personne.Role;
 
 
 public class BibliothequeImpl extends UnicastRemoteObject implements Bibliotheque {
+	
+	private static final long serialVersionUID = 1L;
+	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
+	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
+	private long compteurLivre;
+	private long compteurPersonne;
 
 	public BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,
 			RMIServerSocketFactory arg2) throws RemoteException {
 		super(arg0, arg1, arg2);
 		System.out.println("BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,"
-			+"RMIServerSocketFactory arg2)");
+				+"RMIServerSocketFactory arg2)");
 		try {
-			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
-			System.out.println();
-		} catch (MalformedURLException e) {
+			initBiblio();
+			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -37,32 +45,74 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		super(arg0);
 		System.out.println("BibliothequeImpl(int arg0)");
 		try {
-			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
-		} catch (MalformedURLException e) {
+			initBiblio();
+			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	private static final long serialVersionUID = 1L;
-	private final HashMap<Long, Livre> bibliotheque = new HashMap<Long, Livre>();
-	private final HashMap<Long, Personne> annuaire = new HashMap<Long, Personne>();
-	private long compteurLivre;
-	private long compteurPersonne;
-
 
 	public BibliothequeImpl() throws RemoteException {
 		super();
 		System.out.println("BibliothequeImpl()");
 		try {
-			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
-			//initBiblio();
-		} catch (MalformedURLException e) {
+			initBiblio();
+			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	//private void initBiblio() {}
+	private void initBiblio() throws RemoteException, ParseException {
+		System.out.println("Initialisation de la bibliotheque");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		addLivre("9782203001190", "Herge", "Les Aventures de Tintin", 12.50, sdf.parse("2014-01-01"));
+		addLivre("9781233918119", "Herge", "Fred et Mile", 10.25, sdf.parse("2012-05-10"));
+		addLivre("9780132165112", "John C.Hull", "Options, Futures and Other Derivatives", 61.00, sdf.parse("2010-02-07"));
+		addLivre("9782212140101", "Claude Delannoy", "Programmer en langage C : Cours et exercices corriges", 21.75, sdf.parse("2014-12-10"));
+		addLivre("9782744025983", "Patrick Engebretson", "Les bases du hacking", 30.00, sdf.parse("2013-10-22"));
+		addLivre("9782253150978", "Simon Singh", "Histoire des codes secrets", 25.00, sdf.parse("2015-02-20"));
+		addLivre("9782253150978", "Simon Singh", "Histoire des codes secrets", 25.00, sdf.parse("2014-12-05"));
+		addLivre("9782953966367", "Charles Cohle", "Je sais qui vous Etes: Le manuel d'espionnage sur Internet", 42.15, sdf.parse("2014-09-12"));
+		addLivre("9782744025976", "David Kennedy", "Metasploit Securite & hacking - Le guide du pentesteur", 15.00, sdf.parse("2009-04-10"));
+		addLivre("9782744025365", "Jon Erickson", "Techniques de hacking", 55.25, sdf.parse("2012-05-10"));
+		addLivre("9781481930277", "Simon Levesque", "Le petit livre du hacker 2013", 27.25, sdf.parse("2013-11-17"));
+		addLivre("9782744025969", "Eric Charton", "Hacker's guide", 30.25, sdf.parse("2013-06-05"));
+		addLivre("9782746074026", "Franck EBEL", "Hacking et Forensic - Developpez vos propres outils en Python", 20.00, sdf.parse("2015-01-11"));
+		addLivre("9782744025235", "Scott Granneman", "Linux", 75.25, sdf.parse("2014-01-09"));
+		addLivre("9782822402804", "Alexandre Gomez Urbina", "Hacking Interdit", 65.15, sdf.parse("2009-08-30"));
+		addLivre("9782297040174", "Karyotis Catherine", "L'essentiel de la bourse et des marches de capitaux", 40.25, sdf.parse("2010-03-12"));
+		addLivre("9787561536254", "Zhao Sheng Min", "Le trading algorithmique et les opérations d'arbitrage", 45.10, sdf.parse("2014-04-10"));
+		addLivre("9782100708581", "Jeremy Morvan", "Marches et instruments financiers", 35.15, sdf.parse("2011-07-15"));
+		addLivre("9782100519675", "Walder Masieri", "Aide-memoire Mathematiques financieres", 10.25, sdf.parse("2012-09-23"));
+
+
+		Personne p = new PersonneImpl(Role.Etudiant,"Tiganu","Eugen", "eugen.tiganu@gmail.com", "eugen");
+		addPersonne(p);
+
+		Personne p2 = new PersonneImpl(Role.Etudiant,"Lestic","Florian", "florian.lestic@gmail.com", "florian");			
+		addPersonne(p2);
+
+		Personne p3 = new PersonneImpl(Role.Etudiant,"Hollande","Francois", "francois.hollande@gmail.com", "francois");			
+		addPersonne(p3);
+
+		Personne p4 = new PersonneImpl(Role.Enseignant,"Herve","Luc", "eugen.tiganu@gmail.com", "luc");	
+		addPersonne(p4);
+		p4.setEmail("luc.herve@gmail.com");
+		addPersonne(p4);
+
+
+		Livre[] livres = findByTitre("Fred et Mile");
+		Livre l=livres[0];
+		p.addLivre(l);
+
+		p2.addLivre(l);
+		l.addToAttente(p2);
+		l.addToAttente(p3);
+		p.returnLivre(l);
+		l.addCommentaire("Tres bon livre!");
+	}
 
 	public long getCompteurLivre() {
 		return compteurLivre;
@@ -122,7 +172,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		System.out.println(livre.remoteToString() +" vient d'etre ajoute a la base");
 		return true;
 	}
-	
+
 	/**
 	 * Ajoute une personne a la base
 	 */
@@ -164,25 +214,32 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 	/**
 	 * @return achete les livres passes en parametre
 	 */
-
-	public boolean acheter(LivreService[] livres) throws RemoteException {
+	public boolean acheter(long[] livres) {
 		if (livres==null)
 			throw new NullPointerException();
 		for (int i=0; i<Arrays.asList(livres).size(); i++){
-			Livre l = bibliotheque.get(livres[i].getNumero());			
-			if (delLivre(l))
-				System.out.println(l.remoteToString() +" vient d'etre achete.");
-			else
-				System.out.println(l.remoteToString() +" n'a pu etre achete.");
+			Livre l = bibliotheque.get(livres[i]);			
+			try {
+				if (delLivre(l))
+					System.out.println(l +" vient d'etre achete.");
+				else
+					System.out.println(l +" n'a pu etre achete.");
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
 
-	public LivreService[] getLivresCanSell() throws RemoteException {
+	public LivreService[] getLivresCanSell() {
 		ArrayList<LivreService> livres = new ArrayList<LivreService>();
 		for (Entry<Long, Livre> e : bibliotheque.entrySet()){
-			if (e.getValue().canSell())
-				livres.add(new LivreService(e.getValue()));
+			try {
+				if (e.getValue().canSell())
+					livres.add(new LivreService(e.getValue()));
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
 		}
 		return livres.toArray(new LivreService[livres.size()]);
 	}
@@ -200,5 +257,5 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		}
 		return null;
 	}
-	
+
 }

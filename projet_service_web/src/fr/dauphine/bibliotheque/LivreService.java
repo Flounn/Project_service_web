@@ -1,4 +1,4 @@
-package fr.dauphine.beans;
+package fr.dauphine.bibliotheque;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

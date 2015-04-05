@@ -19,12 +19,12 @@ public interface Livre extends Remote{
 	void setIsbn(String isbn) throws RemoteException;
 	Personne[] getAttente() throws RemoteException ;
 	boolean isDisponible() throws RemoteException;
+	void setDisponible(boolean disponible) throws RemoteException;
 	void addToAttente(Personne p) throws RemoteException;
 	void enleveFromAttente(Personne p) throws RemoteException;
 	String[] getCommentaires() throws RemoteException;
 	void addCommentaire(String commentaire) throws RemoteException;
-	void setDisponible(boolean disponible) throws RemoteException;
-	void passerAuSuivant(Personne p) throws RemoteException;
+	void passerAuSuivant() throws RemoteException;
 	long getCompteurPrets() throws RemoteException;
 	void setCompteurPrets(long compteurPrets) throws RemoteException;
 	double getPrixEuros() throws RemoteException;

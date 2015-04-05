@@ -10,11 +10,11 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 
-import fr.dauphine.models.ComboBoxModelDevise;
+import fr.dauphine.models.ComboBoxModelInteger;
 
 
 public class JListTableCellEditor implements TableCellEditor{
-	private JComboBox<Generique> component;
+	private JComboBox<?> component;
 	private JTable table;
 	private String className;
 	private int row;
@@ -29,8 +29,7 @@ public class JListTableCellEditor implements TableCellEditor{
 				if (component.getSelectedItem()==null)
 					return null;
 				return ((Generique)component.getSelectedItem()).getId();
-
-			default : return null;
+			default : return component.getSelectedItem();
 
 			}
 		}
@@ -85,12 +84,13 @@ public class JListTableCellEditor implements TableCellEditor{
 			className = value.getClass().getName();
 			switch (className){
 			case Classe.ListGenerique:
-				ListGenerique values = (ListGenerique) value;
+				ListGenerique values = (ListGenerique) value;break;
 				//if (values.getNbLigne()>0){
-				component = new JComboBox<Generique>(new ComboBoxModelDevise(values.getResultSet(),true,values.getIndiceSelection()));
+				//component = new JComboBox<Generique>(new ComboBoxModelDevise(values.getResultSet(),true,values.getIndiceSelection()));
 				//component.setSelectedIndex(values.getIndiceSelection());
 				//}
-
+			case Classe.ListInteger:	
+				component=new JComboBox<Integer>(new ComboBoxModelInteger((ListInteger) value));
 
 			}
 

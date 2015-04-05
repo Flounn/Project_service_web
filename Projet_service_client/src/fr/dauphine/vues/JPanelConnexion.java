@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
-import fr.dauphine.main.Connexion;
+import fr.dauphine.main.Session;
 
 public class JPanelConnexion extends JPanel{
 
@@ -50,7 +50,7 @@ public class JPanelConnexion extends JPanel{
 					return;
 				}
 					
-				if (Connexion.seConnecter(email,password)){
+				if (Session.seConnecter(email,password)){
 					System.out.println("connexion OK");
 					JPanelConnexion.this.setEnabled(false);
 					callback.connexionOk();
@@ -85,33 +85,35 @@ public class JPanelConnexion extends JPanel{
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(319)
+							.addGap(64)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblNewLabel_1)
-								.addComponent(lblNewLabel))
+								.addComponent(lblNewLabel)
+								.addComponent(lblNewLabel_1))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txt_email)
-								.addComponent(txt_mdp, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)))
+								.addComponent(txt_mdp)
+								.addComponent(txt_email, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(352)
+							.addGap(103)
 							.addComponent(bt_seConnecter)))
-					.addContainerGap(291, Short.MAX_VALUE))
+					.addContainerGap(201, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(264)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel)
-						.addComponent(txt_email, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
+					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_1)
-						.addComponent(txt_mdp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel)
+							.addComponent(txt_email, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(31)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txt_mdp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1))))
 					.addGap(18)
 					.addComponent(bt_seConnecter)
-					.addGap(237))
+					.addGap(33))
 		);
 		setLayout(groupLayout);
 

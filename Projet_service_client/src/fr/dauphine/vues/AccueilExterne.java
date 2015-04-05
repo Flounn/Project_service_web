@@ -1,12 +1,11 @@
 package fr.dauphine.vues;
 
-import java.awt.Dimension;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import fr.dauphine.interfaces.Livre;
+import fr.dauphine.main.Panier;
+import fr.dauphine.models.TableModelPanier;
+import fr.dauphine.widgets.JTableLivres;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -15,13 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AccueilExterne extends JFrame{
-	
-	private JTabl
 
 	private static final long serialVersionUID = 1L;
 	public MenuAccueil menuAccueil;
-	
-	private final ArrayList<Livre> livres = new ArrayList<Livre>();
 
 	public AccueilExterne() {
 		
@@ -29,10 +24,10 @@ public class AccueilExterne extends JFrame{
 		
 		JLabel lblTotal = new JLabel("Total :");
 		
-		JLabel lbl_total = new JLabel("");
+		JLabel lbl_total = new JLabel(Panier.getTotalPanier()+"€");
 		
 		JPanel panel = new JPanel();
-		panel.add(new JT);
+		panel.add(new JTableLivres("Panier",new TableModelPanier()));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
