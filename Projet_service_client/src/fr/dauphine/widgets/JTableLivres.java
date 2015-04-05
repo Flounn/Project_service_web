@@ -21,7 +21,9 @@ import fr.dauphine.models.AbstractLivresTableModel;
 import fr.dauphine.models.TableModelLivres;
 import fr.dauphine.models.TableModelLivresEmpruntes;
 import fr.dauphine.models.TableModelLivresEnAttentes;
+import fr.dauphine.models.TableModelLivresVentes;
 import fr.dauphine.models.TableModelNotifications;
+import fr.dauphine.models.TableModelPanier;
 import fr.dauphine.renderers.ComponentTableCellRenderer; 
 import fr.dauphine.renderers.ComponentTableCellEditor; 
 import fr.dauphine.renderers.JLabelTableCellRenderer;
@@ -146,6 +148,15 @@ public class JTableLivres extends JTable {
 			if (col==0){
 				if (model instanceof TableModelLivresEnAttentes || model instanceof TableModelLivresEmpruntes){
 					JInternalFrame test = new JInternalFrameGestionBO("Emprunt");
+					getParent().getParent().getParent().getParent().getParent().getParent().getParent().add(test);
+					try {
+						test.setMaximum(true);
+					} catch (PropertyVetoException e) {e.printStackTrace();}
+					return;
+				}
+				
+				if (model instanceof TableModelPanier){
+					JInternalFrame test = new JInternalFrameGestionBO("Livres",new TableModelLivresVentes());
 					getParent().getParent().getParent().getParent().getParent().getParent().getParent().add(test);
 					try {
 						test.setMaximum(true);

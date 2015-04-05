@@ -2,19 +2,15 @@ package fr.dauphine.main;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import fr.dauphine.bibliotheque.BibliothequeImpl;
-import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
-import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
 
-public final class Connexion {
+public final class ConnexionRmi {
 
 	private static Bibliotheque bibliotheque ;
 
@@ -50,18 +46,6 @@ public final class Connexion {
 			e.printStackTrace();
 			return null;
 		}
-
-	}
-
-	public static final List<LivreService> getLivresCanSell(){
-
-		try {
-			BibliothequeImpl b = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-			return Arrays.asList(b.getLivresCanSell()); 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<LivreService>();
 
 	}
 

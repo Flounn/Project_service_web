@@ -18,7 +18,7 @@ public final class Session {
 	private static ObservableImpl observableImpl ;
 
 	public final static boolean seConnecter(String email, String mdp){
-		personne=Connexion.getPersonne(email, mdp);
+		personne=ConnexionRmi.getPersonne(email, mdp);
 		if (getPersonne()==null)
 			return false;
 		try {

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 import fr.dauphine.bibliotheque.LivreImpl;
 import fr.dauphine.interfaces.Livre;
-import fr.dauphine.main.Connexion;
+import fr.dauphine.main.ConnexionRmi;
 import fr.dauphine.main.Session;
 
 public class TableModelLivres extends AbstractLivresTableModel {
@@ -112,7 +112,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 			}
 			if (livreAdd!=null&&rowIndex==nbLignes-1 &&  livreAdd.getIsbn()!=null&&livreAdd.getTitre()!=null
 					&&livreAdd.getAuteur()!=null){
-				Connexion.addLivre(livreAdd.getIsbn(), livreAdd.getAuteur(), livreAdd.getTitre(), livreAdd.getPrixEuros());
+				ConnexionRmi.addLivre(livreAdd.getIsbn(), livreAdd.getAuteur(), livreAdd.getTitre(), livreAdd.getPrixEuros());
 				livreAdd=null;
 				majLivres();
 				fireTableRowsUpdated(rowIndex, rowIndex);
@@ -146,7 +146,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 			nbLignes--;
 			return;
 		}
-		Connexion.delLivre(livres.get(numRow));
+		ConnexionRmi.delLivre(livres.get(numRow));
 		majLivres();
 		fireTableRowsDeleted(numRow, numRow);	
 	}
@@ -159,7 +159,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 
 	private void majLivres(){
 		try {
-			livres = Connexion.getLivres();
+			livres = ConnexionRmi.getLivres();
 			nbLignes=livres.size();
 		} catch (Exception e) {
 			e.printStackTrace();

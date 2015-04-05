@@ -35,7 +35,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 				+"RMIServerSocketFactory arg2)");
 		try {
 			initBiblio();
-			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,7 +46,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		System.out.println("BibliothequeImpl(int arg0)");
 		try {
 			initBiblio();
-			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,7 +57,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		System.out.println("BibliothequeImpl()");
 		try {
 			initBiblio();
-			//Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,14 +72,14 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		addLivre("9780132165112", "John C.Hull", "Options, Futures and Other Derivatives", 61.00, sdf.parse("2010-02-07"));
 		addLivre("9782212140101", "Claude Delannoy", "Programmer en langage C : Cours et exercices corriges", 21.75, sdf.parse("2014-12-10"));
 		addLivre("9782744025983", "Patrick Engebretson", "Les bases du hacking", 30.00, sdf.parse("2013-10-22"));
-		addLivre("9782253150978", "Simon Singh", "Histoire des codes secrets", 25.00, sdf.parse("2015-02-20"));
+		addLivre("9782253150978", "Simon Singh", "Histoire des codes secrets", 25.00, sdf.parse("2010-02-20"));
 		addLivre("9782253150978", "Simon Singh", "Histoire des codes secrets", 25.00, sdf.parse("2014-12-05"));
 		addLivre("9782953966367", "Charles Cohle", "Je sais qui vous Etes: Le manuel d'espionnage sur Internet", 42.15, sdf.parse("2014-09-12"));
 		addLivre("9782744025976", "David Kennedy", "Metasploit Securite & hacking - Le guide du pentesteur", 15.00, sdf.parse("2009-04-10"));
 		addLivre("9782744025365", "Jon Erickson", "Techniques de hacking", 55.25, sdf.parse("2012-05-10"));
-		addLivre("9781481930277", "Simon Levesque", "Le petit livre du hacker 2013", 27.25, sdf.parse("2013-11-17"));
+		addLivre("9781481930277", "Simon Levesque", "Le petit livre du hacker 2012", 27.25, sdf.parse("2012-11-17"));
 		addLivre("9782744025969", "Eric Charton", "Hacker's guide", 30.25, sdf.parse("2013-06-05"));
-		addLivre("9782746074026", "Franck EBEL", "Hacking et Forensic - Developpez vos propres outils en Python", 20.00, sdf.parse("2015-01-11"));
+		addLivre("9782746074026", "Franck EBEL", "Hacking et Forensic - Developpez vos propres outils en Python", 20.00, sdf.parse("2009-01-11"));
 		addLivre("9782744025235", "Scott Granneman", "Linux", 75.25, sdf.parse("2014-01-09"));
 		addLivre("9782822402804", "Alexandre Gomez Urbina", "Hacking Interdit", 65.15, sdf.parse("2009-08-30"));
 		addLivre("9782297040174", "Karyotis Catherine", "L'essentiel de la bourse et des marches de capitaux", 40.25, sdf.parse("2010-03-12"));
@@ -103,9 +103,17 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		addPersonne(p4);
 
 		Livre[] livres = findByTitre("Fred et Mile");
+		
 		Livre l=livres[0];
 		p.addLivre(l);
-
+		p.addLivre((Livre) bibliotheque.values().toArray()[5]);
+		p.returnLivre((Livre) bibliotheque.values().toArray()[5]);
+		p2.addLivre((Livre) bibliotheque.values().toArray()[12]);
+		p2.returnLivre((Livre) bibliotheque.values().toArray()[12]);
+		p4.addLivre((Livre) bibliotheque.values().toArray()[10]);
+		p4.returnLivre((Livre) bibliotheque.values().toArray()[10]);
+		p4.addLivre((Livre) bibliotheque.values().toArray()[9]);
+		p4.returnLivre((Livre) bibliotheque.values().toArray()[9]);
 		p2.addLivre(l);
 		l.addToAttente(p2);
 		//l.addToAttente(p3);

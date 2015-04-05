@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.SwingUtilities;
 
-import fr.dauphine.vues.Accueil;
+import fr.dauphine.vues.AccueilExterne;
 
 
 public class MainClient_Externe {
@@ -15,7 +15,7 @@ public class MainClient_Externe {
 
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				new Accueil();
+				new AccueilExterne();
 			}
 		});
 

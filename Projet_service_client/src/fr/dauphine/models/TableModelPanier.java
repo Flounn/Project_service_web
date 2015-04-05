@@ -3,9 +3,8 @@ package fr.dauphine.models;
 import javax.swing.ImageIcon;
 
 import fr.dauphine.bibliotheque.LivreService;
-import fr.dauphine.main.Connexion;
+import fr.dauphine.main.ConnexionRmi;
 import fr.dauphine.main.Panier;
-import fr.dauphine.widgets.JTableLivres;
 import fr.dauphine.widgets.SelectionListenerLivre;
 
 public class TableModelPanier extends AbstractLivresTableModel implements SelectionListenerLivre {
@@ -25,8 +24,10 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 		case 0: return firstColIcon.getClass();
 		case 1 : return String.class;
 		case 2 : return String.class;
-		case 3 : return boolean.class;
-		case 4 : return String.class;
+		case 3 : return String.class;
+		case 4 : return boolean.class;
+		case 5 : return Double.class;
+		case 6 : return Double.class;
 		default: return String.class;
 		}
 	}
@@ -40,10 +41,12 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 	public String getColumnName(int columnIndex) {
 		switch (columnIndex){
 		case 0:return "";
-		case 1 : return "Titre";
-		case 2 : return "Auteur";
-		case 3 : return "Disponible";
-		case 4 : return "Prix";
+		case 1 : return "ISBN";
+		case 2 : return "Titre";
+		case 3 : return "Auteur";
+		case 4 : return "Disponible";
+		case 5 : return "Prix (€)";
+		case 6 : return "Prix ("+Panier.getDevise()+")";
 		default: return "";
 		}
 	}
@@ -58,10 +61,11 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 
 		switch (columnIndex){
 		case 0:return firstColIcon;
-		case 1 : return Panier.getLivres().get(rowIndex).getTitre();
-		case 2 : return Panier.getLivres().get(rowIndex).getAuteur();
-		case 3 : return Panier.getLivres().get(rowIndex).isDisponible();
-		case 4 : return Panier.getLivres().get(rowIndex).getPrixEuros()+"€";
+		case 1 : return Panier.getLivres().get(rowIndex).getIsbn();
+		case 2 : return Panier.getLivres().get(rowIndex).getTitre();
+		case 3 : return Panier.getLivres().get(rowIndex).getAuteur();
+		case 4 : return Panier.getLivres().get(rowIndex).isDisponible();
+		case 5 : return Panier.getLivres().get(rowIndex).getPrixEuros();
 		default: return "";
 		}
 	}
@@ -78,7 +82,6 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 
 	@Override
 	public boolean addRow(){
-		new JTableLivres("Livre",this);
 		return false;
 	}
 
@@ -92,8 +95,7 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 	public void selectionLigne(LivreService livre) {
 		int old = Panier.getLivres().size();
 		Panier.addLivres(livre);
-		fireTableRowsInserted(old, Connexion.getLivres().size());
-		
+		fireTableRowsInserted(old, ConnexionRmi.getLivres().size());
 	}
 
 }
