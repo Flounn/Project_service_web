@@ -94,7 +94,7 @@ public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 			case 1 : Session.getLivres().get(rowIndex).setIsbn((String)aValue);break;
 			case 2 : Session.getLivres().get(rowIndex).setTitre((String)aValue);break;
 			case 3 : Session.getLivres().get(rowIndex).setAuteur((String)aValue);break;
-			case 4 : Session.addNote(Session.getLivres().get(rowIndex),(Integer)aValue);break;
+			case 4 : if (aValue==null)return;Session.addNote(Session.getLivres().get(rowIndex),(Integer)aValue);break;
 			case 5 : Session.addCommentaire(Session.getLivres().get(rowIndex),(String)aValue);break;
 			case 6 : Session.getLivres().get(rowIndex).setPrixEuros((double)aValue);break;
 			}
