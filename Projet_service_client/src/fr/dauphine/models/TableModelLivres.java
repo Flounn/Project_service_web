@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import fr.dauphine.bibliotheque.LivreImpl;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.main.ConnexionRmi;
 import fr.dauphine.main.Session;
@@ -55,7 +54,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		case 2 : return "Titre";
 		case 3 : return "Auteur";
 		case 4 : return "Disponible";
-		case 5 : return "Prix (€)";
+		case 5 : return "Prix (ï¿½)";
 		case 6 : return "Note moyenne";
 		case 7 : return "Emprunter";
 		default: return "";
@@ -130,7 +129,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		try {
 			if (livreAdd!=null)
 				return false;
-			livreAdd=new LivreImpl();
+			//livreAdd=new LivreImpl();
 			fireTableRowsInserted(nbLignes, nbLignes++);
 			return true;
 		} catch (Exception e) {

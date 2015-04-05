@@ -12,11 +12,11 @@ import javax.xml.rpc.ServiceException;
 import fr.dauphine.banque.Banque;
 import fr.dauphine.banque.BanqueServiceLocator;
 import fr.dauphine.banque.BanqueSoapBindingStub;
-import fr.dauphine.beans.BibliothequeImpl;
-import fr.dauphine.beans.BibliothequeImplServiceLocator;
-import fr.dauphine.beans.BibliothequeImplSoapBindingStub;
-import fr.dauphine.beans.LivreService;
-import fr.dauphine.beans.PersonneImpl;
+import fr.dauphine.bibliotheque.BibliothequeImpl;
+import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
+import fr.dauphine.bibliotheque.BibliothequeImplSoapBindingStub;
+import fr.dauphine.bibliotheque.LivreService;
+import fr.dauphine.bibliotheque.PersonneImpl;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
@@ -32,7 +32,8 @@ public class Main {
 		initBanque(banque);
 		
 		BibliothequeImpl bibliotheque = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);	
+		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);
+		LivreService livres[] = bibliotheque.getLivresCanSell();
 
 		System.setProperty("java.security.policy", "sec.policy");
 		//System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
@@ -84,14 +85,17 @@ public class Main {
 
 
 			Livre[] livres = b.findByTitre("Fred et Mile");
-			Livre l=livres[0];
-			p.addLivre(l);
+			Livre[] livres2 = b.findByTitre("Programmer en langage C : Cours et exercices corriges");
+			Livre[] livres3 = b.findByTitre("Linux");
+			Livre[] livres4 = b.findByTitre("Hacking Interdit");
+			Livre[] livres5 = b.findByTitre("Les Aventures de Tintin");
 
-			p2.addLivre(l);
-			l.addToAttente(p2);
-			l.addToAttente(p3);
-			p.returnLivre(l);
-			l.addCommentaire("Tres bon livre!");
+			p.addLivre(livres[0]);
+			p2.addLivre(livres[0]);
+			livres[0].addToAttente(p2);
+			livres[0].addToAttente(p3);
+			p.returnLivre(livres[0]);
+			livres[0].addCommentaire("Tres bon livre!");
 
 
 		} catch (Exception e) {
