@@ -76,5 +76,12 @@ public class Accueil extends JFrame implements ConnexionOk {
 		((JPanelLivresEmpruntes)splitPane.getLeftComponent()).refreshJTable();
 		((JPanelLivresEnAttentes)splitPane.getRightComponent()).refreshJTable();
 	}
+	
+	public void seDeconnecter(){
+		setJMenuBar(null);
+		getContentPane().removeAll();
+		initUISeConnecter();
+		validate();
+	}
 
 }
