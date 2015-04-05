@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.main.ConnexionWebServices;
@@ -90,6 +91,11 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 	
 	@Override
 	public void delRow(int numRow) {
+		if (livres.get(numRow).isDisponible()==false){
+			JOptionPane.showMessageDialog(null, "Ce livre n'est pas disponible.");
+			return;
+		}
+			
 		Panier.addLivres(livres.get(numRow));
 		majLivres();
 		fireTableRowsDeleted(numRow,numRow);

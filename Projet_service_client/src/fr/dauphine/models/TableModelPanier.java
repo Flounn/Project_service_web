@@ -11,7 +11,7 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 
 	private static final long serialVersionUID = 1L;
 	private final ImageIcon firstColIcon;
-	private int nbColonnes = 6;
+	private int nbColonnes = 5;
 
 	public TableModelPanier(){
 		firstColIcon = new ImageIcon(getClass().getResource("del.png"),"Supprimer");
@@ -25,9 +25,8 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 		case 1 : return String.class;
 		case 2 : return String.class;
 		case 3 : return String.class;
-		case 4 : return boolean.class;
+		case 4 : return Double.class;
 		case 5 : return Double.class;
-		case 6 : return Double.class;
 		default: return String.class;
 		}
 	}
@@ -44,9 +43,8 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 		case 1 : return "ISBN";
 		case 2 : return "Titre";
 		case 3 : return "Auteur";
-		case 4 : return "Disponible";
-		case 5 : return "Prix (€)";
-		case 6 : return "Prix ("+Panier.getDevise()+")";
+		case 4 : return "Prix (€)";
+		case 5 : return "Prix ("+Panier.getDevise()+")";
 		default: return "";
 		}
 	}
@@ -64,9 +62,8 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 		case 1 : return Panier.getLivres().get(rowIndex).getIsbn();
 		case 2 : return Panier.getLivres().get(rowIndex).getTitre();
 		case 3 : return Panier.getLivres().get(rowIndex).getAuteur();
-		case 4 : return Panier.getLivres().get(rowIndex).isDisponible();
-		case 5 : return Panier.getLivres().get(rowIndex).getPrixEuros();
-		case 6 : return Panier.getPrixDevise(Panier.getLivres().get(rowIndex).getPrixEuros());
+		case 4 : return Panier.getLivres().get(rowIndex).getPrixEuros();
+		case 5 : return Panier.getPrixDevise(Panier.getLivres().get(rowIndex).getPrixEuros());
 		default: return "";
 		}
 	}
