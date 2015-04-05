@@ -17,7 +17,7 @@ public class ObservableImpl extends UnicastRemoteObject implements Observable{
 
 	@Override
 	public void newNotification() throws RemoteException {
-		String lastMessage = Session.getPersonne().getNotifications()[Session.getPersonne().getNotifications().length-1];
+		String lastMessage = Session.getLastNotification();
 		JOptionPane.showMessageDialog(null, lastMessage);
 	}
 
