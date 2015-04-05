@@ -221,8 +221,8 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	@Override
 	public boolean canSell() throws RemoteException{
 		long diff = Calendar.getInstance().getTimeInMillis()-dateAjout.getTime();
-		long twoyears = 2*365*24*3600*1000;
-		if (compteurPrets>1&&diff>twoyears/*&&isDisponible()*/)
+		long twoyears = 2*365*24*3600*1000L;
+		if (compteurPrets>=1&&diff>twoyears/*&&isDisponible()*/)
 			return true;
 		return false;
 	}

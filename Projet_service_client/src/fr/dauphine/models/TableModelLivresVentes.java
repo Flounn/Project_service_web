@@ -1,5 +1,6 @@
 package fr.dauphine.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -89,16 +90,20 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 	@Override
 	public void delRow(int numRow) {
 		Panier.addLivres(livres.get(numRow));
-		int old = livres.size();
-		livres.remove(numRow);
-		fireTableRowsDeleted(old, livres.size());
+		majLivres();
+		fireTableRowsDeleted(numRow,numRow);
 	}
 
 
 	private void majLivres(){
 		try {
-			livres = ConnexionWebServices.getLivresCanSell();
-			livres.removeAll(Panier.getLivres());
+			livres = new ArrayList<LivreService>();
+			
+			List<LivreService> temp = ConnexionWebServices.getLivresCanSell();
+			for (LivreService l : temp){
+				if (!Panier.getLivres().contains(l))
+					livres.add(l);
+			}
 			nbLignes=livres.size();
 		} catch (Exception e) {
 			e.printStackTrace();
