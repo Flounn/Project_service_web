@@ -1,2 +1,5 @@
 /bin/
 /build/
+/.classpath
+/WebContent/WEB-INF/lib/
+/.settings/
