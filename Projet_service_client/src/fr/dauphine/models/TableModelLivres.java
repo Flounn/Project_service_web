@@ -92,7 +92,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0 || columnIndex == 4 || columnIndex==6 || columnIndex==7)
+		if (Session.isEtudiant() || columnIndex == 0 || columnIndex == 4 || columnIndex==6 || columnIndex==7)
 			return false;
 		else return true;
 	}
