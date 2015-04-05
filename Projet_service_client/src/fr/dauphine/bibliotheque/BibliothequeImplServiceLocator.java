@@ -22,7 +22,7 @@ public class BibliothequeImplServiceLocator extends org.apache.axis.client.Servi
     }
 
     // Use to get a proxy class for BibliothequeImpl
-    private java.lang.String BibliothequeImpl_address = "http://localhost:8080/projet_service_server/services/BibliothequeImpl";
+    private java.lang.String BibliothequeImpl_address = "http://localhost:8080/Projet_service_web_biblio/services/BibliothequeImpl";
 
     public java.lang.String getBibliothequeImplAddress() {
         return BibliothequeImpl_address;

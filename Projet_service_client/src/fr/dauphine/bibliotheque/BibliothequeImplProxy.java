@@ -44,16 +44,22 @@ public class BibliothequeImplProxy implements fr.dauphine.bibliotheque.Bibliothe
     return bibliothequeImpl;
   }
   
+  public fr.dauphine.bibliotheque.LivreService[] getLivresCanSell() throws java.rmi.RemoteException{
+    if (bibliothequeImpl == null)
+      _initBibliothequeImplProxy();
+    return bibliothequeImpl.getLivresCanSell();
+  }
+  
   public boolean acheter(long[] livres) throws java.rmi.RemoteException{
     if (bibliothequeImpl == null)
       _initBibliothequeImplProxy();
     return bibliothequeImpl.acheter(livres);
   }
   
-  public fr.dauphine.bibliotheque.LivreService[] getLivresCanSell() throws java.rmi.RemoteException{
+  public java.lang.Object getPersonne(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
     if (bibliothequeImpl == null)
       _initBibliothequeImplProxy();
-    return bibliothequeImpl.getLivresCanSell();
+    return bibliothequeImpl.getPersonne(email, mdp);
   }
   
   
