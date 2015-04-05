@@ -44,6 +44,12 @@ public class ComponentTableCellRenderer implements TableCellRenderer{
 				component.setText(libelle);
 				component.setToolTipText(libelle);
 				break;
+			case Classe.ListInteger:
+				ListInteger list = (ListInteger) value;
+				String lib = list.getValueSelected()!=null?list.getValueSelected().toString():null; 
+				component.setText(lib);
+				component.setToolTipText(lib);
+				break;
 			case Classe.Long:
 				Long te = (Long)value;
 				component.setText(te.toString());

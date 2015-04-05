@@ -14,7 +14,7 @@ import fr.dauphine.models.ComboBoxModelInteger;
 
 
 public class JListTableCellEditor implements TableCellEditor{
-	private JComboBox<?> component;
+	private JComboBox<Integer> component;
 	private JTable table;
 	private String className;
 	private int row;
@@ -89,7 +89,7 @@ public class JListTableCellEditor implements TableCellEditor{
 				//component = new JComboBox<Generique>(new ComboBoxModelDevise(values.getResultSet(),true,values.getIndiceSelection()));
 				//component.setSelectedIndex(values.getIndiceSelection());
 				//}
-			case Classe.ListInteger:	
+			case Classe.ListInteger:
 				component=new JComboBox<Integer>(new ComboBoxModelInteger((ListInteger) value));
 
 			}
