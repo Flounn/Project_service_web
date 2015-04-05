@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package fr.dauphine.beans;
+package fr.dauphine.bibliotheque;
 
 public class LivreService  implements java.io.Serializable {
     private java.lang.String auteur;
@@ -372,72 +372,72 @@ public class LivreService  implements java.io.Serializable {
         new org.apache.axis.description.TypeDesc(LivreService.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://beans.dauphine.fr", "LivreService"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "LivreService"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("auteur");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "auteur"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "auteur"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("commentaires");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "commentaires"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "commentaires"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
-        elemField.setItemQName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "item"));
+        elemField.setItemQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "item"));
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("compteurPrets");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "compteurPrets"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "compteurPrets"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "long"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("dateAjout");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "dateAjout"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "dateAjout"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("disponible");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "disponible"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "disponible"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("isbn");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "isbn"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "isbn"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("moyenneNotes");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "moyenneNotes"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "moyenneNotes"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("notes");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "notes"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "notes"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setNillable(true);
-        elemField.setItemQName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "item"));
+        elemField.setItemQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "item"));
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("numero");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "numero"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "numero"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "long"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("prixEuros");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "prixEuros"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "prixEuros"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("titre");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://beans.dauphine.fr", "titre"));
+        elemField.setXmlName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "titre"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);

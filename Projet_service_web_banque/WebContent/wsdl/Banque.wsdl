@@ -98,16 +98,33 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="findByEmail">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findByEmailResponse">
+    <complexType>
+     <sequence>
+      <element name="findByEmailReturn" type="impl:Compte"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="Compte">
+    <sequence>
+     <element name="devise" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
+     <element name="mdp" nillable="true" type="xsd:string"/>
+     <element name="noCompte" type="xsd:long"/>
+     <element name="nom" nillable="true" type="xsd:string"/>
+     <element name="prenom" nillable="true" type="xsd:string"/>
+     <element name="solde" type="xsd:double"/>
+    </sequence>
+   </complexType>
   </schema>
  </wsdl:types>
-
-   <wsdl:message name="retraitEurResponse">
-
-      <wsdl:part element="impl:retraitEurResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
 
    <wsdl:message name="consultSoldeResponse">
 
@@ -117,9 +134,41 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="delCompteRequest">
+   <wsdl:message name="retraitEurResponse">
 
-      <wsdl:part element="impl:delCompte" name="parameters">
+      <wsdl:part element="impl:retraitEurResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addCompteRequest">
+
+      <wsdl:part element="impl:addCompte" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByEmailRequest">
+
+      <wsdl:part element="impl:findByEmail" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="delCompteResponse">
+
+      <wsdl:part element="impl:delCompteResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByEmailResponse">
+
+      <wsdl:part element="impl:findByEmailResponse" name="parameters">
 
       </wsdl:part>
 
@@ -133,9 +182,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addCompteRequest">
+   <wsdl:message name="delCompteRequest">
 
-      <wsdl:part element="impl:addCompte" name="parameters">
+      <wsdl:part element="impl:delCompte" name="parameters">
 
       </wsdl:part>
 
@@ -157,9 +206,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addCompteResponse">
+   <wsdl:message name="consultDeviseRequest">
 
-      <wsdl:part element="impl:addCompteResponse" name="parameters">
+      <wsdl:part element="impl:consultDevise" name="parameters">
 
       </wsdl:part>
 
@@ -173,17 +222,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="consultDeviseRequest">
+   <wsdl:message name="addCompteResponse">
 
-      <wsdl:part element="impl:consultDevise" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="delCompteResponse">
-
-      <wsdl:part element="impl:delCompteResponse" name="parameters">
+      <wsdl:part element="impl:addCompteResponse" name="parameters">
 
       </wsdl:part>
 
@@ -266,6 +307,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:addCompteResponse" name="addCompteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByEmail">
+
+         <wsdl:input message="impl:findByEmailRequest" name="findByEmailRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findByEmailResponse" name="findByEmailResponse">
 
        </wsdl:output>
 
@@ -378,6 +431,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="addCompteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByEmail">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByEmailRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByEmailResponse">
 
             <wsdlsoap:body use="literal"/>
 

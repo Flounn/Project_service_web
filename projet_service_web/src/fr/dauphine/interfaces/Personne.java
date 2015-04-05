@@ -34,4 +34,9 @@ public interface Personne extends Remote{
 	void delEnAttente(Livre l) throws RemoteException;
 	void delAllEnAttente() throws RemoteException;
 
+	void addNote(Livre livre,int note) throws RemoteException;
+	void addCommentaire(Livre livre,String commentaire) throws RemoteException;
+	void addNoteAndCommentaire(Livre livre,int note, String commentaire) throws RemoteException;
+	Integer getNote(Livre livre) throws RemoteException;
+	String getCommentaire(Livre livre) throws RemoteException;
 }

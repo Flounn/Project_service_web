@@ -12,11 +12,11 @@ import javax.xml.rpc.ServiceException;
 import fr.dauphine.banque.Banque;
 import fr.dauphine.banque.BanqueServiceLocator;
 import fr.dauphine.banque.BanqueSoapBindingStub;
-import fr.dauphine.beans.BibliothequeImpl;
-import fr.dauphine.beans.BibliothequeImplServiceLocator;
-import fr.dauphine.beans.BibliothequeImplSoapBindingStub;
-import fr.dauphine.beans.LivreService;
-import fr.dauphine.beans.PersonneImpl;
+import fr.dauphine.bibliotheque.BibliothequeImpl;
+import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
+import fr.dauphine.bibliotheque.BibliothequeImplSoapBindingStub;
+import fr.dauphine.bibliotheque.LivreService;
+import fr.dauphine.bibliotheque.PersonneImpl;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
@@ -32,7 +32,8 @@ public class Main {
 		initBanque(banque);
 		
 		BibliothequeImpl bibliotheque = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);	
+		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);
+		LivreService livres[] = bibliotheque.getLivresCanSell();
 
 		System.setProperty("java.security.policy", "sec.policy");
 		//System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");

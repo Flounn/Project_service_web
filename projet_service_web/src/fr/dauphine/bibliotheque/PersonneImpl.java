@@ -1,7 +1,8 @@
-package fr.dauphine.beans;
+package fr.dauphine.bibliotheque;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.dauphine.interfaces.Livre;
@@ -18,6 +19,8 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	private String mdp;
 	private List<String> notifications;
 	private List<Livre> enAttente;
+	private HashMap<Livre, Integer> notes = new HashMap<Livre, Integer>();
+	private HashMap<Livre, String> commentaires = new HashMap<Livre, String>();
 
 
 	/**
@@ -136,6 +139,11 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	 */
 	@Override
 	public void addLivre(Livre livre) throws RemoteException  {
+		if (this.livres.contains(livre)||this.enAttente.contains(livre)){
+			System.out.println("Vous avez deja emprunte ce livre");
+			return;
+		}
+			
 		if(livre.isDisponible()){
 			System.out.println(livre.remoteToString() + " a ete emprunte par " 
 					+ this.remoteToString());
@@ -143,8 +151,10 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 			livre.setDisponible(false);
 			livre.setCompteurPrets(livre.getCompteurPrets()+1);
 		} else {
+			this.enAttente.add(livre);
+			livre.addToAttente(this);
 			System.out.println(livre.remoteToString() + 
-					" n'est pas disponible est ne peut pas etre emprunté");
+					" n'est pas disponible. Vous avez ete place sur la liste d'attente");
 		}
 		
 	}
@@ -158,9 +168,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.livres.remove(livre);
 		System.out.println(livre.remoteToString() + " a ete retourne par " 
 				+ this.remoteToString());
-		livre.setDisponible(true);
-		if(livre.getAttente()!=null)
-			livre.passerAuSuivant(livre.getAttente()[0]);
+		livre.passerAuSuivant();
 	}
 
 	/**
@@ -197,6 +205,11 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	}
 	@Override
 	public void addEnAttente(Livre l) throws RemoteException {
+		if (enAttente.contains(l)||livres.contains(l)){
+			System.out.println("Vous avez deja emprunte ce livre.");
+			return;
+		}
+			
 		System.out.println(l.remoteToString() + " a ete rajoute a la liste d'attente");
 		this.enAttente.add(l);
 	}
@@ -209,5 +222,38 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	public void delAllEnAttente() throws RemoteException {
 		this.enAttente.clear();
 	}
+
+	@Override
+	public void addNote(Livre livre, int note) throws RemoteException {
+		notes.put(livre, note);
+		livre.addNote(note);
+	}
+
+	@Override
+	public void addCommentaire(Livre livre, String commentaire)
+			throws RemoteException {
+		commentaires.put(livre, commentaire);
+		livre.addCommentaire(commentaire);
+	}
+
+	@Override
+	public void addNoteAndCommentaire(Livre livre, int note, String commentaire)
+			throws RemoteException {
+		addNote(livre, note);
+		addCommentaire(livre, commentaire);
+	}
+
+	@Override
+	public Integer getNote(Livre livre) throws RemoteException {
+		return notes.get(livre);
+	}
+
+	@Override
+	public String getCommentaire(Livre livre) throws RemoteException {
+		return commentaires.get(livre);
+	}
+	
+	
+	
 	
 }

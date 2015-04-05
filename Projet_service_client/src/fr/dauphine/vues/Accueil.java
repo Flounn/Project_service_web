@@ -1,57 +1,53 @@
 package fr.dauphine.vues;
 
-import java.awt.AWTEvent;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-import java.awt.event.WindowAdapter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class Accueil extends JFrame {
+public class Accueil extends JFrame implements ConnexionOk {
 
-	private static final long serialVersionUID = -435463672951049291L;
+	private static final long serialVersionUID = 1L;
 	public MenuAccueil menuAccueil;
-	private WindowAdapter evenementFrame;
-	private AWTEventListener evenementBoutton;
 
-	public Accueil() {	
-
+	public Accueil() {
 		initUI();
-
 	}
 
-
 	private void initUI() {
-		// Gestion des modules de vues
-		//AbstractJPanelObserver viewInfosCourse=new InformationsCourse(this);
-
 
 		pack();
 		setMinimumSize(new Dimension(800,600));
 		setLocationRelativeTo(getParent());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
-		menuAccueil = new MenuAccueil();
-		//listeObserver.add(menuAccueil);
-		setJMenuBar(menuAccueil);
 		setIconImage(new ImageIcon(getClass().getResource("icone.png")).getImage());
-		//JSplitPane spHaut = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, viewInfosCourse, viewInfosVoiture);
 
-		//JSplitPane spBas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, circuit, viewClassementCourse);
-		//spHaut.setDividerSize(2);
-		//spBas.setDividerSize(2);
-
-		//JSplitPane spVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, spHaut, spBas);
-		//spVertical.setDividerSize(2);
-		//add(spVertical);
-
-		addWindowListener(evenementFrame) ;
-		Toolkit.getDefaultToolkit().addAWTEventListener(evenementBoutton,AWTEvent.KEY_EVENT_MASK);
+		initUISeConnecter();
 
 		setVisible(true);
 
+	}
+
+	private void initUISeConnecter(){
+		getContentPane().setLayout(new BorderLayout());
+		JPanel pane = new JPanelConnexion(this);
+		getContentPane().add(pane, BorderLayout.CENTER);
+	}
+
+	private void initUIAccueil(){
+		getContentPane().removeAll();
+		JPanel pane = new JPanelAccueil();
+		getContentPane().add(pane, BorderLayout.CENTER);
+		setJMenuBar(new MenuAccueil());
+		validate();
+	}
+
+	@Override
+	public void connexionOk() {
+		initUIAccueil();
 	}
 
 }

@@ -115,7 +115,7 @@ public class IHM extends JFrame implements ActionListener {
 		if (Connexion.addLivre(txt_isbn.getText(), txt_auteur.getText(), txt_titre.getText(), Double.parseDouble(txt_prix.getText()))){
 			System.out.println("livre ajoute");
 			this.dispose();
-			callback.selectionLigne(null);
+			//callback.selectionLigne(null);
 		}
 		else
 			System.out.println("erreur!");

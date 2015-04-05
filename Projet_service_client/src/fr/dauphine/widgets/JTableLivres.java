@@ -15,28 +15,49 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import fr.dauphine.bibliotheque.LivreService;
+import fr.dauphine.models.AbstractLivresTableModel;
+import fr.dauphine.models.TableModelLivres;
 import fr.dauphine.renderers.ComponentTableCellRenderer; 
 import fr.dauphine.renderers.ComponentTableCellEditor; 
 import fr.dauphine.renderers.JLabelTableCellRenderer;
 import fr.dauphine.renderers.JListTableCellEditor;
 import fr.dauphine.renderers.ListGenerique;
+import fr.dauphine.renderers.ListInteger;
 
-public class JTableGestionBO extends JTable {
- 
+public class JTableLivres extends JTable {
+
 	private static final long serialVersionUID = 9021059135821154367L;
 	private final ImageIcon addIcon = new ImageIcon(getClass().getResource("add.png"));
-	private final TableModelGestionBO model;
-	
+	private final AbstractLivresTableModel model;
+
 	private final ComponentTableCellRenderer ComponentTableCellRenderer = new ComponentTableCellRenderer();
 	private final ComponentTableCellEditor ComponentTableCellEditor = new ComponentTableCellEditor();
 	private final String nomTable;
-	private SelectionListener SelectionListener;
+	private SelectionListener selectionListener;
+	private SelectionListenerLivre selectionListenerLivre;
 
-	public JTableGestionBO(String nomTable,SelectionListener SelectionListener){
-		this.SelectionListener=SelectionListener;
+	public JTableLivres(String nomTable, AbstractLivresTableModel model){
 		this.nomTable = nomTable;
-		model = new TableModelGestionBO(SelectionListener!=null);
+		this.model = model;
+		initUi();
+	}
 
+	public JTableLivres(String nomTable,AbstractLivresTableModel model, SelectionListenerLivre SelectionListenerLivre){
+		this.nomTable = nomTable;
+		this.model = model;
+		this.selectionListenerLivre=SelectionListenerLivre;
+		initUi();
+	}
+
+	public JTableLivres(String nomTable,AbstractLivresTableModel model,SelectionListener SelectionListener){
+		this.nomTable = nomTable;
+		this.model = model;
+		selectionListener=SelectionListener;
+		initUi();
+	}
+
+	private void initUi(){
 		setRowHeight(35);
 		setModel(model);
 
@@ -52,7 +73,7 @@ public class JTableGestionBO extends JTable {
 		getColumnModel().getColumn(0).setMaxWidth(50);
 		JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
 		addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
-		addJLabel.setToolTipText(nomTable+"_ajouter");
+		addJLabel.setToolTipText("Ajouter "+nomTable);
 		getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
 		getColumnModel().getColumn(0).setHeaderValue(addJLabel);
 
@@ -68,6 +89,9 @@ public class JTableGestionBO extends JTable {
 		setDefaultRenderer(Double.class, ComponentTableCellRenderer);
 		setDefaultEditor(ListGenerique.class, new JListTableCellEditor());
 		setDefaultRenderer(ListGenerique.class, ComponentTableCellRenderer);
+		setDefaultEditor(ListInteger.class, new JListTableCellEditor());
+		setDefaultRenderer(ListInteger.class, ComponentTableCellRenderer);
+		setDefaultRenderer(boolean.class, ComponentTableCellRenderer);
 
 		getTableHeader().setReorderingAllowed(false); 
 		// je veux pouvoir selectionner une cellule a la fois
@@ -91,9 +115,15 @@ public class JTableGestionBO extends JTable {
 				if (!isModeSelection())	// Bouton Supprimer
 					model.delRow(convertRowIndexToModel(row));
 				else {// Bouton Selectionner
-					SelectionListener.selectionLigne((Integer) model.getValueAt(convertRowIndexToModel(row), 1));
+					if (selectionListener!=null)
+						selectionListener.selectionLigne((long) model.getValueAt(convertRowIndexToModel(row), 1));
+					else
+						selectionListenerLivre.selectionLigne((LivreService) model.getValueAt(convertRowIndexToModel(row)));
 					((JInternalFrame)getParent().getParent().getParent().getParent().getParent().getParent()).dispose();
 				}
+			}
+			else if (col==6){//Emprunter
+				((TableModelLivres)model).emprunter(convertRowIndexToModel(row));
 			}
 
 		}
@@ -109,12 +139,13 @@ public class JTableGestionBO extends JTable {
 			int col = columnAtPoint(p);
 
 			if (col==0){
-				model.addRow();
-				int i = convertRowIndexToView(model.getRowCount()-1);
-				changeSelection(i, 2, false, false);
-				evt.setSource(((JTableHeader)evt.getSource()).getTable());
-				editCellAt(i, 2,evt);
-				getEditorComponent().requestFocus();
+				if (model.addRow()){
+					int i = convertRowIndexToView(model.getRowCount()-1);
+					changeSelection(i, 1, false, false);
+					evt.setSource(((JTableHeader)evt.getSource()).getTable());
+					editCellAt(i, 1,evt);
+					getEditorComponent().requestFocus();
+				}
 			}
 
 		}
@@ -123,7 +154,7 @@ public class JTableGestionBO extends JTable {
 
 
 	public boolean isModeSelection() {
-		return SelectionListener!=null;
+		return selectionListener!=null||selectionListenerLivre!=null;
 	}
 
 	public String getNomTable() {

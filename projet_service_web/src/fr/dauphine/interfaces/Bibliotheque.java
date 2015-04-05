@@ -15,4 +15,5 @@ public interface Bibliotheque extends Remote{
 	boolean delPersonne(Personne personne) throws RemoteException;
 	Personne findByEmail(String email) throws RemoteException;
 	Livre[] getLivres() throws RemoteException;
+	Personne getPersonne(String email, String mdp) throws RemoteException;
 }

@@ -1,4 +1,4 @@
-package fr.dauphine.beans;
+package fr.dauphine.bibliotheque;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -77,10 +77,17 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		}
 	}
 	@Override
-	public synchronized void passerAuSuivant(Personne p) throws RemoteException {
-		this.attente.remove(p);
-		p.addLivre(this);
-		p.notification(this);
+	public synchronized void passerAuSuivant() throws RemoteException {
+		if (attente.isEmpty())
+			disponible=true;
+		else{
+			Personne p = attente.get(0);
+			attente.remove(p);
+			p.delEnAttente(this);
+			disponible=true;
+			p.addLivre(this);
+			p.notification(this);
+		}
 	}
 
 	@Override
@@ -158,10 +165,7 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	public boolean isDisponible() throws RemoteException  {
 		return disponible;
 	}
-	@Override
-	public void setDisponible(boolean disponible) throws RemoteException  {
-		this.disponible = disponible;
-	}
+
 	@Override
 	public long getCompteurPrets() throws RemoteException{
 		return compteurPrets;
@@ -220,6 +224,11 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 		if (compteurPrets>1&&diff>twoyears/*&&isDisponible()*/)
 			return true;
 		return false;
+	}
+
+	@Override
+	public void setDisponible(boolean disponible) throws RemoteException {
+		this.disponible=disponible;		
 	}
 
 
