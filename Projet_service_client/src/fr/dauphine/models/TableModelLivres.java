@@ -54,7 +54,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		case 2 : return "Titre";
 		case 3 : return "Auteur";
 		case 4 : return "Disponible";
-		case 5 : return "Prix (ï¿½)";
+		case 5 : return "Prix (€)";
 		case 6 : return "Note moyenne";
 		case 7 : return "Emprunter";
 		default: return "";

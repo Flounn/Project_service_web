@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.main.ConnexionWebServices;
@@ -71,6 +72,7 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 		case 3 : return livres.get(rowIndex).getAuteur();
 		case 4 : return livres.get(rowIndex).isDisponible();
 		case 5 : return livres.get(rowIndex).getPrixEuros();
+		case 6 : return Panier.getPrixDevise(livres.get(rowIndex).getPrixEuros());
 		default: return "";
 		}
 
@@ -89,6 +91,11 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 	
 	@Override
 	public void delRow(int numRow) {
+		if (livres.get(numRow).isDisponible()==false){
+			JOptionPane.showMessageDialog(null, "Ce livre n'est pas disponible.");
+			return;
+		}
+			
 		Panier.addLivres(livres.get(numRow));
 		majLivres();
 		fireTableRowsDeleted(numRow,numRow);

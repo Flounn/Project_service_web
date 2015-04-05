@@ -14,6 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.xml.rpc.ServiceException;
+
+import NET.webserviceX.www.Currency;
+import NET.webserviceX.www.CurrencyConvertorLocator;
+import NET.webserviceX.www.CurrencyConvertorSoap;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.interfaces.Personne;
@@ -266,6 +271,11 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 				return t.getValue();
 		}
 		return null;
+	}
+	
+	public double getPrixDevise(String devise,double prixEuros) throws ServiceException, RemoteException, IllegalArgumentException{
+		CurrencyConvertorSoap dev = new CurrencyConvertorLocator().getCurrencyConvertorSoap();
+		return dev.conversionRate(Currency.fromString("EUR"), Currency.fromString(devise))*prixEuros;
 	}
 
 }

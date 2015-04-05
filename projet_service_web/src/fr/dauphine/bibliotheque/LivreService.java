@@ -6,11 +6,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.rpc.ServiceException;
-
 import NET.webserviceX.www.Currency;
 import NET.webserviceX.www.CurrencyConvertorLocator;
-import NET.webserviceX.www.CurrencyConvertorSoap;
 import fr.dauphine.interfaces.Livre;
 
 
@@ -187,10 +184,13 @@ public class LivreService {
 		return result;
 	}
 	
-	public double getPrixDevise(String devise) throws ServiceException, RemoteException, IllegalArgumentException{
-		CurrencyConvertorSoap dev = new CurrencyConvertorLocator().getCurrencyConvertorSoap();
-		return Math.round(100*prixEuros*dev.conversionRate(Currency.fromString("EUR"), Currency.fromString(devise)))/100;
+	public double getPrixDevise(String devise) {
+		try {
+			return new CurrencyConvertorLocator().getCurrencyConvertorSoap().conversionRate(Currency.fromString("EUR"), Currency.fromString(devise))*prixEuros;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
-
 
 }
