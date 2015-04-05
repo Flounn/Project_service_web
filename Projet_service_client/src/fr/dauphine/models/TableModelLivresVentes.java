@@ -1,22 +1,24 @@
 package fr.dauphine.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
 import fr.dauphine.bibliotheque.LivreService;
-import fr.dauphine.main.Connexion;
+import fr.dauphine.main.ConnexionWebServices;
+import fr.dauphine.main.Panier;
 
 public class TableModelLivresVentes extends AbstractLivresTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private final ImageIcon firstColIcon;
 	private List<LivreService> livres;
-	private int nbColonnes = 4;
+	private int nbColonnes = 6;
 	private int nbLignes;
 
 	public TableModelLivresVentes(){
-		firstColIcon = new ImageIcon(getClass().getResource("selectionner.png"),"Selectionner");
+		firstColIcon = new ImageIcon(getClass().getResource("acheter.png"),"Acheter");
 		majLivres();
 	}
 
@@ -27,8 +29,10 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 		case 0: return firstColIcon.getClass();
 		case 1 : return String.class;
 		case 2 : return String.class;
-		case 3 : return boolean.class;
-		case 4 : return double.class;
+		case 3 : return String.class;
+		case 4 : return boolean.class;
+		case 5 : return Double.class;
+		case 6 : return Double.class;
 		default: return String.class;
 		}
 	}
@@ -42,10 +46,12 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 	public String getColumnName(int columnIndex) {
 		switch (columnIndex){
 		case 0:return "";
-		case 1 : return "Titre";
-		case 2 : return "Auteur";
-		case 3 : return "Disponible";
-		case 4 : return "Prix (€)";
+		case 1 : return "ISBN";
+		case 2 : return "Titre";
+		case 3 : return "Auteur";
+		case 4 : return "Disponible";
+		case 5 : return "Prix (€)";
+		case 6 : return "Prix ("+Panier.getDevise()+")";
 		default: return "";
 		}
 	}
@@ -60,10 +66,11 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 
 		switch (columnIndex){
 		case 0:return firstColIcon;
-		case 1 : return livres.get(rowIndex).getTitre();
-		case 2 : return livres.get(rowIndex).getAuteur();
-		case 3 : return livres.get(rowIndex).isDisponible();
-		case 4 : return livres.get(rowIndex).getPrixEuros();
+		case 1 : return livres.get(rowIndex).getIsbn();
+		case 2 : return livres.get(rowIndex).getTitre();
+		case 3 : return livres.get(rowIndex).getAuteur();
+		case 4 : return livres.get(rowIndex).isDisponible();
+		case 5 : return livres.get(rowIndex).getPrixEuros();
 		default: return "";
 		}
 
@@ -79,11 +86,24 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
+	
+	@Override
+	public void delRow(int numRow) {
+		Panier.addLivres(livres.get(numRow));
+		majLivres();
+		fireTableRowsDeleted(numRow,numRow);
+	}
 
 
 	private void majLivres(){
 		try {
-			livres = Connexion.getLivresCanSell();
+			livres = new ArrayList<LivreService>();
+			
+			List<LivreService> temp = ConnexionWebServices.getLivresCanSell();
+			for (LivreService l : temp){
+				if (!Panier.getLivres().contains(l))
+					livres.add(l);
+			}
 			nbLignes=livres.size();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,7 +8,7 @@ public class ComboBoxModelDevise  extends AbstractListModel<String> implements C
 	private static final long serialVersionUID = 1L;
 	private String[] values = {"EUR","USD","CHF","JPY","CNY"};	
 	
-	private String selectedItem;
+	private String selectedItem = "EUR";
 	
 	public String getElementAt(int indice) {
 		return values[indice];

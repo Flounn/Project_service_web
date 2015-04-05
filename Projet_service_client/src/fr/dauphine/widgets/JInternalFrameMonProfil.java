@@ -3,7 +3,6 @@ package fr.dauphine.widgets;
 import javax.swing.JInternalFrame;
 
 import fr.dauphine.main.Session;
-import fr.dauphine.models.TableModelNotifications;
 import fr.dauphine.vues.JPanelLivresNotifications;
 
 import javax.swing.GroupLayout;
