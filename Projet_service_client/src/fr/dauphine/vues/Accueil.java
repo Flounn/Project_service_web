@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 public class Accueil extends JFrame implements ConnexionOk {
 
@@ -39,9 +40,12 @@ public class Accueil extends JFrame implements ConnexionOk {
 
 	private void initUIAccueil(){
 		getContentPane().removeAll();
-		JPanel pane = new JPanelAccueil();
-		getContentPane().add(pane, BorderLayout.CENTER);
 		setJMenuBar(new MenuAccueil());
+		
+		setLayout(new BorderLayout());
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,new JPanelLivresEmpruntes(),new JPanelLivresEnAttentes());
+		splitPane.setResizeWeight(0.5d);
+		getContentPane().add(splitPane, BorderLayout.CENTER);
 		validate();
 	}
 
@@ -51,12 +55,11 @@ public class Accueil extends JFrame implements ConnexionOk {
 	}
 	
 	public void refreshJTables(){
-		for (Component c : getContentPane().getComponents()){
-			if (c instanceof JPanelAccueil){
-				JPanelAccueil jpane = (JPanelAccueil) c;
-				jpane.refreshJTable();
-			}
-		}
+		if (getContentPane().getComponents().length==0)
+			return;
+		JSplitPane splitPane = (JSplitPane)getContentPane().getComponents()[0];
+		((JPanelLivresEmpruntes)splitPane.getLeftComponent()).refreshJTable();
+		((JPanelLivresEnAttentes)splitPane.getRightComponent()).refreshJTable();
 	}
 
 }

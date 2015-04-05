@@ -209,11 +209,12 @@ public class LivreImpl extends UnicastRemoteObject implements Livre {
 	}
 
 	@Override
-	public double getMoyenneNotes() throws RemoteException {
-		double result =0;
+	public Double getMoyenneNotes() throws RemoteException {
+		if (notes==null||notes.isEmpty())
+			return null;
+		double result = notes.get(0);
 		for (int n : notes)
 			result=(result+n)/2;
-
 		return result;
 	}
 

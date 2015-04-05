@@ -11,7 +11,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
@@ -126,7 +125,7 @@ public class JTableLivres extends JTable {
 					((JInternalFrame)getParent().getParent().getParent().getParent().getParent().getParent()).dispose();
 				}
 			}
-			else if (col==6){//Emprunter
+			else if (col==7){//Emprunter
 				((TableModelLivres)model).emprunter(convertRowIndexToModel(row));
 			}
 
@@ -145,7 +144,7 @@ public class JTableLivres extends JTable {
 			if (col==0){
 				if (model instanceof TableModelLivresEnAttentes || model instanceof TableModelLivresEmpruntes){
 					JInternalFrame test = new JInternalFrameGestionBO("Emprunt");
-					getParent().getParent().getParent().getParent().getParent().getParent().add(test);
+					getParent().getParent().getParent().getParent().getParent().getParent().getParent().add(test);
 					try {
 						test.setMaximum(true);
 					} catch (PropertyVetoException e) {e.printStackTrace();}

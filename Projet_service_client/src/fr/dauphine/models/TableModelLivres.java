@@ -16,7 +16,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 	private final ImageIcon firstColIcon;
 	private final ImageIcon lastColIcon;
 	private List<Livre> livres;
-	private int nbColonnes = 5;
+	private int nbColonnes = 6;
 	private int nbLignes;
 	private Livre livreAdd;
 
@@ -36,7 +36,8 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		case 3 : return String.class;
 		case 4 : return boolean.class;
 		case 5 : return Double.class;
-		case 6: return lastColIcon.getClass();
+		case 6 : return Double.class;
+		case 7: return lastColIcon.getClass();
 		default: return String.class;
 		}
 	}
@@ -55,7 +56,8 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		case 3 : return "Auteur";
 		case 4 : return "Disponible";
 		case 5 : return "Prix (€)";
-		case 6 : return "Emprunter";
+		case 6 : return "Note moyenne";
+		case 7 : return "Emprunter";
 		default: return "";
 		}
 	}
@@ -76,7 +78,8 @@ public class TableModelLivres extends AbstractLivresTableModel {
 			case 3 : return livre.getAuteur();
 			case 4 : return livre.isDisponible();
 			case 5 : return livre.getPrixEuros();
-			case 6 : return lastColIcon;
+			case 6 : return livre.getMoyenneNotes();
+			case 7 : return lastColIcon;
 			default: return "";
 			}
 		}
@@ -90,7 +93,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0 || columnIndex == 4 || columnIndex==6)
+		if (columnIndex == 0 || columnIndex == 4 || columnIndex==6 || columnIndex==7)
 			return false;
 		else return true;
 	}
