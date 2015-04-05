@@ -11,7 +11,7 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 
 	private static final long serialVersionUID = 1L;
 	private final ImageIcon firstColIcon;
-	private int nbColonnes = 4;
+	private int nbColonnes = 6;
 
 	public TableModelPanier(){
 		firstColIcon = new ImageIcon(getClass().getResource("del.png"),"Supprimer");

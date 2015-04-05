@@ -157,7 +157,7 @@ public class JTableLivres extends JTable {
 				
 				if (model instanceof TableModelPanier){
 					JInternalFrame test = new JInternalFrameGestionBO("Livres",new TableModelLivresVentes());
-					getParent().getParent().getParent().getParent().getParent().getParent().getParent().add(test);
+					getParent().getParent().getParent().getParent().getParent().getParent().add(test);
 					try {
 						test.setMaximum(true);
 					} catch (PropertyVetoException e) {e.printStackTrace();}
@@ -185,6 +185,51 @@ public class JTableLivres extends JTable {
 
 	public String getNomTable() {
 		return nomTable;
+	}
+	
+	public void refreshHeader(){
+		model.fireTableStructureChanged();setRowHeight(35);
+		setModel(model);
+
+		final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(getModel());
+		sorter.setSortable(0, false);
+		setRowSorter(sorter);
+		addMouseListener(new MouseAdapterJTable());
+		getColumnModel().getColumn(0).setResizable(false);
+		getColumnModel().getColumn(0).setMaxWidth(50);
+		
+		if (!(model instanceof TableModelNotifications)){
+			getTableHeader().addMouseListener(new MouseAdapterHeader());
+
+			// sorter.setSortKeys(null);
+			JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
+			addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
+			addJLabel.setToolTipText("Ajouter "+nomTable);
+			getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
+			getColumnModel().getColumn(0).setHeaderValue(addJLabel);
+		}
+		setDefaultEditor(Integer.class, ComponentTableCellEditor);
+		setDefaultRenderer(Integer.class, ComponentTableCellRenderer);
+		setDefaultEditor(Timestamp.class, ComponentTableCellEditor);
+		setDefaultRenderer(Timestamp.class, ComponentTableCellRenderer);
+		setDefaultEditor(Time.class, ComponentTableCellEditor);
+		setDefaultRenderer(Time.class, ComponentTableCellRenderer);
+		setDefaultEditor(String.class, ComponentTableCellEditor);
+		setDefaultRenderer(String.class, ComponentTableCellRenderer);
+		setDefaultEditor(Double.class, ComponentTableCellEditor);
+		setDefaultRenderer(Double.class, ComponentTableCellRenderer);
+		setDefaultEditor(ListGenerique.class, new JListTableCellEditor());
+		setDefaultRenderer(ListGenerique.class, ComponentTableCellRenderer);
+		setDefaultEditor(ListInteger.class, new JListTableCellEditor());
+		setDefaultRenderer(ListInteger.class, ComponentTableCellRenderer);
+		setDefaultRenderer(boolean.class, ComponentTableCellRenderer);
+
+		getTableHeader().setReorderingAllowed(false); 
+		// je veux pouvoir selectionner une cellule a la fois
+		// setRowSelectionAllowed(true);
+		setColumnSelectionAllowed(true);
+		//setCellSelectionEnabled(true);
+		this.setVisible(true);
 	}
 
 }

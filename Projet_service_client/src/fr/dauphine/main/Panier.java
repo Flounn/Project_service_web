@@ -67,6 +67,7 @@ public final class Panier {
 		if (panier.isEmpty())
 			return;
 		ConnexionWebServices.validerPanier(panier);
+		panier.clear();
 	}
 	
 }
