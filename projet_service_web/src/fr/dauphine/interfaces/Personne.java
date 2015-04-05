@@ -3,7 +3,7 @@ package fr.dauphine.interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface Personne extends Remote{
+public interface Personne extends Remote {
 
 	public enum Role {Enseignant,Etudiant}
 
@@ -19,6 +19,7 @@ public interface Personne extends Remote{
 	void addLivre(Livre livre) throws RemoteException;
 	void returnLivre(Livre livre) throws RemoteException;
 	void notification(Livre livre) throws RemoteException;
+	void newNotification()throws RemoteException;
 	String getEmail() throws RemoteException;
 	void setEmail(String email) throws RemoteException;
 	String getMdp() throws RemoteException;
@@ -39,4 +40,5 @@ public interface Personne extends Remote{
 	void addNoteAndCommentaire(Livre livre,int note, String commentaire) throws RemoteException;
 	Integer getNote(Livre livre) throws RemoteException;
 	String getCommentaire(Livre livre) throws RemoteException;
+	void notification(String message) throws RemoteException;
 }

@@ -3,6 +3,7 @@ package fr.dauphine.widgets;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
+import java.beans.PropertyVetoException;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -18,6 +19,9 @@ import javax.swing.table.TableRowSorter;
 import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.models.AbstractLivresTableModel;
 import fr.dauphine.models.TableModelLivres;
+import fr.dauphine.models.TableModelLivresEmpruntes;
+import fr.dauphine.models.TableModelLivresEnAttentes;
+import fr.dauphine.models.TableModelNotifications;
 import fr.dauphine.renderers.ComponentTableCellRenderer; 
 import fr.dauphine.renderers.ComponentTableCellEditor; 
 import fr.dauphine.renderers.JLabelTableCellRenderer;
@@ -65,18 +69,19 @@ public class JTableLivres extends JTable {
 		sorter.setSortable(0, false);
 		setRowSorter(sorter);
 		addMouseListener(new MouseAdapterJTable());
-		getTableHeader().addMouseListener(new MouseAdapterHeader());
-
-		// sorter.setSortKeys(null);
-
 		getColumnModel().getColumn(0).setResizable(false);
 		getColumnModel().getColumn(0).setMaxWidth(50);
-		JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
-		addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
-		addJLabel.setToolTipText("Ajouter "+nomTable);
-		getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
-		getColumnModel().getColumn(0).setHeaderValue(addJLabel);
+		
+		if (!(model instanceof TableModelNotifications)){
+			getTableHeader().addMouseListener(new MouseAdapterHeader());
 
+			// sorter.setSortKeys(null);
+			JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
+			addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
+			addJLabel.setToolTipText("Ajouter "+nomTable);
+			getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
+			getColumnModel().getColumn(0).setHeaderValue(addJLabel);
+		}
 		setDefaultEditor(Integer.class, ComponentTableCellEditor);
 		setDefaultRenderer(Integer.class, ComponentTableCellRenderer);
 		setDefaultEditor(Timestamp.class, ComponentTableCellEditor);
@@ -122,7 +127,7 @@ public class JTableLivres extends JTable {
 					((JInternalFrame)getParent().getParent().getParent().getParent().getParent().getParent()).dispose();
 				}
 			}
-			else if (col==6){//Emprunter
+			else if (col==7){//Emprunter
 				((TableModelLivres)model).emprunter(convertRowIndexToModel(row));
 			}
 
@@ -139,6 +144,16 @@ public class JTableLivres extends JTable {
 			int col = columnAtPoint(p);
 
 			if (col==0){
+				if (model instanceof TableModelLivresEnAttentes || model instanceof TableModelLivresEmpruntes){
+					JInternalFrame test = new JInternalFrameGestionBO("Emprunt");
+					getParent().getParent().getParent().getParent().getParent().getParent().getParent().add(test);
+					try {
+						test.setMaximum(true);
+					} catch (PropertyVetoException e) {e.printStackTrace();}
+					return;
+				}
+
+
 				if (model.addRow()){
 					int i = convertRowIndexToView(model.getRowCount()-1);
 					changeSelection(i, 1, false, false);

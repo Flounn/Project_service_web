@@ -16,13 +16,13 @@ public class ListInteger {
 	/**
 	 * @return the valueSelected
 	 */
-	public int getValueSelected() {
+	public Integer getValueSelected() {
 		return valueSelected;
 	}
 	/**
 	 * @param valueSelected the valueSelected to set
 	 */
-	public void setValueSelected(int valueSelected) {
+	public void setValueSelected(Integer valueSelected) {
 		this.valueSelected = valueSelected;
 	}
 	/**

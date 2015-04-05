@@ -33,7 +33,7 @@ public interface Livre extends Remote{
 	void setDateAjout(Date dateAjout) throws RemoteException;
 	void addNote(int note) throws RemoteException;
 	Integer[] getNotes() throws RemoteException;
-	double getMoyenneNotes() throws RemoteException;
+	Double getMoyenneNotes() throws RemoteException;
 	boolean canSell() throws RemoteException;
 
 }

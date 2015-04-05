@@ -85,14 +85,17 @@ public class Main {
 
 
 			Livre[] livres = b.findByTitre("Fred et Mile");
-			Livre l=livres[0];
-			p.addLivre(l);
+			Livre[] livres2 = b.findByTitre("Programmer en langage C : Cours et exercices corriges");
+			Livre[] livres3 = b.findByTitre("Linux");
+			Livre[] livres4 = b.findByTitre("Hacking Interdit");
+			Livre[] livres5 = b.findByTitre("Les Aventures de Tintin");
 
-			p2.addLivre(l);
-			l.addToAttente(p2);
-			l.addToAttente(p3);
-			p.returnLivre(l);
-			l.addCommentaire("Tres bon livre!");
+			p.addLivre(livres[0]);
+			p2.addLivre(livres[0]);
+			livres[0].addToAttente(p2);
+			livres[0].addToAttente(p3);
+			p.returnLivre(livres[0]);
+			livres[0].addCommentaire("Tres bon livre!");
 
 
 		} catch (Exception e) {

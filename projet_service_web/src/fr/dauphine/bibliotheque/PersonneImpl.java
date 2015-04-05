@@ -61,6 +61,7 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		PersonneImpl temp = (PersonneImpl) obj;
 		return temp.id==id&&temp.role==role&&temp.nom==nom&&temp.prenom==prenom;
 	}
+	
 	@Override
 	public String remoteToString() throws RemoteException {
 		return "Personne [Id=" + id + ", Role="
@@ -184,12 +185,18 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 		this.addNotification(notification);
 	}
 	@Override
+	public void notification(String message) throws RemoteException {
+		System.out.println("notification : "+message);
+		this.addNotification(message);
+	}
+	@Override
 	public String[] getNotifications() throws RemoteException {
 		return notifications.toArray(new String[notifications.size()]);
 	}
 	@Override
 	public void addNotification(String notification) throws RemoteException {
 		this.notifications.add(notification);
+		ObserverImpl.getInstance().notifier(id, notification);
 	}
 	@Override
 	public void delNotification(int i) throws RemoteException {
@@ -251,6 +258,12 @@ public class PersonneImpl extends UnicastRemoteObject implements Personne {
 	@Override
 	public String getCommentaire(Livre livre) throws RemoteException {
 		return commentaires.get(livre);
+	}
+
+	@Override
+	public void newNotification() throws RemoteException {
+		System.out.println("Vous avez une nouvelle notification cote client!!");
+		
 	}
 	
 	

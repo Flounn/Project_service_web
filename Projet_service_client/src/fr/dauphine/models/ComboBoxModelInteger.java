@@ -13,12 +13,12 @@ public class ComboBoxModelInteger  extends AbstractListModel<Integer> implements
 	private Integer selectedItem;
 	
 	public ComboBoxModelInteger (ListInteger list){
-		values = new int[list.getEnd()-list.getBegin()/list.getPas()];
-		for (int i = 0;i<values.length;i=i++)
+		values = new int[(list.getEnd()-list.getBegin())/list.getPas()+1];
+		for (int i = 0;i<values.length;i++)
 			values[i]=list.getBegin()+(i*list.getPas());
 			
 	}
-	
+	@Override
 	public Integer getElementAt(int indice) {
 		return values[indice];
 	}

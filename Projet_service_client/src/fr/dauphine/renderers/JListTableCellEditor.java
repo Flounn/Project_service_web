@@ -84,13 +84,14 @@ public class JListTableCellEditor implements TableCellEditor{
 			className = value.getClass().getName();
 			switch (className){
 			case Classe.ListGenerique:
-				ListGenerique values = (ListGenerique) value;break;
+				//ListGenerique values = (ListGenerique) value;break;
 				//if (values.getNbLigne()>0){
 				//component = new JComboBox<Generique>(new ComboBoxModelDevise(values.getResultSet(),true,values.getIndiceSelection()));
 				//component.setSelectedIndex(values.getIndiceSelection());
 				//}
-			case Classe.ListInteger:	
+			case Classe.ListInteger:
 				component=new JComboBox<Integer>(new ComboBoxModelInteger((ListInteger) value));
+				component.setSelectedItem(((ListInteger) value).getValueSelected());
 
 			}
 

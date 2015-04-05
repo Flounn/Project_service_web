@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import fr.dauphine.main.Session;
 import fr.dauphine.renderers.ListInteger;
+import fr.dauphine.widgets.JInternalFrameGestionBO;
 
 public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 
@@ -94,7 +95,7 @@ public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 			case 1 : Session.getLivres().get(rowIndex).setIsbn((String)aValue);break;
 			case 2 : Session.getLivres().get(rowIndex).setTitre((String)aValue);break;
 			case 3 : Session.getLivres().get(rowIndex).setAuteur((String)aValue);break;
-			case 4 : Session.addNote(Session.getLivres().get(rowIndex),(Integer)aValue);break;
+			case 4 : if (aValue==null)return;Session.addNote(Session.getLivres().get(rowIndex),(Integer)aValue);break;
 			case 5 : Session.addCommentaire(Session.getLivres().get(rowIndex),(String)aValue);break;
 			case 6 : Session.getLivres().get(rowIndex).setPrixEuros((double)aValue);break;
 			}
@@ -109,12 +110,12 @@ public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 	@Override
 	public boolean addRow(){
 		try {
-			fireTableRowsInserted(Session.getLivres().size(), Session.getLivres().size());
-			return true;
+			new JInternalFrameGestionBO("Emprunt");
+			//fireTableRowsInserted(Session.getLivres().size(), Session.getLivres().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 
 	@Override

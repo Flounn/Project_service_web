@@ -99,14 +99,13 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		p4.setEmail("luc.herve@gmail.com");
 		addPersonne(p4);
 
-
 		Livre[] livres = findByTitre("Fred et Mile");
 		Livre l=livres[0];
 		p.addLivre(l);
 
 		p2.addLivre(l);
 		l.addToAttente(p2);
-		l.addToAttente(p3);
+		//l.addToAttente(p3);
 		p.returnLivre(l);
 		l.addCommentaire("Tres bon livre!");
 	}
