@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import javax.swing.ImageIcon;
 
 import fr.dauphine.main.Session;
-import fr.dauphine.widgets.JInternalFrameGestionBO;
 
 public class TableModelLivresEnAttentes extends AbstractLivresTableModel {
 

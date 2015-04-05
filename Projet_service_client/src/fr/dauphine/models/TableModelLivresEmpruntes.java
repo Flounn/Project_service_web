@@ -4,11 +4,9 @@ import java.rmi.RemoteException;
 
 import javax.swing.ImageIcon;
 
-import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.main.Session;
 import fr.dauphine.renderers.ListInteger;
 import fr.dauphine.widgets.JInternalFrameGestionBO;
-import fr.dauphine.widgets.SelectionListenerLivre;
 
 public class TableModelLivresEmpruntes extends AbstractLivresTableModel {
 
