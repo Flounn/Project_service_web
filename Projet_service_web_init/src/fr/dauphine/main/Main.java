@@ -84,18 +84,95 @@ public class Main {
 			b.addPersonne(p4);
 
 
-			Livre[] livres = b.findByTitre("Fred et Mile");
-			Livre[] livres2 = b.findByTitre("Programmer en langage C : Cours et exercices corriges");
-			Livre[] livres3 = b.findByTitre("Linux");
-			Livre[] livres4 = b.findByTitre("Hacking Interdit");
-			Livre[] livres5 = b.findByTitre("Les Aventures de Tintin");
-
-			p.addLivre(livres[0]);
-			p2.addLivre(livres[0]);
-			livres[0].addToAttente(p2);
-			livres[0].addToAttente(p3);
-			p.returnLivre(livres[0]);
-			livres[0].addCommentaire("Tres bon livre!");
+			Livre l = b.findByTitre("Fred et Mile")[0];
+			Livre l2 = b.findByTitre("Programmer en langage C : Cours et exercices corriges")[0];
+			Livre l3 = b.findByTitre("Linux")[0];
+			Livre l4 = b.findByTitre("Hacking Interdit")[0];
+			Livre l5 = b.findByTitre("Les Aventures de Tintin")[0];
+			Livre l6 = b.findByTitre("Histoire des codes secrets")[0];
+			
+			p.addLivre(l);
+			p.addLivre(l2);
+			p.addLivre(l3);
+			p.addLivre(l4);
+			p.addLivre(l5);
+			p.addLivre(l6);
+			
+			p.returnLivre(l);
+			p.returnLivre(l2);
+			p.returnLivre(l3);
+			p.returnLivre(l4);
+			p.returnLivre(l5);
+			p.returnLivre(l6);
+			
+			p.addLivre(l);
+			p.addLivre(l2);
+			p.addLivre(l3);			
+			p4.addLivre(l4);			
+			p4.addLivre(l5);
+			p4.addLivre(l6);
+			
+			l4.addToAttente(p);
+			l5.addToAttente(p);
+			l6.addToAttente(p);
+			
+			l.addToAttente(p4);
+			l2.addToAttente(p4);
+			l3.addToAttente(p4);
+			
+			l.addToAttente(p2);
+			l2.addToAttente(p2);
+			l3.addToAttente(p2);
+			l4.addToAttente(p2);
+			l5.addToAttente(p2);
+			l6.addToAttente(p2);
+			
+			l.addToAttente(p3);
+			l2.addToAttente(p3);
+			l3.addToAttente(p3);
+			l4.addToAttente(p3);
+			l5.addToAttente(p3);
+			l6.addToAttente(p3);
+			
+			p.returnLivre(l);
+			p.returnLivre(l2);
+			
+			p4.returnLivre(l4);
+			p4.returnLivre(l5);
+			
+			l.addCommentaire("Tres bon livre!");
+			l.addCommentaire("J'adore");
+			l.addCommentaire("Génial");
+			l2.addCommentaire("N'importe quoi");
+			l2.addCommentaire("J'ai vu mieux");
+			l3.addCommentaire("Comme ci comme ca");
+			l4.addCommentaire("Pas mal");
+			l4.addCommentaire("Bien décrit");
+			l5.addCommentaire("Intéréssant");
+			l5.addCommentaire("Bon auteur");
+			l6.addCommentaire("Sympa");
+			
+			l.addNote(8);
+			l.addNote(9);
+			l.addNote(10);
+			l.addNote(7);
+			l2.addNote(5);
+			l2.addNote(4);
+			l2.addNote(3);
+			l2.addNote(6);
+			l2.addNote(8);
+			l3.addNote(7);
+			l3.addNote(6);
+			l3.addNote(7);
+			l3.addNote(9);
+			l4.addNote(7);
+			l4.addNote(7);
+			l4.addNote(8);
+			l5.addNote(8);
+			l5.addNote(9);
+			l6.addNote(8);
+			l6.addNote(8);
+			
 
 
 		} catch (Exception e) {

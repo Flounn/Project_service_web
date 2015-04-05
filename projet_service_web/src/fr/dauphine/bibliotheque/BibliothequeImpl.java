@@ -36,6 +36,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		try {
 			initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,6 +48,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		try {
 			initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,6 +60,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		try {
 			initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
+			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
