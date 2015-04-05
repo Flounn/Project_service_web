@@ -66,6 +66,7 @@ public class TableModelPanier extends AbstractLivresTableModel implements Select
 		case 3 : return Panier.getLivres().get(rowIndex).getAuteur();
 		case 4 : return Panier.getLivres().get(rowIndex).isDisponible();
 		case 5 : return Panier.getLivres().get(rowIndex).getPrixEuros();
+		case 6 : return Panier.getPrixDevise(Panier.getLivres().get(rowIndex).getPrixEuros());
 		default: return "";
 		}
 	}

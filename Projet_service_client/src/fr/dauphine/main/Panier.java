@@ -70,4 +70,10 @@ public final class Panier {
 		panier.clear();
 	}
 	
+	public final static double getPrixDevise(double prixEuro){
+		if (prixEuro==0)
+			return 0;
+		return ConnexionWebServices.getPrixDevise(devise, prixEuro);
+	}
+	
 }

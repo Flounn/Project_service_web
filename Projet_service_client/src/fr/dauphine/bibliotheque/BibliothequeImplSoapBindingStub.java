@@ -16,13 +16,22 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {
-        _operations = new org.apache.axis.description.OperationDesc[2];
+        _operations = new org.apache.axis.description.OperationDesc[3];
         _initOperationDesc1();
     }
 
     private static void _initOperationDesc1(){
         org.apache.axis.description.OperationDesc oper;
         org.apache.axis.description.ParameterDesc param;
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("getLivresCanSell");
+        oper.setReturnType(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "LivreService"));
+        oper.setReturnClass(fr.dauphine.bibliotheque.LivreService[].class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getLivresCanSellReturn"));
+        oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        _operations[0] = oper;
+
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("acheter");
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "livres"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "long"), long[].class, false, false);
@@ -32,16 +41,20 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "acheterReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[0] = oper;
+        _operations[1] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getLivresCanSell");
-        oper.setReturnType(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "LivreService"));
-        oper.setReturnClass(fr.dauphine.bibliotheque.LivreService[].class);
-        oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getLivresCanSellReturn"));
+        oper.setName("getPrixDevise");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "devise"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "prixEuros"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"), double.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
+        oper.setReturnClass(double.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPrixDeviseReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        _operations[1] = oper;
+        _operations[2] = oper;
 
     }
 
@@ -165,12 +178,46 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         }
     }
 
-    public boolean acheter(long[] livres) throws java.rmi.RemoteException {
+    public fr.dauphine.bibliotheque.LivreService[] getLivresCanSell() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
         _call.setOperation(_operations[0]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("");
+        _call.setEncodingStyle(null);
+        _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getLivresCanSell"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
+        }
+        else {
+            extractAttachments(_call);
+            try {
+                return (fr.dauphine.bibliotheque.LivreService[]) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (fr.dauphine.bibliotheque.LivreService[]) org.apache.axis.utils.JavaUtils.convert(_resp, fr.dauphine.bibliotheque.LivreService[].class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+  throw axisFaultException;
+}
+    }
+
+    public boolean acheter(long[] livres) throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[1]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
@@ -199,23 +246,23 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
 }
     }
 
-    public fr.dauphine.bibliotheque.LivreService[] getLivresCanSell() throws java.rmi.RemoteException {
+    public double getPrixDevise(java.lang.String devise, double prixEuros) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[1]);
+        _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("");
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getLivresCanSell"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPrixDevise"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {devise, new java.lang.Double(prixEuros)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -223,9 +270,9 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         else {
             extractAttachments(_call);
             try {
-                return (fr.dauphine.bibliotheque.LivreService[]) _resp;
+                return ((java.lang.Double) _resp).doubleValue();
             } catch (java.lang.Exception _exception) {
-                return (fr.dauphine.bibliotheque.LivreService[]) org.apache.axis.utils.JavaUtils.convert(_resp, fr.dauphine.bibliotheque.LivreService[].class);
+                return ((java.lang.Double) org.apache.axis.utils.JavaUtils.convert(_resp, double.class)).doubleValue();
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {

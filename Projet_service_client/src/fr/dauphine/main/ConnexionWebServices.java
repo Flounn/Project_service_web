@@ -9,7 +9,7 @@ import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
 import fr.dauphine.bibliotheque.LivreService;
 
 public final class ConnexionWebServices {
-	
+
 	public static final List<LivreService> getLivresCanSell(){
 
 		try {
@@ -21,7 +21,7 @@ public final class ConnexionWebServices {
 		return new ArrayList<LivreService>();
 
 	}
-	
+
 	public static final boolean validerPanier(List<LivreService> livres){
 
 		try {
@@ -34,6 +34,18 @@ public final class ConnexionWebServices {
 			e.printStackTrace();
 		}
 		return false;
+
+	}
+
+	public static final double getPrixDevise(String codeDevise,double prixEuros){
+
+		try {
+			BibliothequeImpl b = new BibliothequeImplServiceLocator().getBibliothequeImpl();
+			return b.getPrixDevise(codeDevise, prixEuros);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 
 	}
 

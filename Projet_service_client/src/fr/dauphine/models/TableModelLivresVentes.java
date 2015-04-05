@@ -71,6 +71,7 @@ public class TableModelLivresVentes extends AbstractLivresTableModel {
 		case 3 : return livres.get(rowIndex).getAuteur();
 		case 4 : return livres.get(rowIndex).isDisponible();
 		case 5 : return livres.get(rowIndex).getPrixEuros();
+		case 6 : return Panier.getPrixDevise(livres.get(rowIndex).getPrixEuros());
 		default: return "";
 		}
 

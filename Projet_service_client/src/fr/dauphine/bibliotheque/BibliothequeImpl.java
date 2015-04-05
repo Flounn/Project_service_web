@@ -8,6 +8,7 @@
 package fr.dauphine.bibliotheque;
 
 public interface BibliothequeImpl extends java.rmi.Remote {
-    public boolean acheter(long[] livres) throws java.rmi.RemoteException;
     public fr.dauphine.bibliotheque.LivreService[] getLivresCanSell() throws java.rmi.RemoteException;
+    public boolean acheter(long[] livres) throws java.rmi.RemoteException;
+    public double getPrixDevise(java.lang.String devise, double prixEuros) throws java.rmi.RemoteException;
 }
