@@ -1,9 +1,7 @@
 package fr.dauphine.banque;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 
-import javax.xml.rpc.ServiceException;
 
 import NET.webserviceX.www.Currency;
 import NET.webserviceX.www.CurrencyConvertorLocator;
