@@ -1,20 +1,27 @@
 package fr.dauphine.main;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.xml.rpc.ServiceException;
+
+import fr.dauphine.banque.Banque;
+import fr.dauphine.banque.BanqueServiceLocator;
+import fr.dauphine.banque.Compte;
 import fr.dauphine.bibliotheque.BibliothequeImpl;
 import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
 import fr.dauphine.bibliotheque.LivreService;
 
 public final class ConnexionWebServices {
-
+	
+	private static BibliothequeImpl bibliotheque;
+	private static Banque banque;
+	
 	public static final List<LivreService> getLivresCanSell(){
-
 		try {
-			BibliothequeImpl b = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-			return Arrays.asList(b.getLivresCanSell()); 
+			return Arrays.asList(getBibliotheque().getLivresCanSell()); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -23,13 +30,11 @@ public final class ConnexionWebServices {
 	}
 
 	public static final boolean validerPanier(List<LivreService> livres){
-
 		try {
-			BibliothequeImpl b = new BibliothequeImplServiceLocator().getBibliothequeImpl();
 			long[] tab = new long[livres.size()];
 			for (int i=0;i<tab.length;i++)
 				tab[i]=livres.get(i).getNumero();
-			return b.acheter(tab);
+			return getBibliotheque().acheter(tab);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,15 +43,52 @@ public final class ConnexionWebServices {
 	}
 
 	public static final double getPrixDevise(String codeDevise,double prixEuros){
-
 		try {
-			BibliothequeImpl b = new BibliothequeImplServiceLocator().getBibliothequeImpl();
-			return b.getPrixDevise(codeDevise, prixEuros);
+			return getBibliotheque().getPrixDevise(codeDevise, prixEuros);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return 0;
 
 	}
+
+	/**
+	 * @return the bibliotheque
+	 */
+	public final static BibliothequeImpl getBibliotheque() {
+		while (bibliotheque==null){
+			try {
+				bibliotheque = new BibliothequeImplServiceLocator().getBibliothequeImpl();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+		}
+		return bibliotheque;
+	}
+
+	/**
+	 * @return the banque
+	 */
+	private final static Banque getBanque() {
+		while (banque==null){
+			try {
+				banque = new BanqueServiceLocator().getBanque();
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+		}
+		return banque;
+	}
+	
+	public static final Compte getCompteBancaire(String email, String mdp){
+		try {
+			return getBanque().getCompte(email, mdp);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 
 }

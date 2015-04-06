@@ -1,7 +1,7 @@
 package fr.dauphine.banque;
 import java.io.Serializable;
 import java.util.HashMap;
-
+import java.util.Map.Entry;
 
 import NET.webserviceX.www.Currency;
 import NET.webserviceX.www.CurrencyConvertorLocator;
@@ -21,19 +21,27 @@ public class Banque implements Serializable{
 		super();
 	}
 
-	public Compte findByEmail(String email){
-		for (long key : banque.keySet()){
-			if (banque.get(key).getEmail().equals(email))
-				return banque.get(key);
+	public Compte getCompte(String email,String mdp){
+		for (Entry<Long, Compte> compte : banque.entrySet()){
+			if (compte.getValue().getEmail().equals(email)&&compte.getValue().getMdp().equals(mdp))
+				return compte.getValue();
 		}
 		return null;
+	}
+	
+	private boolean exist(String email){
+		for (Compte compte : banque.values()){
+			if (compte.getEmail().equals(email))
+				return true;
+		}
+		return false;
 	}
 
 	/**
 	 * Ajoute un compte a la base
 	 */
 	public boolean addCompte(String nom, String prenom, String email, String mdp, String devise) {
-		if(findByEmail(email)==null){
+		if(!exist(email)){
 			Compte compte = new Compte(nom, prenom, email, mdp, compteurCompte, devise);
 			banque.put(compteurCompte, compte);
 			compteurCompte++;
@@ -49,8 +57,8 @@ public class Banque implements Serializable{
 	 * Supprime le compte de la base
 	 */
 
-	public boolean delCompte(String email){
-		Compte compte = findByEmail(email);
+	public boolean delCompte(String email,String mdp){
+		Compte compte = getCompte(email,mdp);
 		if(compte!=null){
 			banque.remove(compte.getNoCompte());
 			System.out.println(compte.toString() +" vient d'etre supprime de la base");
@@ -68,7 +76,7 @@ public class Banque implements Serializable{
 	 * indiques et le montant a ete rajoute au solde
 	 */
 	public boolean depot(String email, String mdp, double montant){
-		Compte compte = findByEmail(email);
+		Compte compte = getCompte(email,mdp);
 		if(compte==null){
 			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
 			return false;
@@ -94,7 +102,7 @@ public class Banque implements Serializable{
 	 * 1 si le compte a ete debite avec succes
 	 */
 	public int retraitEur(String email, String mdp, double montant){
-		Compte compte = findByEmail(email);
+		Compte compte = getCompte(email,mdp);
 		if(compte==null){
 			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
 			return 0;
@@ -136,7 +144,7 @@ public class Banque implements Serializable{
 	 * @return
 	 */
 	public double consultSolde(String email, String mdp){
-		Compte compte = findByEmail(email);
+		Compte compte = getCompte(email,mdp);
 		if(compte==null){
 			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
 			return 0;
@@ -156,7 +164,7 @@ public class Banque implements Serializable{
 	 * @return
 	 */
 	public String consultDevise(String email, String mdp){
-		Compte compte = findByEmail(email);
+		Compte compte = getCompte(email,mdp);
 		if(compte==null){
 			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
 			return "";
