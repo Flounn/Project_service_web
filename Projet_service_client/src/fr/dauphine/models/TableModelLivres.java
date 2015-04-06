@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import fr.dauphine.bibliotheque.LivreImpl;
 import fr.dauphine.interfaces.Livre;
 import fr.dauphine.main.ConnexionRmi;
 import fr.dauphine.main.Session;
@@ -17,7 +18,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 	private List<Livre> livres;
 	private int nbColonnes = 6;
 	private int nbLignes;
-	private Livre livreAdd;
+	private LivreImpl livreAdd;
 	private final boolean firstCol;
 
 	public TableModelLivres(){
@@ -173,12 +174,13 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		try {
 			if (livreAdd!=null)
 				return false;
+			livreAdd = new LivreImpl();
 			fireTableRowsInserted(nbLignes, nbLignes++);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return true;
+		return false;
 	}
 
 	@Override
