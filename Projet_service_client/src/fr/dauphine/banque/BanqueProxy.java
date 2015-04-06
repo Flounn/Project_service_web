@@ -44,16 +44,34 @@ public class BanqueProxy implements fr.dauphine.banque.Banque {
     return banque;
   }
   
-  public boolean addCompte(java.lang.String nom, java.lang.String prenom, java.lang.String email, java.lang.String mdp, java.lang.String devise) throws java.rmi.RemoteException{
+  public boolean modifierCompte(java.lang.String email, java.lang.String mdp, java.lang.String nom, java.lang.String prenom, java.lang.String devise) throws java.rmi.RemoteException{
     if (banque == null)
       _initBanqueProxy();
-    return banque.addCompte(nom, prenom, email, mdp, devise);
+    return banque.modifierCompte(email, mdp, nom, prenom, devise);
   }
   
   public boolean depot(java.lang.String email, java.lang.String mdp, double montant) throws java.rmi.RemoteException{
     if (banque == null)
       _initBanqueProxy();
     return banque.depot(email, mdp, montant);
+  }
+  
+  public fr.dauphine.banque.Compte getCompte(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
+    if (banque == null)
+      _initBanqueProxy();
+    return banque.getCompte(email, mdp);
+  }
+  
+  public boolean delCompte(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
+    if (banque == null)
+      _initBanqueProxy();
+    return banque.delCompte(email, mdp);
+  }
+  
+  public boolean addCompte(java.lang.String nom, java.lang.String prenom, java.lang.String email, java.lang.String mdp, java.lang.String devise) throws java.rmi.RemoteException{
+    if (banque == null)
+      _initBanqueProxy();
+    return banque.addCompte(nom, prenom, email, mdp, devise);
   }
   
   public int retraitEur(java.lang.String email, java.lang.String mdp, double montant) throws java.rmi.RemoteException{
@@ -72,18 +90,6 @@ public class BanqueProxy implements fr.dauphine.banque.Banque {
     if (banque == null)
       _initBanqueProxy();
     return banque.consultDevise(email, mdp);
-  }
-  
-  public boolean delCompte(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
-    if (banque == null)
-      _initBanqueProxy();
-    return banque.delCompte(email, mdp);
-  }
-  
-  public fr.dauphine.banque.Compte getCompte(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
-    if (banque == null)
-      _initBanqueProxy();
-    return banque.getCompte(email, mdp);
   }
   
   

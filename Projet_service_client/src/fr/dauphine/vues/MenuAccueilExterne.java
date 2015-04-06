@@ -21,6 +21,7 @@ import fr.dauphine.main.Panier;
 import fr.dauphine.models.ComboBoxModelDevise;
 import fr.dauphine.models.TableModelLivresVentes;
 import fr.dauphine.widgets.JInternalFrameGestionBO;
+import fr.dauphine.widgets.JInternalFrameMonComptebancaire;
 
 import javax.swing.JLabel;
 
@@ -29,9 +30,12 @@ public class MenuAccueilExterne extends JMenuBar {
 
 	private static final long serialVersionUID = 1L;
 	private ActionListener ActionListenerLivres;
-
+	private ActionListener ActionListenerCompte;
+	
 	private JMenu menuLivre = new JMenu("Livre");
+	private JMenu menuCompte = new JMenu("Compte");
 	private JMenuItem menuVoirLivre = new JMenuItem("Voir Livres");
+	private JMenuItem menuMonCompte = new JMenuItem("Mon Compte");
 	private JMenu menuAide = new JMenu("Aide");
 	private ItemListener changerDevise;
 	private JComboBox<String> comboBoxDevises;
@@ -45,13 +49,16 @@ public class MenuAccueilExterne extends JMenuBar {
 
 	private void initUI() {
 		add(menuLivre);
+		add(menuCompte);
 		add(menuAide);
 		initListeners();
 		menuLivre.add(menuVoirLivre);
-
+		menuCompte.add(menuMonCompte);
+		
 		menuVoirLivre.setName("Livres");
 
 		menuVoirLivre.addActionListener(ActionListenerLivres);
+		menuMonCompte.addActionListener(ActionListenerCompte);
 		initListeners();
 		initCombobox();
 
@@ -97,7 +104,7 @@ public class MenuAccueilExterne extends JMenuBar {
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED)
 					Panier.setDevise((String) comboBoxDevises.getSelectedItem());
-				listenerDevise.changerDevise();
+				listenerDevise.changerDevise(false);
 			}  
 		};
 		
@@ -113,7 +120,25 @@ public class MenuAccueilExterne extends JMenuBar {
 					
 			}
 		};
-
+		
+		ActionListenerCompte = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JInternalFrame test = new JInternalFrameMonComptebancaire();
+				getParent().add(test);
+				try {
+					test.setMaximum(true);
+				} catch (PropertyVetoException exp) {exp.printStackTrace();}
+				
+			}
+		};
+		
+		
+	}
+	
+	public void modifierDevise(){
+		comboBoxDevises.setSelectedItem(Panier.getDevise());
 	}
 
 

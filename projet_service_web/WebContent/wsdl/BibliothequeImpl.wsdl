@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://bibliotheque.dauphine.fr" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://bibliotheque.dauphine.fr" xmlns:intf="http://bibliotheque.dauphine.fr" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://bibliotheque.dauphine.fr" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getLivresCanSell">
+    <complexType/>
+   </element>
+   <element name="getLivresCanSellResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getLivresCanSellReturn" type="impl:LivreService"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="ArrayOf_xsd_int">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="LivreService">
+    <sequence>
+     <element name="auteur" nillable="true" type="xsd:string"/>
+     <element name="commentaires" nillable="true" type="impl:ArrayOf_xsd_string"/>
+     <element name="compteurPrets" type="xsd:long"/>
+     <element name="dateAjout" nillable="true" type="xsd:dateTime"/>
+     <element name="disponible" type="xsd:boolean"/>
+     <element name="isbn" nillable="true" type="xsd:string"/>
+     <element name="moyenneNotes" type="xsd:double"/>
+     <element name="notes" nillable="true" type="impl:ArrayOf_xsd_int"/>
+     <element name="numero" type="xsd:long"/>
+     <element name="prixEuros" type="xsd:double"/>
+     <element name="titre" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="acheter">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="livres" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="acheterResponse">
+    <complexType>
+     <sequence>
+      <element name="acheterReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPrixDevise">
+    <complexType>
+     <sequence>
+      <element name="devise" type="xsd:string"/>
+      <element name="prixEuros" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPrixDeviseResponse">
+    <complexType>
+     <sequence>
+      <element name="getPrixDeviseReturn" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="acheterRequest">
+
+      <wsdl:part element="impl:acheter" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLivresCanSellRequest">
+
+      <wsdl:part element="impl:getLivresCanSell" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPrixDeviseRequest">
+
+      <wsdl:part element="impl:getPrixDevise" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPrixDeviseResponse">
+
+      <wsdl:part element="impl:getPrixDeviseResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLivresCanSellResponse">
+
+      <wsdl:part element="impl:getLivresCanSellResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="acheterResponse">
+
+      <wsdl:part element="impl:acheterResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BibliothequeImpl">
+
+      <wsdl:operation name="getLivresCanSell">
+
+         <wsdl:input message="impl:getLivresCanSellRequest" name="getLivresCanSellRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLivresCanSellResponse" name="getLivresCanSellResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acheter">
+
+         <wsdl:input message="impl:acheterRequest" name="acheterRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:acheterResponse" name="acheterResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPrixDevise">
+
+         <wsdl:input message="impl:getPrixDeviseRequest" name="getPrixDeviseRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPrixDeviseResponse" name="getPrixDeviseResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BibliothequeImplSoapBinding" type="impl:BibliothequeImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getLivresCanSell">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLivresCanSellRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLivresCanSellResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="acheter">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="acheterRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="acheterResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPrixDevise">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPrixDeviseRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPrixDeviseResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BibliothequeImplService">
+
+      <wsdl:port binding="impl:BibliothequeImplSoapBinding" name="BibliothequeImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/projet_service_server/services/BibliothequeImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

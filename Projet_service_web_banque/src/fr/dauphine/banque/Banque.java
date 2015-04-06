@@ -19,6 +19,12 @@ public class Banque implements Serializable{
 
 	public Banque(){
 		super();
+		initBanque();
+	}
+
+	private void initBanque() {
+		banque.put(1L, new Compte("Tiganu", "Eugen", "eugen.tiganu@gmail.com", "eugen", 1, "EUR"));
+		banque.put(2L, new Compte("Lestic", "Florian", "florian.lestic@gmail.com", "florian", 2, "EUR"));
 	}
 
 	public Compte getCompte(String email,String mdp){
@@ -116,8 +122,8 @@ public class Banque implements Serializable{
 			double montantDev = 0;
 			try {
 				CurrencyConvertorSoap dev = new CurrencyConvertorLocator().getCurrencyConvertorSoap();
-				montantDev= Math.round(100*montant*dev.conversionRate(Currency.fromString("EUR"), 
-						Currency.fromString(compte.getDevise())))/100;
+				montantDev= montant*dev.conversionRate(Currency.fromString("EUR"), 
+						Currency.fromString(compte.getDevise()));
 				if(compte.getSolde()<montantDev){
 					System.out.println(compte.toString() + " le solde du compte est inferieur au montant demande");
 					return 4;
@@ -157,7 +163,7 @@ public class Banque implements Serializable{
 		}
 	}
 	/**
-	 * Renvoie le solde d'un compte
+	 * Renvoie la devise d'un compte
 	 * @param email
 	 * @param mdp
 	 * @param montant
@@ -175,5 +181,17 @@ public class Banque implements Serializable{
 			System.out.println(compte.toString() + " interogation du compte");
 			return compte.getDevise();
 		}
+	}
+	
+	public boolean modifierCompte(String email, String mdp,String nom, String prenom,String devise){
+		Compte compte = getCompte(email,mdp);
+		if(compte==null){
+			System.out.println("Le compte pour l'email "+ email + " n'existe pas");
+			return false;
+		}
+		compte.setNom(nom);
+		compte.setPrenom(prenom);
+		compte.setDevise(devise);
+		return true;
 	}
 }

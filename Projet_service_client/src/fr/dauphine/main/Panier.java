@@ -63,11 +63,17 @@ public final class Panier {
 		panier = new ArrayList<LivreService>();
 	}
 
-	public final static void valider(){
+	public final static int valider(){
 		if (panier.isEmpty())
-			return;
-		ConnexionWebServices.validerPanier(panier);
+			return 0;
+		if (!CompteBancaire.retrait(getTotalPanier()))
+			return 2;
+		if (!ConnexionWebServices.validerPanier(panier)){
+			CompteBancaire.depot(getTotalPanier());
+			return 3;
+		}
 		panier.clear();
+		return 1;
 	}
 	
 	public final static double getPrixDevise(double prixEuro){

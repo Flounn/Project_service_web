@@ -49,7 +49,7 @@ public class Accueil extends JFrame implements ConnexionOk {
 
 	private void initUISeConnecter(){
 		getContentPane().setLayout(new BorderLayout());
-		JPanel pane = new JPanelConnexion(this);
+		JPanel pane = new JPanelConnexion(JPanelConnexion.COMPTE_BIBLIOTHEQUE,this);
 		getContentPane().add(pane, BorderLayout.CENTER);
 	}
 

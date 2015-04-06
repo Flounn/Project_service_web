@@ -1,0 +1,57 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BibliothequeImplService WSDL service -->
+
+  <service name="BibliothequeImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://bibliotheque.dauphine.fr"/>
+      <parameter name="wsdlServiceElement" value="BibliothequeImplService"/>
+      <parameter name="schemaQualified" value="http://bibliotheque.dauphine.fr"/>
+      <parameter name="wsdlServicePort" value="BibliothequeImpl"/>
+      <parameter name="className" value="fr.dauphine.bibliotheque.BibliothequeImplSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="BibliothequeImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getLivresCanSell" qname="operNS:getLivresCanSell" xmlns:operNS="http://bibliotheque.dauphine.fr" returnQName="retNS:getLivresCanSellReturn" xmlns:retNS="http://bibliotheque.dauphine.fr" returnType="rtns:LivreService" xmlns:rtns="http://bibliotheque.dauphine.fr" soapAction="" >
+      </operation>
+      <operation name="acheter" qname="operNS:acheter" xmlns:operNS="http://bibliotheque.dauphine.fr" returnQName="retNS:acheterReturn" xmlns:retNS="http://bibliotheque.dauphine.fr" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:livres" xmlns:pns="http://bibliotheque.dauphine.fr" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getPrixDevise" qname="operNS:getPrixDevise" xmlns:operNS="http://bibliotheque.dauphine.fr" returnQName="retNS:getPrixDeviseReturn" xmlns:retNS="http://bibliotheque.dauphine.fr" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:devise" xmlns:pns="http://bibliotheque.dauphine.fr" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:prixEuros" xmlns:pns="http://bibliotheque.dauphine.fr" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="acheter getLivresCanSell getPrixDevise"/>
+
+      <arrayMapping
+        xmlns:ns="http://bibliotheque.dauphine.fr"
+        qname="ns:ArrayOf_xsd_int"
+        type="java:int[]"
+        innerType="cmp-ns:int" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://bibliotheque.dauphine.fr"
+        qname="ns:LivreService"
+        type="java:fr.dauphine.bibliotheque.LivreService"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://bibliotheque.dauphine.fr"
+        qname="ns:ArrayOf_xsd_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

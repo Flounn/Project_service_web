@@ -4,49 +4,21 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://banque.dauphine.fr" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="consultDevise">
+   <element name="modifierCompte">
     <complexType>
      <sequence>
       <element name="email" type="xsd:string"/>
       <element name="mdp" type="xsd:string"/>
+      <element name="nom" type="xsd:string"/>
+      <element name="prenom" type="xsd:string"/>
+      <element name="devise" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="consultDeviseResponse">
+   <element name="modifierCompteResponse">
     <complexType>
      <sequence>
-      <element name="consultDeviseReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="consultSolde">
-    <complexType>
-     <sequence>
-      <element name="email" type="xsd:string"/>
-      <element name="mdp" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="consultSoldeResponse">
-    <complexType>
-     <sequence>
-      <element name="consultSoldeReturn" type="xsd:double"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="retraitEur">
-    <complexType>
-     <sequence>
-      <element name="email" type="xsd:string"/>
-      <element name="mdp" type="xsd:string"/>
-      <element name="montant" type="xsd:double"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="retraitEurResponse">
-    <complexType>
-     <sequence>
-      <element name="retraitEurReturn" type="xsd:int"/>
+      <element name="modifierCompteReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -63,21 +35,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="depotReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="delCompte">
-    <complexType>
-     <sequence>
-      <element name="email" type="xsd:string"/>
-      <element name="mdp" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="delCompteResponse">
-    <complexType>
-     <sequence>
-      <element name="delCompteReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -107,6 +64,21 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="solde" type="xsd:double"/>
     </sequence>
    </complexType>
+   <element name="delCompte">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+      <element name="mdp" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="delCompteResponse">
+    <complexType>
+     <sequence>
+      <element name="delCompteReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="addCompte">
     <complexType>
      <sequence>
@@ -122,6 +94,52 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="addCompteReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="retraitEur">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+      <element name="mdp" type="xsd:string"/>
+      <element name="montant" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="retraitEurResponse">
+    <complexType>
+     <sequence>
+      <element name="retraitEurReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultSolde">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+      <element name="mdp" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultSoldeResponse">
+    <complexType>
+     <sequence>
+      <element name="consultSoldeReturn" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultDevise">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+      <element name="mdp" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultDeviseResponse">
+    <complexType>
+     <sequence>
+      <element name="consultDeviseReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -147,6 +165,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="addCompteRequest">
 
       <wsdl:part element="impl:addCompte" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="modifierCompteResponse">
+
+      <wsdl:part element="impl:modifierCompteResponse" name="parameters">
 
       </wsdl:part>
 
@@ -208,14 +234,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addCompteResponse">
-
-      <wsdl:part element="impl:addCompteResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="consultDeviseRequest">
 
       <wsdl:part element="impl:consultDevise" name="parameters">
@@ -224,9 +242,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="modifierCompteRequest">
+
+      <wsdl:part element="impl:modifierCompte" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="depotRequest">
 
       <wsdl:part element="impl:depot" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addCompteResponse">
+
+      <wsdl:part element="impl:addCompteResponse" name="parameters">
 
       </wsdl:part>
 
@@ -242,37 +276,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="Banque">
 
-      <wsdl:operation name="consultDevise">
+      <wsdl:operation name="modifierCompte">
 
-         <wsdl:input message="impl:consultDeviseRequest" name="consultDeviseRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:consultDeviseResponse" name="consultDeviseResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="consultSolde">
-
-         <wsdl:input message="impl:consultSoldeRequest" name="consultSoldeRequest">
+         <wsdl:input message="impl:modifierCompteRequest" name="modifierCompteRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:consultSoldeResponse" name="consultSoldeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="retraitEur">
-
-         <wsdl:input message="impl:retraitEurRequest" name="retraitEurRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:retraitEurResponse" name="retraitEurResponse">
+         <wsdl:output message="impl:modifierCompteResponse" name="modifierCompteResponse">
 
        </wsdl:output>
 
@@ -290,18 +300,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="delCompte">
-
-         <wsdl:input message="impl:delCompteRequest" name="delCompteRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:delCompteResponse" name="delCompteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getCompte">
 
          <wsdl:input message="impl:getCompteRequest" name="getCompteRequest">
@@ -309,6 +307,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getCompteResponse" name="getCompteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="delCompte">
+
+         <wsdl:input message="impl:delCompteRequest" name="delCompteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:delCompteResponse" name="delCompteResponse">
 
        </wsdl:output>
 
@@ -326,59 +336,59 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="retraitEur">
+
+         <wsdl:input message="impl:retraitEurRequest" name="retraitEurRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:retraitEurResponse" name="retraitEurResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="consultSolde">
+
+         <wsdl:input message="impl:consultSoldeRequest" name="consultSoldeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:consultSoldeResponse" name="consultSoldeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="consultDevise">
+
+         <wsdl:input message="impl:consultDeviseRequest" name="consultDeviseRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:consultDeviseResponse" name="consultDeviseResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="BanqueSoapBinding" type="impl:Banque">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 
-      <wsdl:operation name="consultDevise">
+      <wsdl:operation name="modifierCompte">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="consultDeviseRequest">
+         <wsdl:input name="modifierCompteRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="consultDeviseResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="consultSolde">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="consultSoldeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="consultSoldeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="retraitEur">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="retraitEurRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="retraitEurResponse">
+         <wsdl:output name="modifierCompteResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -404,24 +414,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="delCompte">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="delCompteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="delCompteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getCompte">
 
          <wsdlsoap:operation soapAction=""/>
@@ -440,6 +432,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="delCompte">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="delCompteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="delCompteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="addCompte">
 
          <wsdlsoap:operation soapAction=""/>
@@ -451,6 +461,60 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="addCompteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="retraitEur">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="retraitEurRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="retraitEurResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="consultSolde">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultSoldeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultSoldeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="consultDevise">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultDeviseRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultDeviseResponse">
 
             <wsdlsoap:body use="literal"/>
 

@@ -90,5 +90,41 @@ public final class ConnexionWebServices {
 	}
 
 
+	public static final int retrait(String email, String mdp, double montant){
+		try {
+			return getBanque().retraitEur(email, mdp, montant);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public static final boolean depot(String email, String mdp, double montant){
+		try {
+			return getBanque().depot(email, mdp, montant);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static final double getSolde(String email, String mdp){
+		try {
+			return getBanque().consultSolde(email, mdp);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public static boolean modifierCompteBancaire(String nom, String prenom,
+			String email, String mdp, String devise) {
+		try {
+			return getBanque().modifierCompte(email, mdp, nom, prenom, devise);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

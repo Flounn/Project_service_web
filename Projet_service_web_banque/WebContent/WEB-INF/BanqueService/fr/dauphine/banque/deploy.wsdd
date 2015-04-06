@@ -10,29 +10,23 @@
       <parameter name="className" value="fr.dauphine.banque.Banque"/>
       <parameter name="wsdlPortType" value="Banque"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="consultDevise" qname="operNS:consultDevise" returnQName="retNS:consultDeviseReturn" returnType="rtns:string" soapAction="">
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="modifierCompte" qname="operNS:modifierCompte" returnQName="retNS:modifierCompteReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="consultSolde" qname="operNS:consultSolde" returnQName="retNS:consultSoldeReturn" returnType="rtns:double" soapAction="">
-        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
-        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="retraitEur" qname="operNS:retraitEur" returnQName="retNS:retraitEurReturn" returnType="rtns:int" soapAction="">
-        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
-        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
-        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:montant" type="tns:double"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nom" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:prenom" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:devise" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="depot" qname="operNS:depot" returnQName="retNS:depotReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:montant" type="tns:double"/>
       </operation>
-      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="delCompte" qname="operNS:delCompte" returnQName="retNS:delCompteReturn" returnType="rtns:boolean" soapAction="">
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://banque.dauphine.fr" name="getCompte" qname="operNS:getCompte" returnQName="retNS:getCompteReturn" returnType="rtns:Compte" soapAction="">
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://banque.dauphine.fr" name="getCompte" qname="operNS:getCompte" returnQName="retNS:getCompteReturn" returnType="rtns:Compte" soapAction="">
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="delCompte" qname="operNS:delCompte" returnQName="retNS:delCompteReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
       </operation>
@@ -43,7 +37,20 @@
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
         <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:devise" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="retraitEur consultDevise getCompte depot addCompte consultSolde delCompte"/>
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="retraitEur" qname="operNS:retraitEur" returnQName="retNS:retraitEurReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:montant" type="tns:double"/>
+      </operation>
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="consultSolde" qname="operNS:consultSolde" returnQName="retNS:consultSoldeReturn" returnType="rtns:double" soapAction="">
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://banque.dauphine.fr" xmlns:retNS="http://banque.dauphine.fr" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="consultDevise" qname="operNS:consultDevise" returnQName="retNS:consultDeviseReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+        <parameter xmlns:pns="http://banque.dauphine.fr" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:mdp" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="modifierCompte retraitEur consultDevise getCompte depot consultSolde addCompte delCompte"/>
 
       <typeMapping xmlns:ns="http://banque.dauphine.fr" qname="ns:Compte" type="java:fr.dauphine.banque.Compte" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>

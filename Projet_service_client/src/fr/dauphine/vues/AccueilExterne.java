@@ -3,16 +3,21 @@ package fr.dauphine.vues;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JFrame;
 
+import fr.dauphine.main.CompteBancaire;
 import fr.dauphine.main.Panier;
+import fr.dauphine.widgets.JInternalFrameMonComptebancaire;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -35,8 +40,21 @@ public class AccueilExterne extends JFrame implements ListenerDevise{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Panier.valider();
-				refreshJTables();
+				if (!CompteBancaire.isConnected()){
+					JInternalFrame test = new JInternalFrameMonComptebancaire();
+					getLayeredPane().add(test);
+					try {
+						test.setMaximum(true);
+					} catch (PropertyVetoException exp) {exp.printStackTrace();}
+					return;
+				}
+				int result = Panier.valider();
+				if (result==2)
+					JOptionPane.showMessageDialog(null, "Fonds insuffisant sur votre compte bancaire");
+				else if (result==3)
+					JOptionPane.showMessageDialog(null, "Erreur lors de la validation de votre panier");
+				else if (result==1)
+					refreshJTables();
 			}
 		};
 
@@ -68,7 +86,7 @@ public class AccueilExterne extends JFrame implements ListenerDevise{
 		lblTotal_1.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		lbl_total_devise = new JLabel();
-		changerDevise();
+		lbl_total_devise.setText(Panier.getPrixDevise(Panier.getTotalPanier())+" ("+Panier.getDevise()+")");
 		lbl_total_devise.setHorizontalAlignment(SwingConstants.LEFT);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -113,13 +131,15 @@ public class AccueilExterne extends JFrame implements ListenerDevise{
 			return;
 		JPanelPanier panel = (JPanelPanier) getContentPane().getComponents()[5];
 		panel.refreshJTable();
-		changerDevise();
+		changerDevise(false);
 		lbl_total_euros.setText(Panier.getTotalPanier()+" \u20AC");
 	}
 
 	@Override
-	public void changerDevise() {
+	public void changerDevise(boolean withMenu) {
 		lbl_total_devise.setText(Panier.getPrixDevise(Panier.getTotalPanier())+" ("+Panier.getDevise()+")");
+		if (withMenu)
+			((MenuAccueilExterne)getJMenuBar()).modifierDevise();
 		try{
 			JPanelPanier panel = (JPanelPanier) getContentPane().getComponents()[5];
 			panel.refreshJTableHeader();

@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
+import fr.dauphine.main.CompteBancaire;
 import fr.dauphine.main.Session;
 
 public class JPanelConnexion extends JPanel{
@@ -23,16 +24,23 @@ public class JPanelConnexion extends JPanel{
 	private JButton bt_seConnecter;
 	private final ConnexionOk callback;
 	
-	public JPanelConnexion(){
+	public final static int COMPTE_BIBLIOTHEQUE = 1;
+	public final static int COMPTE_BANCAIRE = 2;
+	
+	private final int COMPTE;
+	
+	public JPanelConnexion(int COMPTE){
+		this.COMPTE = COMPTE;
 		initUI();
 		initListeners();
 		callback=null;
 	}
 	
-	public JPanelConnexion(ConnexionOk callback){
+	public JPanelConnexion(int COMPTE,ConnexionOk callback){
+		this.COMPTE = COMPTE;
+		this.callback=callback;
 		initUI();
 		initListeners();
-		this.callback=callback;
 	}
 
 	private void initListeners() {
@@ -41,16 +49,16 @@ public class JPanelConnexion extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String email = txt_email.getText();
-				String password = new String(txt_mdp.getPassword());
-				if (email.isEmpty()||password.isEmpty()){
+				String mdp = new String(txt_mdp.getPassword());
+				if (email.isEmpty()||mdp.isEmpty()){
 					if (email.isEmpty())
 						txt_email.requestFocus();
 					else
 						txt_mdp.requestFocus();
 					return;
 				}
-					
-				if (Session.seConnecter(email,password)){
+				boolean result = COMPTE==COMPTE_BIBLIOTHEQUE?Session.seConnecter(email,mdp):CompteBancaire.seConnecter(email, mdp);
+				if (result){
 					System.out.println("connexion OK");
 					JPanelConnexion.this.setEnabled(false);
 					callback.connexionOk();
