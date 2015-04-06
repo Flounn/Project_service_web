@@ -69,8 +69,7 @@ public class JInternalFrameMonComptebancaire extends JInternalFrame implements C
 				if (nom.isEmpty()||prenom.isEmpty()||devise.isEmpty())
 					return;
 				CompteBancaire.modifier(nom, prenom, devise);
-				majSolde();
-				majDevise();
+				modifierDevise();
 			}
 			
 		};
@@ -220,11 +219,17 @@ public class JInternalFrameMonComptebancaire extends JInternalFrame implements C
 
 	@Override
 	public void connexionOk() {
-		Panier.setDevise(CompteBancaire.getCompte().getDevise());
-		((AccueilExterne)getParent().getParent().getParent()).changerDevise(true);
 		getContentPane().removeAll();
 		initUI();
+		Panier.setDevise(CompteBancaire.getCompte().getDevise());
+		((AccueilExterne)getParent().getParent().getParent()).changerDevise(true);
 		validate();
+	}
+	private void modifierDevise(){
+		majDevise();
+		majSolde();
+		Panier.setDevise(CompteBancaire.getCompte().getDevise());
+		((AccueilExterne)getParent().getParent().getParent()).changerDevise(true);
 	}
 	
 	private void majDevise(){
