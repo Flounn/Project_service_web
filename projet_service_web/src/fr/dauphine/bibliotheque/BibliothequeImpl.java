@@ -39,7 +39,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		System.out.println("BibliothequeImpl(int arg0, RMIClientSocketFactory arg1,"
 				+"RMIServerSocketFactory arg2)");
 		try {
-			initBiblio();
+			//initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
@@ -51,7 +51,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		super(arg0);
 		System.out.println("BibliothequeImpl(int arg0)");
 		try {
-			initBiblio();
+			//initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class BibliothequeImpl extends UnicastRemoteObject implements Bibliothequ
 		super();
 		System.out.println("BibliothequeImpl()");
 		try {
-			initBiblio();
+			//initBiblio();
 			Naming.rebind("rmi://localhost:1099/Bibliotheque", this);
 			Naming.rebind("rmi://localhost:1099/ObserverService", ObserverImpl.getInstance());
 		} catch (Exception e) {
