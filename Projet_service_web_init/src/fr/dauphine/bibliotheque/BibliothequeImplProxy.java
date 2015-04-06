@@ -56,10 +56,10 @@ public class BibliothequeImplProxy implements fr.dauphine.bibliotheque.Bibliothe
     return bibliothequeImpl.acheter(livres);
   }
   
-  public java.lang.Object getPersonne(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException{
+  public double getPrixDevise(java.lang.String devise, double prixEuros) throws java.rmi.RemoteException{
     if (bibliothequeImpl == null)
       _initBibliothequeImplProxy();
-    return bibliothequeImpl.getPersonne(email, mdp);
+    return bibliothequeImpl.getPrixDevise(devise, prixEuros);
   }
   
   
