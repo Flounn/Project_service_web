@@ -29,6 +29,9 @@ public class JPanelConnexion extends JPanel{
 	
 	private final int COMPTE;
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public JPanelConnexion(int COMPTE){
 		this.COMPTE = COMPTE;
 		initUI();

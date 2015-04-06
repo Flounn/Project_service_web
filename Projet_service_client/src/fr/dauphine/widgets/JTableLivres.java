@@ -17,6 +17,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import fr.dauphine.bibliotheque.LivreService;
+import fr.dauphine.main.Session;
 import fr.dauphine.models.AbstractLivresTableModel;
 import fr.dauphine.models.TableModelLivres;
 import fr.dauphine.models.TableModelLivresEmpruntes;
@@ -71,18 +72,20 @@ public class JTableLivres extends JTable {
 		sorter.setSortable(0, false);
 		setRowSorter(sorter);
 		addMouseListener(new MouseAdapterJTable());
-		getColumnModel().getColumn(0).setResizable(false);
-		getColumnModel().getColumn(0).setMaxWidth(50);
-		
-		if (!(model instanceof TableModelNotifications)){
-			getTableHeader().addMouseListener(new MouseAdapterHeader());
+		if (!(model instanceof TableModelLivres) || !Session.isEtudiant()){
+			getColumnModel().getColumn(0).setResizable(false);
+			getColumnModel().getColumn(0).setMaxWidth(50);
 
-			// sorter.setSortKeys(null);
-			JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
-			addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
-			addJLabel.setToolTipText("Ajouter "+nomTable);
-			getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
-			getColumnModel().getColumn(0).setHeaderValue(addJLabel);
+			if (!(model instanceof TableModelNotifications)){
+				getTableHeader().addMouseListener(new MouseAdapterHeader());
+
+				// sorter.setSortKeys(null);
+				JLabel addJLabel = new JLabel(addIcon,JLabel.CENTER);
+				addJLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY));
+				addJLabel.setToolTipText("Ajouter "+nomTable);
+				getColumnModel().getColumn(0).setHeaderRenderer(new JLabelTableCellRenderer());
+				getColumnModel().getColumn(0).setHeaderValue(addJLabel);
+			}
 		}
 		setDefaultEditor(Integer.class, ComponentTableCellEditor);
 		setDefaultRenderer(Integer.class, ComponentTableCellRenderer);
@@ -118,7 +121,7 @@ public class JTableLivres extends JTable {
 			//num de la col selectionnee
 			int col = columnAtPoint(p);
 
-			if (col==0){
+			if (col==0 && (!Session.isEtudiant()||!(model instanceof TableModelLivres))){
 				if (!isModeSelection())	// Bouton Supprimer
 					model.delRow(convertRowIndexToModel(row));
 				else {// Bouton Selectionner
@@ -129,7 +132,7 @@ public class JTableLivres extends JTable {
 					((JInternalFrame)getParent().getParent().getParent().getParent().getParent().getParent()).dispose();
 				}
 			}
-			else if (col==7){//Emprunter
+			else if ((col==7&&Session.isEnseignant())||col==6&&Session.isEtudiant()){//Emprunter
 				((TableModelLivres)model).emprunter(convertRowIndexToModel(row));
 			}
 
@@ -154,7 +157,7 @@ public class JTableLivres extends JTable {
 					} catch (PropertyVetoException e) {e.printStackTrace();}
 					return;
 				}
-				
+
 				if (model instanceof TableModelPanier){
 					JInternalFrame test = new JInternalFrameGestionBO("Livres",new TableModelLivresVentes());
 					getParent().getParent().getParent().getParent().getParent().getParent().add(test);
@@ -186,7 +189,7 @@ public class JTableLivres extends JTable {
 	public String getNomTable() {
 		return nomTable;
 	}
-	
+
 	public void refreshHeader(){
 		model.fireTableStructureChanged();setRowHeight(35);
 		setModel(model);
@@ -197,7 +200,7 @@ public class JTableLivres extends JTable {
 		addMouseListener(new MouseAdapterJTable());
 		getColumnModel().getColumn(0).setResizable(false);
 		getColumnModel().getColumn(0).setMaxWidth(50);
-		
+
 		if (!(model instanceof TableModelNotifications)){
 			getTableHeader().addMouseListener(new MouseAdapterHeader());
 

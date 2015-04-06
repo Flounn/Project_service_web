@@ -18,8 +18,10 @@ public class TableModelLivres extends AbstractLivresTableModel {
 	private int nbColonnes = 6;
 	private int nbLignes;
 	private Livre livreAdd;
+	private final boolean firstCol;
 
 	public TableModelLivres(){
+		firstCol=Session.isEnseignant();
 		firstColIcon = new ImageIcon(getClass().getResource("del.png"),"Supprimer");
 		lastColIcon = new ImageIcon(getClass().getResource("emprunter.png"),"Emprunter");
 		majLivres();
@@ -28,36 +30,64 @@ public class TableModelLivres extends AbstractLivresTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch (columnIndex){
-		case 0 : return firstColIcon.getClass();
-		case 1 : return String.class;
-		case 2 : return String.class;
-		case 3 : return String.class;
-		case 4 : return boolean.class;
-		case 5 : return Double.class;
-		case 6 : return Double.class;
-		case 7: return lastColIcon.getClass();
-		default: return String.class;
+		if (firstCol){
+			switch (columnIndex){
+			case 0 : return firstColIcon.getClass();
+			case 1 : return String.class;
+			case 2 : return String.class;
+			case 3 : return String.class;
+			case 4 : return boolean.class;
+			case 5 : return Double.class;
+			case 6 : return Double.class;
+			case 7: return lastColIcon.getClass();
+			default: return String.class;
+			}
+		}
+		else {
+			switch (columnIndex){
+			case 0 : return String.class;
+			case 1 : return String.class;
+			case 2 : return String.class;
+			case 3 : return boolean.class;
+			case 4 : return Double.class;
+			case 5 : return Double.class;
+			case 6: return lastColIcon.getClass();
+			default: return String.class;
+			}
 		}
 	}
 
 	@Override
 	public int getColumnCount() {
-		return nbColonnes+2;
+		return nbColonnes+1+(firstCol?1:0);
 	}
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		switch (columnIndex){
-		case 0:return "";
-		case 1 : return "ISBN";
-		case 2 : return "Titre";
-		case 3 : return "Auteur";
-		case 4 : return "Disponible";
-		case 5 : return "Prix (€)";
-		case 6 : return "Note moyenne";
-		case 7 : return "Emprunter";
-		default: return "";
+		if (firstCol){
+			switch (columnIndex){
+			case 0:return "";
+			case 1 : return "ISBN";
+			case 2 : return "Titre";
+			case 3 : return "Auteur";
+			case 4 : return "Disponible";
+			case 5 : return "Prix (€)";
+			case 6 : return "Note moyenne";
+			case 7 : return "Emprunter";
+			default: return "";
+			}
+		}
+		else {
+			switch (columnIndex){
+			case 0 : return "ISBN";
+			case 1 : return "Titre";
+			case 2 : return "Auteur";
+			case 3 : return "Disponible";
+			case 4 : return "Prix (€)";
+			case 5 : return "Note moyenne";
+			case 6 : return "Emprunter";
+			default: return "";
+			}
 		}
 	}
 
@@ -70,16 +100,30 @@ public class TableModelLivres extends AbstractLivresTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Livre livre = (livreAdd!=null&&rowIndex==nbLignes-1)?livreAdd:livres.get(rowIndex);
 		try{
-			switch (columnIndex){
-			case 0 : return firstColIcon;
-			case 1 : return livre.getIsbn();
-			case 2 : return livre.getTitre();
-			case 3 : return livre.getAuteur();
-			case 4 : return livre.isDisponible();
-			case 5 : return livre.getPrixEuros();
-			case 6 : return livre.getMoyenneNotes();
-			case 7 : return lastColIcon;
-			default: return "";
+			if (firstCol){
+				switch (columnIndex){
+				case 0 : return firstColIcon;
+				case 1 : return livre.getIsbn();
+				case 2 : return livre.getTitre();
+				case 3 : return livre.getAuteur();
+				case 4 : return livre.isDisponible();
+				case 5 : return livre.getPrixEuros();
+				case 6 : return livre.getMoyenneNotes();
+				case 7 : return lastColIcon;
+				default: return "";
+				}
+			}
+			else{
+				switch (columnIndex){
+				case 0 : return livre.getIsbn();
+				case 1 : return livre.getTitre();
+				case 2 : return livre.getAuteur();
+				case 3 : return livre.isDisponible();
+				case 4 : return livre.getPrixEuros();
+				case 5 : return livre.getMoyenneNotes();
+				case 6 : return lastColIcon;
+				default: return "";
+				}
 			}
 		}
 		catch (RemoteException e){e.printStackTrace();return "";}
@@ -129,7 +173,6 @@ public class TableModelLivres extends AbstractLivresTableModel {
 		try {
 			if (livreAdd!=null)
 				return false;
-			//livreAdd=new LivreImpl();
 			fireTableRowsInserted(nbLignes, nbLignes++);
 			return true;
 		} catch (Exception e) {
@@ -152,7 +195,7 @@ public class TableModelLivres extends AbstractLivresTableModel {
 
 	public void emprunter(int numRow){
 		Session.emprunter(livres.get(numRow));
-		fireTableCellUpdated(numRow, 4);
+		fireTableCellUpdated(numRow, firstCol?4:3);
 	}
 
 
