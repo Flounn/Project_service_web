@@ -64,7 +64,7 @@ public class JPanelConnexion extends JPanel{
 					callback.connexionOk();
 				}
 				else
-					JOptionPane.showConfirmDialog(JPanelConnexion.this, "Votre email ou votre mot de passe est incorrecte", "Echec", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(JPanelConnexion.this, "Votre email ou votre mot de passe est incorrecte");
 			}
 		};
 		

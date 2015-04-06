@@ -21,7 +21,9 @@ public final class ConnexionWebServices {
 	
 	public static final List<LivreService> getLivresCanSell(){
 		try {
-			return Arrays.asList(getBibliotheque().getLivresCanSell()); 
+			LivreService[] livres = getBibliotheque().getLivresCanSell();
+			if (livres!=null)
+				return Arrays.asList(livres); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
