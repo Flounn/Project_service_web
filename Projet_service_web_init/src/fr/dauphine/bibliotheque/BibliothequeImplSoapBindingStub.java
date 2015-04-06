@@ -44,14 +44,14 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         _operations[1] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getPersonne");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "email"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.setName("getPrixDevise");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "devise"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "mdp"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "prixEuros"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"), double.class, false, false);
         oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "anyType"));
-        oper.setReturnClass(java.lang.Object.class);
-        oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPersonneReturn"));
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "double"));
+        oper.setReturnClass(double.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPrixDeviseReturn"));
         oper.setStyle(org.apache.axis.constants.Style.WRAPPED);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         _operations[2] = oper;
@@ -246,7 +246,7 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
 }
     }
 
-    public java.lang.Object getPersonne(java.lang.String email, java.lang.String mdp) throws java.rmi.RemoteException {
+    public double getPrixDevise(java.lang.String devise, double prixEuros) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -258,11 +258,11 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPersonne"));
+        _call.setOperationName(new javax.xml.namespace.QName("http://bibliotheque.dauphine.fr", "getPrixDevise"));
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {email, mdp});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {devise, new java.lang.Double(prixEuros)});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -270,9 +270,9 @@ public class BibliothequeImplSoapBindingStub extends org.apache.axis.client.Stub
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.Object) _resp;
+                return ((java.lang.Double) _resp).doubleValue();
             } catch (java.lang.Exception _exception) {
-                return (java.lang.Object) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object.class);
+                return ((java.lang.Double) org.apache.axis.utils.JavaUtils.convert(_resp, double.class)).doubleValue();
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {

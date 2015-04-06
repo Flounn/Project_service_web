@@ -15,7 +15,6 @@ import fr.dauphine.banque.BanqueSoapBindingStub;
 import fr.dauphine.bibliotheque.BibliothequeImpl;
 import fr.dauphine.bibliotheque.BibliothequeImplServiceLocator;
 import fr.dauphine.bibliotheque.BibliothequeImplSoapBindingStub;
-import fr.dauphine.bibliotheque.LivreService;
 import fr.dauphine.bibliotheque.PersonneImpl;
 import fr.dauphine.interfaces.Bibliotheque;
 import fr.dauphine.interfaces.Livre;
@@ -33,7 +32,7 @@ public class Main {
 		
 		BibliothequeImpl bibliotheque = new BibliothequeImplServiceLocator().getBibliothequeImpl();
 		((BibliothequeImplSoapBindingStub) bibliotheque).setMaintainSession(true);
-		LivreService livres[] = bibliotheque.getLivresCanSell();
+		//LivreService livres[] = bibliotheque.getLivresCanSell();
 
 		System.setProperty("java.security.policy", "sec.policy");
 		//System.setProperty("java.rmi.server.codebase", "file://C:/Users/utilisateur/git/Project_service_web/projet_service_web/bin/");
@@ -195,7 +194,7 @@ public class Main {
 			banque.retraitEur("nicolas.sarkozy@gmail.com", "nicolas", 100.0);
 			
 			banque.addCompte("Francois", "Hollande", "francois.hollande@gmail.com", "eugen", "EUR");
-			banque.delCompte("francois.hollande@gmail.com");
+			banque.delCompte("francois.hollande@gmail.com","eugen");
 			
 		}
 }
