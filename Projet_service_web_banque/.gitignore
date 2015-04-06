@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 /build/
+=======
+/bin/
+/build/
+/.classpath
+/WebContent/WEB-INF/lib/
+/.settings/
+>>>>>>> branch 'master' of https://github.com/Flounn/Project_service_web.git
